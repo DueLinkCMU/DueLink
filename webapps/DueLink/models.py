@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class School(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile_user')
     nick_name = models.CharField(max_length=20)
@@ -11,13 +18,6 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return self.nick_name
-
-#yilonghey
-class School(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __unicode__(self):
-        return self.name
 
 
 class Course(models.Model):
@@ -39,7 +39,7 @@ class Deadline(models.Model):
     students = models.ManyToManyField(User)
 
     def __unicode__(self):
-        return self.course.school + ", " + self.course.course_name + ", "\
+        return self.course.school + ", " + self.course.course_name + ", " \
                + self.name + " due on " + self.due
 
 
@@ -48,4 +48,3 @@ class Task(models.Model):
     status = models.BooleanField()
     description = models.CharField(max_length=100)
     timestamp = models.DateTimeField()
-

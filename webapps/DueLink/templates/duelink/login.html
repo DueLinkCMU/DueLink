@@ -1,0 +1,17 @@
+{% extends "dueLink/base.html" %}
+<form class="" action="{% url 'login' %}" method="POST">
+    <h2 class="">Please sign in</h2>
+    <input type="text" id="inputUserName" class="" placeholder="Username" name="username" required
+           autofocus>
+    <input type="password" id="inputPassword" class="" placeholder="Password" name="password" required>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        <label onclick="location.href='{% url 'password_reset' %}'" class="forget">Forget Password</label>
+    </div>
+    <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in">
+    <input type="hidden" name="next" value="{{ next }}"/>
+    {% csrf_token %}
+</form>
