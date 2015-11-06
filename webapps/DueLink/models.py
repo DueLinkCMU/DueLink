@@ -12,7 +12,7 @@ class Profile(models.Model):
     def __unicode__(self):
         return self.nick_name
 
-
+#yilonghey
 class School(models.Model):
     name = models.CharField(max_length=50)
 
