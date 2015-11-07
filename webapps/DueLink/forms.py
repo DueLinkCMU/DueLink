@@ -35,8 +35,8 @@ class TaskForm(forms.ModelForm):
 
 class RegistrationForm(forms.Form):
     #TODO: form attrs
-    username = forms.CharField(max_length=30, label='username', widget=forms.TextInput)
-    email = forms.EmailField(max_length=100, label='email', widget=forms.PasswordInput())
+    username = forms.CharField(max_length=30, label='username', widget=forms.TextInput())
+    email = forms.EmailField(max_length=100, label='email', widget=forms.EmailInput())
     password1 = forms.CharField(max_length=30, label='password1', widget=forms.PasswordInput())
     password2 = forms.CharField(max_length=30, label='password2', widget=forms.PasswordInput())
 
