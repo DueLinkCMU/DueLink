@@ -22,19 +22,18 @@ urlpatterns = [
     url(r'^$', 'DueLink.views.home', name='home'),
     # Route for built-in authentication with our own custom login page
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'duelink/login.html'}, name='login'),
-    url(r'^register$', 'duelink.views.register', name='register'),
+    url(r'^register$', 'DueLink.views.register', name='register'),
 
     #
-    url(r'^profile/(?P<id>\d+)$', 'duelink.views.profile', name='profile'),
+    url(r'^profile/(?P<id>\d+)$', 'DueLink.views.profile', name='profile'),
 
-    url(r'^profile_image/(?P<id>\d+)$', 'duelink.views.get_user_image', name="profile_image"),
+    url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     #
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
     # url(r'edit-profile$', 'duelink.views.edit_profile', name='edit_profile'),
 
-    #
     url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
         {'template_name': 'duelink/password_reset.html',
          'email_template_name': 'duelink/password_reset_email.html',
