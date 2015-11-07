@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.db import transaction
 from django.contrib.auth.models import User
@@ -22,6 +23,11 @@ def home(request):
         return response
 
 
+@login_required
+def profile(request):
+    return HttpResponse("This is profile page")
+
+
 @transaction.atomic
 def register(request):
     if request.method == 'GET':
@@ -31,6 +37,7 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if not form.is_valid():
+            print("invalid")
             return render(request, 'duelink/register.html', {'form': form})
 
         new_user = User.objects.create_user(username=form.clean_username(), email=form.clean_email(),
@@ -38,7 +45,7 @@ def register(request):
         new_user.save()
 
         info = {'nick_name': form.cleaned_data['nick_name'],
-                'school': School.objects.get(name="central michigan univ").pk}
+                'school': School.objects.get(name="central michigan univ").pk}  # TODO: school name
 
         # TODO: school exist?
 
