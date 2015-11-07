@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<div class="div-deadline">
+    <div class="sing">
+        <div class="row" id="deadline-header">
+            <div class="col-md-2">
+                <a href="{% url 'profile' event.user.id %}">
+                    <img data-src="holder.js/60x60" class="img-thumbnail" alt="60x60"
+                         src="{% url 'profile_image' post.user.id %}" data-holder-rendered="true">
+                </a></div>
+            <div class="col-lg-10">
+                <p><span class="span-username">{{ post.user.username }}</span>
+                    <span class="span-action"> added a new post</span></p>
+
+                <p><span class="span-postTime">{{ post.post_time }}</span></p>
+            </div>
+
+
+            <div class="postContent" id="first-post content">
+                <div class="div-text">
+                    <p><span class="span-post-text">{{ post.text }}</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="div-comments">
+        {% for comment in post.get_comments %}
+            {% include 'grumblr/comment.html' %}
+        {% endfor %}
+        {% include 'grumblr/comment_form.html' %}
+    </div>
+</div>
+
