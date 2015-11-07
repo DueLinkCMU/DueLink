@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^$', 'DueLink.views.home', name='home'),
     # Route for built-in authentication with our own custom login page
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'duelink/login.html'}, name='login'),
-    # url(r'^register$', 'duelink.views.register', name='register'),
+    url(r'^register$', 'DueLink.views.register', name='register'),
     #
     # url(r'^profile/(?P<id>\d+)$', 'duelink.views.profile', name='profile'),
     #
