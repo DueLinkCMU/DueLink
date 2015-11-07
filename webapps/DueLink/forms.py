@@ -41,7 +41,10 @@ class RegistrationForm(forms.Form):
     password2 = forms.CharField(max_length=30, label='password2', widget=forms.PasswordInput())
 
     nick_name = forms.CharField(max_length=30, label='nickname', widget=forms.TextInput())
-    school = forms.CharField(max_length=50, label='school', widget=forms.TextInput())
+    #school = forms.CharField(max_length=50, label='school', widget=forms.TextInput())
+    school = forms.ModelChoiceField(queryset=School.objects.all())
+
+
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
@@ -65,3 +68,6 @@ class RegistrationForm(forms.Form):
         return email
 
 # TODO: clean school
+
+    #def get_school_list(self):
+
