@@ -27,6 +27,9 @@ def home(request):
 def profile(request):
     return HttpResponse("This is profile page")
 
+@login_required
+def get_user_image(request):
+    return HttpResponse("This is for get user image")
 
 @transaction.atomic
 def register(request):
