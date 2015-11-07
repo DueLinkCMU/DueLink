@@ -1,0 +1,11 @@
+{% extends "dueLink/base.html" %}
+{% block title %}Register{% endblock %}
+{% block content%}
+<form action="{% url 'register'%}" method="POST">
+    {% csrf_token %}
+    <table>
+    {{form}}
+    </table>
+    <input type="submit">
+</form>
+{% endblock content%}
