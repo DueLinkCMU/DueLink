@@ -48,7 +48,7 @@ class DeadEvent(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
 
 class Task(models.Model):
-    deadline = models.ForeignKey(Deadline)
+    deadline = models.ForeignKey(DeadEvent, related_name= 'tasks')
     status = models.BooleanField()
     description = models.CharField(max_length=100)
-    timestamp = models.DateTimeField()
+    created_time = models.DateTimeField(auto_now_add=True)
