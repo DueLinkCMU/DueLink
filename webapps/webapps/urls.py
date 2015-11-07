@@ -17,5 +17,5 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^duelink/', include('DueLink.urls')),
-    url(r'^$', 'duelink.views.home'),
+    url(r'^$', 'DueLink.views.home'),
 ]

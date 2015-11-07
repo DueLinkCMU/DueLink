@@ -1,4 +1,6 @@
 {% extends "dueLink/base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
 <form class="" action="{% url 'login' %}" method="POST">
     <h2 class="">Please sign in</h2>
     <input type="text" id="inputUserName" class="" placeholder="Username" name="username" required
@@ -15,3 +17,5 @@
     <input type="hidden" name="next" value="{{ next }}"/>
     {% csrf_token %}
 </form>
+
+{% endblock %}

@@ -19,7 +19,7 @@ from django.contrib.auth.views import password_reset, password_reset_done, passw
     password_reset_complete
 
 urlpatterns = [
-    url(r'^$', 'duelink.views.home', name='home'),
+    url(r'^$', 'DueLink.views.home', name='home'),
     # Route for built-in authentication with our own custom login page
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'duelink/login.html'}, name='login'),
     # url(r'^register$', 'duelink.views.register', name='register'),
@@ -31,23 +31,23 @@ urlpatterns = [
     # url(r'edit-profile$', 'duelink.views.edit_profile', name='edit_profile'),
     #
     #
-    # url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
-    #     {'template_name': 'duelink/password_reset.html',
-    #      'email_template_name': 'duelink/password_reset_email.html',
-    #      'subject_template_name': 'duelink/password_reset_subject',
-    #      }, name='password_reset'),
-    # # The page shown after a user has been emailed a link to reset their password.
-    # url(r'^password_reset_done$', 'django.contrib.auth.views.password_reset_done',
-    #     {'template_name': 'duelink/password_reset_done.html'
-    #      }, name='password_reset_done'),
-    # # Presents a form for entering a new password.
-    # url(r'^password_reset_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)$',
-    #     'django.contrib.auth.views.password_reset_confirm',
-    #     {'template_name': 'duelink/password_reset_confirm.html',
-    #      'post_reset_redirect': 'password_reset_complete',
-    #      }, name='password_reset_confirm'),
-    # # Presents a view which informs the user that the password has been successfully changed.
-    # url(r'^password_reset_complete$', 'django.contrib.auth.views.password_reset_complete',
-    #     {'template_name': 'duelink/password_reset_complete.html'
-    #      }, name='password_reset_complete'),
+    url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
+        {'template_name': 'duelink/password_reset.html',
+         'email_template_name': 'duelink/password_reset_email.html',
+         'subject_template_name': 'duelink/password_reset_subject',
+         }, name='password_reset'),
+    # The page shown after a user has been emailed a link to reset their password.
+    url(r'^password_reset_done$', 'django.contrib.auth.views.password_reset_done',
+        {'template_name': 'duelink/password_reset_done.html'
+         }, name='password_reset_done'),
+    # Presents a form for entering a new password.
+    url(r'^password_reset_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)$',
+        'django.contrib.auth.views.password_reset_confirm',
+        {'template_name': 'duelink/password_reset_confirm.html',
+         'post_reset_redirect': 'password_reset_complete',
+         }, name='password_reset_confirm'),
+    # Presents a view which informs the user that the password has been successfully changed.
+    url(r'^password_reset_complete$', 'django.contrib.auth.views.password_reset_complete',
+        {'template_name': 'duelink/password_reset_complete.html'
+         }, name='password_reset_complete'),
 ]
