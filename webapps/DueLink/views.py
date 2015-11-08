@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden
 from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.db import transaction
@@ -63,14 +63,30 @@ def add_course(request):
         return render(request, 'duelink/add_course.html', {'form': form})
 
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        school = request.POST['school']
+        a = request.POST['section']
+        print(a)
 
-        # if form.is_valid() and form.clean_section():
+        new_course = Course(school=School.objects.get(pk=school), section=a)
+        form = CourseForm(request.POST, instance=new_course)
         if form.is_valid():
             form.save()
-            return HttpResponse("add success")
+
+
+
+def add_school(request):
+    if request.method == 'GET':
+        form = SchoolForm()
+        return render(request, 'duelink/add_school.html', {'form': form})
+
+    if request.method == 'POST':
+        form = SchoolForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse("save school")
         else:
-            return HttpResponse("not valid or duplicated section")
+            return HttpResponseForbidden("fail")
 
 
 @transaction.atomic

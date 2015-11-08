@@ -32,6 +32,7 @@ urlpatterns = [
 
     url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
     url(r'^add_deadline$', 'DueLink.views.add_deadline', name='add_deadline'),
+    url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
 
 
     # # Route to logout a user and send them back to the login page
