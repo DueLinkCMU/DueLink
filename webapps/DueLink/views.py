@@ -34,6 +34,20 @@ def get_user_image(request):
 
 
 @login_required
+def add_deadline(request):
+    if request.method == 'GET':
+        form = DeadlineForm()
+        return render(request, 'duelink/add_deadline.html', {'form': form})
+
+    if request.method == 'POST':
+        form = DeadlineForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse("Add deadline fail")
+
+
+@login_required
 def add_course(request):
     if request.method == 'GET':
         form = CourseForm()

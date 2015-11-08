@@ -1,5 +1,7 @@
 from django import forms
 from models import *
+from django.forms.extras.widgets import SelectDateWidget
+
 
 
 class ProfileForm(forms.ModelForm):
@@ -33,6 +35,7 @@ class DeadlineForm(forms.ModelForm):
     class Meta:
         model = Deadline
         exclude = ['students']
+        widgets = {'due': SelectDateWidget}
 
 
 class TaskForm(forms.ModelForm):

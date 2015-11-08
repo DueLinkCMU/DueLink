@@ -29,7 +29,8 @@ urlpatterns = [
 
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
-    url(r'^add_course', 'DueLink.views.add_course', name='add_course'),
+    url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
+    url(r'^add_deadline$', 'DueLink.views.add_deadline', name='add_deadline'),
 
     #
     # # Route to logout a user and send them back to the login page
