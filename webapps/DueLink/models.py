@@ -24,7 +24,7 @@ class Course(models.Model):
     course_number = models.CharField(max_length=10)
     course_name = models.CharField(max_length=50)
     section = models.CharField(max_length=1)
-    school = models.ForeignKey(School)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
     instructor = models.CharField(max_length=40)
     students = models.ManyToManyField(User, related_name='course_students')
 
@@ -35,7 +35,7 @@ class Course(models.Model):
 class Deadline(models.Model):
     name = models.CharField(max_length=20)
     due = models.DateTimeField()
-    course = models.ForeignKey(Course)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     students = models.ManyToManyField(User)
 
     def __unicode__(self):
@@ -44,8 +44,8 @@ class Deadline(models.Model):
 
 
 class DueEvent(models.Model):
-    deadline = models.ForeignKey(Deadline, related_name='events')
-    user = models.ForeignKey(User, related_name='events')
+    deadline = models.ForeignKey(Deadline, related_name='events', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
     finished = models.BooleanField()
 
@@ -65,7 +65,7 @@ class DueEvent(models.Model):
 
 
 class Task(models.Model):
-    deadline = models.ForeignKey(DueEvent, related_name='tasks')
+    deadline = models.ForeignKey(DueEvent, related_name='tasks', on_delete=models.CASCADE)
     finished = models.BooleanField()
     description = models.CharField(max_length=100)
     created_time = models.DateTimeField(auto_now_add=True)

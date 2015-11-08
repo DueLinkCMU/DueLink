@@ -2,7 +2,7 @@
 {% block title %}Friend Stream{% endblock %}
 
 {% block content %}
-    {% for deadline in deadlines %}
+    {% for event in events %}
             {% include 'duelink/deadline.html' %}
-        {% endfor %}
+    {% endfor %}
 {% endblock %}
