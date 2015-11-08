@@ -80,7 +80,7 @@ def register(request):
         new_user.save()
 
         info = {'nick_name': form.cleaned_data['nick_name'],
-                'school': School.objects.get(name="central michigan univ").pk}  # TODO: school name
+                'school': School.objects.get(name=form.cleaned_data['school']).pk}  # TODO: school name
 
         # TODO: school exist?
 
