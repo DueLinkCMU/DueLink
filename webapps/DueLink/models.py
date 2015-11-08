@@ -46,6 +46,7 @@ class DueEvent(models.Model):
     deadline = models.ForeignKey(Deadline, related_name = 'events')
     user = models.ForeignKey(User, related_name= 'events')
     created_time = models.DateTimeField(auto_now_add=True)
+    isFinished = models.BooleanField()
 
 class Task(models.Model):
     deadline = models.ForeignKey(DueEvent, related_name= 'tasks')
