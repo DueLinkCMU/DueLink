@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from DueLink.models import *
+from models import *
 
 
 class ProfileForm(forms.ModelForm):
