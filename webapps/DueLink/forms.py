@@ -3,7 +3,6 @@ from models import *
 from django.forms.extras.widgets import SelectDateWidget
 
 
-
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -76,4 +75,3 @@ class RegistrationForm(forms.Form):
         return email
 
         # TODO: clean school
-
