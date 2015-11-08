@@ -1,6 +1,15 @@
 {% extends "dueLink/base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
+
+    {% block error %}
+        {% if error %}
+            <p class="error" style="color:red">
+                Incorrect username and password.
+            </p>
+        {% endif %}
+    {% endblock %}
+
     <form class="" action="{% url 'login' %}" method="POST">
         <h2 class="">Please sign in</h2>
         <input type="text" id="inputUserName" class="" placeholder="Username" name="username" required

@@ -65,7 +65,8 @@ def add_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
 
-        if form.is_valid() and form.clean_section():
+        # if form.is_valid() and form.clean_section():
+        if form.is_valid():
             form.save()
             return HttpResponse("add success")
         else:

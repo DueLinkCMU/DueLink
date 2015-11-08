@@ -47,7 +47,7 @@ class DueEvent(models.Model):
     deadline = models.ForeignKey(Deadline, related_name='events', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
-    finished = models.BooleanField()
+    finished = models.BooleanField(default=False)
 
     @property
     def progress(self):
@@ -66,7 +66,7 @@ class DueEvent(models.Model):
 
 class Task(models.Model):
     deadline = models.ForeignKey(DueEvent, related_name='tasks', on_delete=models.CASCADE)
-    finished = models.BooleanField()
+    finished = models.BooleanField(default=False)
     description = models.CharField(max_length=100)
     created_time = models.DateTimeField(auto_now_add=True)
 

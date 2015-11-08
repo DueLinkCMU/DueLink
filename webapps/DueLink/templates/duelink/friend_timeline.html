@@ -1,0 +1,10 @@
+{% extends "duelink/base.html" %}
+{% block title %}{{ user.username }}'s Deadlines{% endblock %}
+
+{% block content %}
+{% for event in events %}
+            {% include 'duelink/deadline.html' %}
+    {% endfor %}
+
+    <a href='{% url 'logout' %}'>Log out</a>
+{% endblock %}

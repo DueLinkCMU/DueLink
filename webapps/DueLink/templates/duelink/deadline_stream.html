@@ -1,0 +1,11 @@
+{% extends "duelink/base.html" %}
+{% block title %}Deadlines Stream{% endblock %}
+
+{% block content %}
+
+    {% for event in events %}
+            {% include 'duelink/deadline.html' %}
+    {% endfor %}
+
+    <a href='{% url 'logout' %}'>Log out</a>
+{% endblock %}
