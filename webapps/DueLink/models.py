@@ -47,11 +47,29 @@ class DueEvent(models.Model):
     deadline = models.ForeignKey(Deadline, related_name='events')
     user = models.ForeignKey(User, related_name='events')
     created_time = models.DateTimeField(auto_now_add=True)
-    isFinished = models.BooleanField()
+    finished = models.BooleanField()
+
+    @property
+    def progress(self):
+        if self.finished:
+            return 1
+        total = self.tasks.all().count()
+        if total:
+            finished = 0
+            for task in self.tasks.all():
+                if task.finished:
+                    finished += 1
+            return round(float(finished) / total, 2)
+        else:
+            return 0
 
 
 class Task(models.Model):
     deadline = models.ForeignKey(DueEvent, related_name='tasks')
-    status = models.BooleanField()
+    finished = models.BooleanField()
     description = models.CharField(max_length=100)
     created_time = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.deadline + ", " + self.finished.__str__() + ", " + self.description + ", " \
+               + self.created_time.__str__()
