@@ -27,9 +27,27 @@ def home(request):
 def profile(request):
     return HttpResponse("This is profile page")
 
+
 @login_required
 def get_user_image(request):
     return HttpResponse("This is for get user image")
+
+
+@login_required
+def add_course(request):
+    if request.method == 'GET':
+        form = CourseForm()
+        return render(request, 'duelink/add_course.html', {'form': form})
+
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+
+        if form.is_valid() and form.clean_section():
+            form.save()
+            return HttpResponse("add success")
+        else:
+            return HttpResponse("not valid or duplicated section")
+
 
 @transaction.atomic
 def register(request):
