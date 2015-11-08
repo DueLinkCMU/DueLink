@@ -29,7 +29,7 @@ class Course(models.Model):
     students = models.ManyToManyField(User, related_name='course_students')
 
     def __unicode__(self):
-        return self.school + ": " + self.course_name
+        return self.school.name + ": " + self.course_name
 
 
 class Deadline(models.Model):
@@ -39,18 +39,37 @@ class Deadline(models.Model):
     students = models.ManyToManyField(User)
 
     def __unicode__(self):
-        return self.course.school + ", " + self.course.course_name + ", " \
-               + self.name + " due on " + self.due
+        return self.course.school.name + ", " + self.course.course_name + ", " \
+               + self.name + " due on " + self.due.__str__()
 
 
 class DueEvent(models.Model):
     deadline = models.ForeignKey(Deadline, related_name='events')
     user = models.ForeignKey(User, related_name='events')
     created_time = models.DateTimeField(auto_now_add=True)
+    finished = models.BooleanField()
+
+    @property
+    def progress(self):
+        if self.finished:
+            return 1
+        total = self.tasks.all().count()
+        if total:
+            finished = 0
+            for task in self.tasks.all():
+                if task.finished:
+                    finished += 1
+            return round(float(finished) / total, 2)
+        else:
+            return 0
 
 
 class Task(models.Model):
     deadline = models.ForeignKey(DueEvent, related_name='tasks')
-    status = models.BooleanField()
+    finished = models.BooleanField()
     description = models.CharField(max_length=100)
     created_time = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.deadline + ", " + self.finished.__str__() + ", " + self.description + ", " \
+               + self.created_time.__str__()
