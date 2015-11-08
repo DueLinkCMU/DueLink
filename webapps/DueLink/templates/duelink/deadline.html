@@ -11,11 +11,7 @@
             </div>
             <!-- name -->
             <div class="col-md-4">
-<<<<<<< HEAD
-                <p><span class="span-username">{{ due_event.user.first_name }}</span>
-=======
                 <p><span class="span-username">{{ event.user.nick_name }}</span>
->>>>>>> development
             </div>
             <!-- due time -->
             <div class="col-md-6">
@@ -31,25 +27,21 @@
             <div class="div-deadline-name">
                 <p><span class="span-post-text">{{ due_event.deadline.name }}</span></p>
             </div>
-<<<<<<< HEAD
-            <!--     <div class="div-deadline-status">
-            <p><span class="span-post-text">{{ task.status }}</span></p>
-                </div> -->
-=======
             <div class="div-deadline-status">
                 <p><span class="span-post-text">
-                    {{ event.progress }}
+                    {% if event.finished %}Finished
+                    {% else %}In progress
+                    {% endif %}
                 </span></p>
             </div>
->>>>>>> development
         </div>
         <!-- end content -->
     </div>
     <div class="col-md-4">
-        <!-- draw a circle
-        <div class="div-deadline-percent">
-            <p><span class="span-post-text">{{ percent }}</span></p>
-        </div> -->
+        <!-- draw a circle -->
+        <div class="div-deadline-progress">
+            <p><span class="span-post-text">{{ event.progress }}</span></p>
+        </div>
     </div>
 
 </div>
