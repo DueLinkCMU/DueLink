@@ -6,8 +6,8 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
-from DueLink.forms import *
-from DueLink.models import *
+from forms import *
+from models import *
 
 
 # Create your views here.
@@ -27,9 +27,41 @@ def home(request):
 def profile(request):
     return HttpResponse("This is profile page")
 
+
 @login_required
 def get_user_image(request):
     return HttpResponse("This is for get user image")
+
+
+@login_required
+def add_deadline(request):
+    if request.method == 'GET':
+        form = DeadlineForm()
+        return render(request, 'duelink/add_deadline.html', {'form': form})
+
+    if request.method == 'POST':
+        form = DeadlineForm(request.POST)
+        if form.is_valid():
+            form.save()
+        else:
+            return HttpResponse("Add deadline fail")
+
+
+@login_required
+def add_course(request):
+    if request.method == 'GET':
+        form = CourseForm()
+        return render(request, 'duelink/add_course.html', {'form': form})
+
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+
+        if form.is_valid() and form.clean_section():
+            form.save()
+            return HttpResponse("add success")
+        else:
+            return HttpResponse("not valid or duplicated section")
+
 
 @transaction.atomic
 def register(request):
@@ -48,7 +80,7 @@ def register(request):
         new_user.save()
 
         info = {'nick_name': form.cleaned_data['nick_name'],
-                'school': School.objects.get(name="central michigan univ").pk}  # TODO: school name
+                'school': School.objects.get(name=form.cleaned_data['school']).pk}  # TODO: school name
 
         # TODO: school exist?
 
