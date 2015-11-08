@@ -1,0 +1,29 @@
+<!-- template for user's deadlines -->
+{% extends "duelink/base.html" %}
+{% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
+
+{% block content %}
+    <div id="profile_img"><img class="img-thumbnail" alt="100x100"
+                               src="{% url 'profile_image' profile.user.id %}"
+                               data-holder-rendered="true"></div>
+
+    <div id="name">
+        {{ profile.user.username }}({{ profile.nick_name }}) @{{ profile.school }}
+    </div>
+
+    {% block error %}
+        {% if errors %}
+            {% for error in errors %}
+                <p class="error" style="color:red">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+
+    {% for event in events %}
+        {% include 'duelink/deadline.html' %}
+    {% endfor %}
+
+    <a href='{% url 'logout' %}'>Log out</a>
+{% endblock %}
