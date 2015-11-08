@@ -20,6 +20,15 @@ class CourseForm(forms.ModelForm):
         model = Course
         exclude = ['students']
 
+    def clean_section(self):
+        cleaned_data = super(CourseForm, self).clean()
+        if Course.objects.filter(course_number=self.cleaned_data['course_number']) > 0:
+            if Course.objects.get(course_number=self.cleaned_data['course_number']).section == \
+                    self.cleaned_data['section']:
+                return False
+
+        return True
+
 
 class DeadlineForm(forms.ModelForm):
     class Meta:
@@ -34,17 +43,14 @@ class TaskForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.Form):
-    #TODO: form attrs
+    # TODO: form attrs
     username = forms.CharField(max_length=30, label='username', widget=forms.TextInput())
     email = forms.EmailField(max_length=100, label='email', widget=forms.EmailInput())
     password1 = forms.CharField(max_length=30, label='password1', widget=forms.PasswordInput())
     password2 = forms.CharField(max_length=30, label='password2', widget=forms.PasswordInput())
 
     nick_name = forms.CharField(max_length=30, label='nickname', widget=forms.TextInput())
-    #school = forms.CharField(max_length=50, label='school', widget=forms.TextInput())
     school = forms.ModelChoiceField(queryset=School.objects.all())
-
-
 
     def clean(self):
         cleaned_data = super(RegistrationForm, self).clean()
@@ -67,7 +73,5 @@ class RegistrationForm(forms.Form):
 
         return email
 
-# TODO: clean school
-
-    #def get_school_list(self):
+        # TODO: clean school
 

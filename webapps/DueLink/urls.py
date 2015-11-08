@@ -29,6 +29,8 @@ urlpatterns = [
 
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
+    url(r'^add_course', 'DueLink.views.add_course', name='add_course'),
+
     #
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),

@@ -29,7 +29,7 @@ class Course(models.Model):
     students = models.ManyToManyField(User, related_name='course_students')
 
     def __unicode__(self):
-        return self.school + ": " + self.course_name
+        return self.school.name + ": " + self.course_name
 
 
 class Deadline(models.Model):
