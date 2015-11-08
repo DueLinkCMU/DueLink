@@ -1,32 +1,46 @@
 {% load staticfiles %}
-<div class="div-deadline">
-    <div class="sing">
-        <div class="row" id="deadline-header">
+
+
+<div class="row" id="deadline">
+    <div class="col-md-8">
+        <div class="deadline-header">
+            <!-- image -->
             <div class="col-md-2">
                 <a href="{% url 'profile' event.user.id %}">
-                    <img data-src="holder.js/60x60" class="img-thumbnail" alt="60x60"
-                         src="{% url 'profile_image' post.user.id %}" data-holder-rendered="true">
-                </a></div>
-            <div class="col-lg-10">
-                <p><span class="span-username">{{ post.user.username }}</span>
-                    <span class="span-action"> added a new post</span></p>
-
-                <p><span class="span-postTime">{{ post.post_time }}</span></p>
+                    <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' post.user.id %}"
+                         data-holder-rendered="true"></a>
             </div>
-
-
-            <div class="postContent" id="first-post content">
-                <div class="div-text">
-                    <p><span class="span-post-text">{{ post.text }}</span></p>
-                </div>
+            <!-- name -->
+            <div class="col-md-4">
+                <p><span class="span-username">{{ event.user.first_name }}</span>
+            </div>
+            <!-- due time -->
+            <div class="col-md-6">
+                <p><span class="span-due-time">{{ event.deadline.due }}</span></p>
             </div>
         </div>
+        <!-- end header -->
+
+        <div class="deadline-content">
+            <div class="div-deadline-course">
+                <p><span class="span-post-text">{{ event.deadline.course }}</span></p>
+            </div>
+            <div class="div-deadline-name">
+                <p><span class="span-post-text">{{ event.deadline.name }}</span></p>
+            </div>
+            <!--     <div class="div-deadline-status">
+                    <p><span class="span-post-text">{{ task.status }}</span></p>
+                </div> -->
+        </div>
+        <!-- end content -->
     </div>
-    <div class="div-comments">
-        {% for comment in post.get_comments %}
-            {% include 'grumblr/comment.html' %}
-        {% endfor %}
-        {% include 'grumblr/comment_form.html' %}
+    <div class="col-md-4">
+    <!-- draw a circle
+        <div class="div-deadline-percent">
+            <p><span class="span-post-text">{{ task.percent }}</span></p>
+        </div> -->
     </div>
+
 </div>
+
 

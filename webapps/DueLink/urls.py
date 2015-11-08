@@ -34,7 +34,6 @@ urlpatterns = [
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
     # url(r'edit-profile$', 'duelink.views.edit_profile', name='edit_profile'),
 
-    #
     url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
         {'template_name': 'duelink/password_reset.html',
          'email_template_name': 'duelink/password_reset_email.html',
