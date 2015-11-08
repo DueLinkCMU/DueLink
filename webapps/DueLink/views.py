@@ -56,11 +56,12 @@ def add_course(request):
     if request.method == 'POST':
         school = request.POST['school']
         a = request.POST['section']
-        print(a.strlen)
+        print(a)
 
         new_course = Course(school=School.objects.get(pk=school), section=a)
         form = CourseForm(request.POST, instance=new_course)
-        form.is_valid()
+        if form.is_valid():
+            form.save()
 
 
 
