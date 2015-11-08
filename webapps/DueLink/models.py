@@ -63,7 +63,6 @@ class DueEvent(models.Model):
         else:
             return 0
 
-
 class Task(models.Model):
     deadline = models.ForeignKey(DueEvent, related_name='tasks', on_delete=models.CASCADE)
     finished = models.BooleanField()

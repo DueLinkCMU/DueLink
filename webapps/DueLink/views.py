@@ -54,13 +54,14 @@ def add_course(request):
         return render(request, 'duelink/add_course.html', {'form': form})
 
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        school = request.POST['school']
+        a = request.POST['section']
+        print(a.strlen)
 
-        if form.is_valid() and form.clean_section():
-            form.save()
-            return HttpResponse("add success")
-        else:
-            return HttpResponse("not valid or duplicated section")
+        new_course = Course(school=School.objects.get(pk=school), section=a)
+        form = CourseForm(request.POST, instance=new_course)
+        form.is_valid()
+
 
 
 def add_school(request):
