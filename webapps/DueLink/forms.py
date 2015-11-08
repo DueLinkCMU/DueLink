@@ -21,9 +21,10 @@ class CourseForm(forms.ModelForm):
         model = Course
         exclude = ['students']
 
+
     def clean_section(self):
         cleaned_data = super(CourseForm, self).clean()
-        if Course.objects.filter(course_number=self.cleaned_data['course_number']) > 0:
+        if Course.objects.filter(course_number=self.cleaned_data['course_number']).count() > 0:
             if Course.objects.get(course_number=self.cleaned_data['course_number']).section == \
                     cleaned_data['section']:
                 return False
