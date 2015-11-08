@@ -8,6 +8,7 @@
 
     <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
     <script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+    <script src="{% static 'jquery/jquery-ui.custom.min.js' %}"></script>
     <script src="{% static 'fullcalendar-2.4.0/fullcalendar.min.js' %}"></script>
     <script src="{% static 'js/schedule.js' %}">
 
@@ -23,7 +24,12 @@
 </ul>
 <div>
     <p>Your Calendar</P>
+    <div id='script-warning'>
+		 something wrong.
+	</div>
+    <div id='loading'>loading...</div>
     <div id="calendar"></div>
+
 </div>
 
     <a href='{% url 'logout' %}'>Log out</a>
