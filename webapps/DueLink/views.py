@@ -34,6 +34,15 @@ def get_user_image(request):
 
 
 @login_required
+def get_friend_list(request):
+    context = {}
+    user = request.user
+    friend_list = user.profile_friends.all()
+    context['friend_list'] = friend_list
+    return render(request, 'duelink/friend_list.html', context)
+
+
+@login_required
 def add_deadline(request):
     if request.method == 'GET':
         form = DeadlineForm()
