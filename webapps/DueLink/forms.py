@@ -1,6 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
-from DueLink.models import *
+from models import *
 
 
 class ProfileForm(forms.ModelForm):
@@ -24,7 +23,7 @@ class CourseForm(forms.ModelForm):
         cleaned_data = super(CourseForm, self).clean()
         if Course.objects.filter(course_number=self.cleaned_data['course_number']) > 0:
             if Course.objects.get(course_number=self.cleaned_data['course_number']).section == \
-                    self.cleaned_data['section']:
+                    cleaned_data['section']:
                 return False
 
         return True
@@ -57,7 +56,7 @@ class RegistrationForm(forms.Form):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError("The two passwords doesn't match.")
-        return self.cleaned_data
+        return cleaned_data
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
