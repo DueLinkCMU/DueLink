@@ -1,0 +1,36 @@
+{% extends "dueLink/base.html" %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+    {% for error in profile_form.non_field_errors %}
+        <div class="error">
+            {{ error }}
+        </div>
+    {% endfor %}
+    <form class="div-edit-profile" enctype="multipart/form-data" action="{% url 'edit_profile' %}" method="POST">
+        {% for field in user_form %}
+            <div>
+                {{ field.label }}:
+                {{ field }}
+                <div class="error">
+                    {{ field.errors }}
+                </div>
+            </div>
+        {% endfor %}
+
+        {% for field in profile_form %}
+            <div>
+                {{ field.label }}:
+                {{ field }}
+                <div class="error">
+                    {{ field.errors }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-block btn-default">Save</button>
+        {% csrf_token %}
+    </form>
+
+    <a href='{% url 'logout' %}'>Log out</a>
+{% endblock %}
