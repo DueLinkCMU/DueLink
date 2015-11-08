@@ -2,12 +2,13 @@
 {% load staticfiles %}
 {% block links %}
     {{ block.super }}
-    <link href="{% static 'fullcalendar-2.4.0/fullcalendar.css' %}" rel='stylesheet' />
-    <link href="{% static 'fullcalendar-2.4.0/fullcalendar.print.css' %}" rel='stylesheet' media='print' />
-    <link href="{% static 'css/schedule.css' %}" rel="stylesheet" />
+    <link href="{% static 'fullcalendar-2.4.0/fullcalendar.css' %}" rel='stylesheet'/>
+    <link href="{% static 'fullcalendar-2.4.0/fullcalendar.print.css' %}" rel='stylesheet' media='print'/>
+    <link href="{% static 'css/schedule.css' %}" rel="stylesheet"/>
 
     <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
     <script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+    <script src="{% static 'jquery/jquery-ui.custom.min.js' %}"></script>
     <script src="{% static 'fullcalendar-2.4.0/fullcalendar.min.js' %}"></script>
     <script src="{% static 'js/schedule.js' %}">
 
@@ -16,15 +17,22 @@
 
 {% block title %}Home{% endblock %}
 {% block content %}
-<ul>
-    <li><a href="#">Deadline</a></li>
-    <li><a href="#">Schedule</a></li>
-    <li><a href="{% url 'friend_list' %}">Friends</a></li>
-</ul>
-<div>
-    <p>Your Calendar</P>
-    <div id="calendar"></div>
-</div>
+
+    <ul>
+        <li><a href="#">Schedule</a></li>
+        <li><a href="{% url 'profile' user.id %}">Deadlines</a></li>
+        <li><a href="{% url 'friend_list' %}">Friends</a></li>
+        <li><a href="{% url 'friend_stream' %}">Friend Stream</a></li>
+    </ul>
+    <div>
+        <p>Your Calendar</P>
+        <div id='script-warning'>
+             something wrong.
+        </div>
+        <div id='loading'>loading...</div>
+        <div id="calendar"></div>
+    </div>
+
 
     <a href='{% url 'logout' %}'>Log out</a>
 {% endblock content %}

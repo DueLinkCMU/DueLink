@@ -19,6 +19,18 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__)) + '/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
+#
+MEDIA_ROOT = PROJECT_ROOT + 'media/'
+
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = PROJECT_ROOT + 'static/'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+STATIC_URL = '/static/'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'q!@t!qvbmfq$(!yiok6g*me#tdngn!n&x)ruk83@wt*ap%t+df'
 
@@ -26,7 +38,6 @@ SECRET_KEY = 'q!@t!qvbmfq$(!yiok6g*me#tdngn!n&x)ruk83@wt*ap%t+df'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 

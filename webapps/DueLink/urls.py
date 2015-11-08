@@ -25,19 +25,20 @@ urlpatterns = [
     url(r'^register$', 'DueLink.views.register', name='register'),
 
     url(r'^friend_list$', 'DueLink.views.get_friend_list', name='friend_list'),
+    url(r'^friend_stream', 'DueLink.views.get_friend_stream', name='friend_stream'),
 
-    url(r'^profile/(?P<id>\d+)$', 'DueLink.views.profile', name='profile'),
+    url(r'^profile/(?P<id>\d+)$', 'DueLink.views.get_profile', name='profile'),
 
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
     url(r'^add_deadline$', 'DueLink.views.add_deadline', name='add_deadline'),
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
-
+    url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
 
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
-    # url(r'edit-profile$', 'duelink.views.edit_profile', name='edit_profile'),
+    url(r'edit-profile$', 'DueLink.views.edit_profile', name='edit_profile'),
 
     url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
         {'template_name': 'duelink/password_reset.html',

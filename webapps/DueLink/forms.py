@@ -6,21 +6,20 @@ from django.forms.extras.widgets import SelectDateWidget
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['nick_name', 'school', 'profile_image']
+        fields = ('nick_name', 'school', 'profile_image')
 
 
 class SchoolForm(forms.ModelForm):
     class Meta:
         model = School
-        fields = ['name']
+        fields = ('name',)
 
 
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        exclude = ['students']
+        exclude = ('students',)
 
-    # return False if same course_number same section
     def clean_section(self):
         cleaned_data = super(CourseForm, self).clean()
         if Course.objects.filter(course_number=cleaned_data['course_number']).count() > 0:
@@ -35,14 +34,14 @@ class CourseForm(forms.ModelForm):
 class DeadlineForm(forms.ModelForm):
     class Meta:
         model = Deadline
-        exclude = ['students']
+        exclude = ('students',)
         widgets = {'due': SelectDateWidget}
 
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        exclude = ['timestamp']
+        exclude = ('timestamp',)
 
 
 class RegistrationForm(forms.Form):
@@ -77,3 +76,15 @@ class RegistrationForm(forms.Form):
         return email
 
         # TODO: clean school
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
+
+
+class EditProfileForm(ProfileForm):
+    class Meta(ProfileForm.Meta):
+        model = Profile
+        fields = ProfileForm.Meta.fields + ('profile_image',)

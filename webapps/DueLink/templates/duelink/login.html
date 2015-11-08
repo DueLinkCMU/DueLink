@@ -1,8 +1,17 @@
 {% extends "dueLink/base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
+
+    {% block error %}
+        {% if error %}
+            <p class="error" style="color:red">
+                Incorrect username and password.
+            </p>
+        {% endif %}
+    {% endblock %}
+
     <form class="" action="{% url 'login' %}" method="POST">
-        <h2 class="">Please sign in</h2>
+        <h2 class="">Please login</h2>
         <input type="text" id="inputUserName" class="" placeholder="Username" name="username" required
                autofocus>
         <input type="password" id="inputPassword" class="" placeholder="Password" name="password" required>
@@ -17,6 +26,5 @@
         <input type="hidden" name="next" value="{{ next }}"/>
         {% csrf_token %}
     </form>
-
     <a href='{% url 'register' %}'>Register</a>
 {% endblock %}
