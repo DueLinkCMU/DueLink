@@ -42,13 +42,15 @@ class Deadline(models.Model):
         return self.course.school + ", " + self.course.course_name + ", " \
                + self.name + " due on " + self.due
 
+
 class DueEvent(models.Model):
-    deadline = models.ForeignKey(Deadline, related_name = 'events')
-    user = models.ForeignKey(User, related_name= 'events')
+    deadline = models.ForeignKey(Deadline, related_name='events')
+    user = models.ForeignKey(User, related_name='events')
     created_time = models.DateTimeField(auto_now_add=True)
 
+
 class Task(models.Model):
-    deadline = models.ForeignKey(DueEvent, related_name= 'tasks')
+    deadline = models.ForeignKey(DueEvent, related_name='tasks')
     status = models.BooleanField()
     description = models.CharField(max_length=100)
     created_time = models.DateTimeField(auto_now_add=True)

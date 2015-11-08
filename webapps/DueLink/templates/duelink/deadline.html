@@ -1,6 +1,5 @@
 {% load staticfiles %}
 
-
 <div class="row" id="deadline">
     <div class="col-md-8">
         <div class="deadline-header">
@@ -12,24 +11,24 @@
             </div>
             <!-- name -->
             <div class="col-md-4">
-                <p><span class="span-username">{{ event.user.first_name }}</span>
+                <p><span class="span-username">{{ due_event.user.first_name }}</span>
             </div>
             <!-- due time -->
             <div class="col-md-6">
-                <p><span class="span-due-time">{{ event.deadline.due }}</span></p>
+                <p><span class="span-due-time">{{ due_event.deadline.due }}</span></p>
             </div>
         </div>
         <!-- end header -->
 
         <div class="deadline-content">
             <div class="div-deadline-course">
-                <p><span class="span-post-text">{{ event.deadline.course }}</span></p>
+                <p><span class="span-post-text">{{ due_event.deadline.course }}</span></p>
             </div>
             <div class="div-deadline-name">
-                <p><span class="span-post-text">{{ event.deadline.name }}</span></p>
+                <p><span class="span-post-text">{{ due_event.deadline.name }}</span></p>
             </div>
             <!--     <div class="div-deadline-status">
-                    <p><span class="span-post-text">{{ task.status }}</span></p>
+            <p><span class="span-post-text">{{ task.status }}</span></p>
                 </div> -->
         </div>
         <!-- end content -->

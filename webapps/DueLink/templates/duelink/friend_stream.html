@@ -1,0 +1,8 @@
+{% extends "dueLink/base.html" %}
+{% block title %}Friend Stream{% endblock %}
+
+{% block content %}
+    {% for deadline in deadlines %}
+            {% include 'duelink/deadline.html' %}
+        {% endfor %}
+{% endblock %}
