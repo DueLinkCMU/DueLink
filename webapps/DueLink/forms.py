@@ -20,15 +20,16 @@ class CourseForm(forms.ModelForm):
         model = Course
         exclude = ['students']
 
-
+    # return False if same course_number same section
     def clean_section(self):
         cleaned_data = super(CourseForm, self).clean()
-        if Course.objects.filter(course_number=self.cleaned_data['course_number']).count() > 0:
-            if Course.objects.get(course_number=self.cleaned_data['course_number']).section == \
-                    cleaned_data['section']:
-                return False
-
-        return True
+        if Course.objects.filter(course_number=cleaned_data['course_number']).count() > 0:
+            courses_same_course_num = Course.objects.filter(course_number=cleaned_data['course_number'])
+            for each in courses_same_course_num:
+                if each.section == cleaned_data['section']:
+                    return False
+        else:
+            return True
 
 
 class DeadlineForm(forms.ModelForm):
