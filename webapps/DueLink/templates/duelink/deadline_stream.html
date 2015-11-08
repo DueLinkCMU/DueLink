@@ -1,8 +1,17 @@
 <!-- template for user's deadlines -->
 {% extends "duelink/base.html" %}
-{% block title %}Deadlines Stream{% endblock %}
+{% block title %}{{ user.username }}'s Deadlines{% endblock %}
 
 {% block content %}
+    {% block error %}
+        {% if errors %}
+            {% for error in errors %}
+                <p class="error" style="color:red">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
 
     {% for event in events %}
         {% include 'duelink/deadline.html' %}

@@ -1,5 +1,9 @@
+from mimetypes import guess_type
+
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden
+from django.core.exceptions import ObjectDoesNotExist
+from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
+    Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
@@ -24,13 +28,28 @@ def home(request):
 
 
 @login_required
-def profile(request):
-    return HttpResponse("This is profile page")
+def get_profile(request):
+    errors = []
+    # Go to the profile page of a user matching the id
+    try:
+        user = User.objects.get(id=id)
+        profile = get_object_or_404(Profile, user=user)
+        events = user.events
+    except ObjectDoesNotExist:
+        errors.append('This user does not exist.')
+        return render(request, 'duelink/deadline_stream.html', errors)
+
+    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors}
+    return render(request, 'duelink/deadline_stream.html', context)
 
 
 @login_required
 def get_user_image(request):
-    return HttpResponse("This is for get user image")
+    profile = get_object_or_404(Profile, user=id)
+    if not profile.profile_image:
+        raise Http404
+    content_type = guess_type(profile.profile_image.name)
+    return HttpResponse(profile.profile_image, content_type=content_type)
 
 
 @login_required

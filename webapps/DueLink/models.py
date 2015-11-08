@@ -52,14 +52,14 @@ class DueEvent(models.Model):
     @property
     def progress(self):
         if self.finished:
-            return 1
+            return 100
         total = self.tasks.all().count()
         if total:
             finished = 0
             for task in self.tasks.all():
                 if task.finished:
                     finished += 1
-            return round(float(finished) / total, 2)
+            return round(float(finished) / total, 2) * 100
         else:
             return 0
 

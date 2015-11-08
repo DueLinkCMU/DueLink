@@ -3,7 +3,7 @@
 <div class="row" id="deadline">
     <div class="col-md-8">
         <div class="deadline-header">
-            <!-- image -->
+            <!-- profile image -->
             <div class="col-md-2">
                 <a href="{% url 'profile' event.user.id %}">
                     <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' post.user.id %}"
@@ -15,20 +15,20 @@
             </div>
             <!-- due time -->
             <div class="col-md-6">
-                <p><span class="span-due-time">{{ due_event.deadline.due }}</span></p>
+                <p><span class="span-due-time">{{ event.deadline.due }}</span></p>
             </div>
         </div>
         <!-- end header -->
 
         <div class="deadline-content">
             <div class="div-deadline-course">
-                <p><span class="span-post-text">{{ due_event.deadline.course }}</span></p>
+                <p><span class="span-post-text">{{ event.deadline.course }}</span></p>
             </div>
             <div class="div-deadline-name">
-                <p><span class="span-post-text">{{ due_event.deadline.name }}</span></p>
+                <p><span class="span-post-text">{{ event.deadline.name }}</span></p>
             </div>
             <div class="div-deadline-status">
-                <p><span class="span-post-text">
+                <p><span class="span-deadline-text">
                     {% if event.finished %}Finished
                     {% else %}In progress
                     {% endif %}
@@ -41,7 +41,7 @@
     <div class="col-md-4">
         <!-- draw a circle -->
         <div class="div-deadline-progress">
-            <p><span class="span-post-text">{{ event.progress }}</span></p>
+            <p><span class="span-post-text">{{ event.progress }}%</span></p>
         </div>
     </div>
 </div>
