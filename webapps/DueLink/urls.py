@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'duelink/login.html'}, name='login'),
     url(r'^register$', 'DueLink.views.register', name='register'),
 
-    #
+    url(r'^friend_list$', 'DueLink.views.get_friend_list', name='friend_list'),
+
     url(r'^profile/(?P<id>\d+)$', 'DueLink.views.profile', name='profile'),
 
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
@@ -33,7 +34,7 @@ urlpatterns = [
     url(r'^add_deadline$', 'DueLink.views.add_deadline', name='add_deadline'),
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
 
-    #
+
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
     # url(r'edit-profile$', 'duelink.views.edit_profile', name='edit_profile'),
