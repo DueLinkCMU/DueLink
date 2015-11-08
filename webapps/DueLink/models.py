@@ -13,7 +13,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile_user')
     nick_name = models.CharField(max_length=20)
     school = models.ForeignKey(School)
-    profile_image = models.ImageField(upload_to='user_images', blank=True)
+    profile_image = models.ImageField(upload_to='user_images', blank=True, default='default_user.jpg')
     friends = models.ManyToManyField(User, related_name='profile_friends')
 
     def __unicode__(self):

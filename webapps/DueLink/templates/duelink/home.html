@@ -17,9 +17,10 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <ul>
-        <li><a href="#">Deadline</a></li>
+        <li><a href="{% url 'profile' user.id %}">Deadlines</a></li>
         <li><a href="#">Schedule</a></li>
         <li><a href="{% url 'friend_list' %}">Friends</a></li>
+        <li><a href="{% url 'friend_stream' %}">Friend Stream</a></li>
     </ul>
     <div>
         <p>Your Calendar</P>

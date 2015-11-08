@@ -2,26 +2,19 @@
 {% block title %}Friend List{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            {% for friend in friend_list %}
-                <div class="row" id="friend-{{ friend.id }}">
-                    <!-- image -->
-                    <div class="col-md-3">
-                        <a href="{% url 'profile' friend.id %}">
-                            <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' friend.id %}"
-                                 data-holder-rendered="true"></a>
-                    </div>
-                    <!-- name -->
-                    <div class="col-md-9">
-                        <p><span class="span-username">{{ friend.nick_name }}</span>
-                    </div>
-                </div>
-            {% endfor %}
+    {% for friend in friend_list %}
+        <div class="row" id="friend-{{ friend.id }}">
+            <!-- image -->
+            <div class="col-md-3">
+                <a href="{% url 'profile' friend.id %}">
+                    <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' friend.id %}"
+                         data-holder-rendered="true"></a>
+            </div>
+            <!-- name -->
+            <div class="col-md-9">
+                <p><span class="span-username">{{ friend.nick_name }}</span>
+            </div>
         </div>
-        <div class="col-md-2"></div>
-    </div>
-
+    {% endfor %}
     <a href='{% url 'logout' %}'>Log out</a>
 {% endblock %}

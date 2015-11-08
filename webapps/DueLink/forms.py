@@ -12,13 +12,13 @@ class ProfileForm(forms.ModelForm):
 class SchoolForm(forms.ModelForm):
     class Meta:
         model = School
-        fields = 'name'
+        fields = ('name',)
 
 
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        exclude = 'students'
+        exclude = ('students',)
 
     def clean_section(self):
         cleaned_data = super(CourseForm, self).clean()
@@ -33,14 +33,14 @@ class CourseForm(forms.ModelForm):
 class DeadlineForm(forms.ModelForm):
     class Meta:
         model = Deadline
-        exclude = 'students'
+        exclude = ('students',)
         widgets = {'due': SelectDateWidget}
 
 
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        exclude = 'timestamp'
+        exclude = ('timestamp',)
 
 
 class RegistrationForm(forms.Form):

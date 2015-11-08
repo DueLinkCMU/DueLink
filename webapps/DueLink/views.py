@@ -1,5 +1,4 @@
 from mimetypes import guess_type
-
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
@@ -28,13 +27,14 @@ def home(request):
 
 
 @login_required
-def get_profile(request):
+def get_profile(request, id):
     errors = []
     # Go to the profile page of a user matching the id
     try:
         user = User.objects.get(id=id)
         profile = get_object_or_404(Profile, user=user)
-        events = user.events
+        events = user.events.all()
+        print profile.user.id
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
@@ -44,7 +44,7 @@ def get_profile(request):
 
 
 @login_required
-def get_user_image(request):
+def get_user_image(request, id):
     profile = get_object_or_404(Profile, user=id)
     if not profile.profile_image:
         raise Http404
@@ -59,6 +59,16 @@ def get_friend_list(request):
     friend_list = user.profile_friends.all()
     context['friend_list'] = friend_list
     return render(request, 'duelink/friend_list.html', context)
+
+
+@login_required
+def get_friend_stream(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    friends = User.objects.filter(profile_friends=profile)
+
+    events = DueEvent.objects.filter(user__in=friends).order_by('deadline__due')
+    return render(request, 'duelink/friend_stream.html', {'events': events})
 
 
 @login_required

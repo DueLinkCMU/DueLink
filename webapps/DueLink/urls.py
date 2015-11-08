@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^register$', 'DueLink.views.register', name='register'),
 
     url(r'^friend_list$', 'DueLink.views.get_friend_list', name='friend_list'),
+    url(r'^friend_stream', 'DueLink.views.get_friend_stream', name='friend_stream'),
 
     url(r'^profile/(?P<id>\d+)$', 'DueLink.views.get_profile', name='profile'),
 
