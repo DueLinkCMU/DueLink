@@ -72,17 +72,38 @@ def get_friend_stream(request):
 
 
 @login_required
-def add_deadline(request):
+def add_event(request):
     if request.method == 'GET':
-        form = DeadlineForm()
-        return render(request, 'duelink/add_deadline.html', {'form': form})
+        form = AddEventForm()
+        return render(request, 'duelink/add_event.html', {'form': form})
 
     if request.method == 'POST':
-        form = DeadlineForm(request.POST)
+        form = AddEventForm(request.POST)
         if form.is_valid():
-            form.save()
+            cleaned_data = form.cleaned_data
+            name = cleaned_data['name']
+            due = cleaned_data['due']
+            student = request.user
+            # Use course pk to get course
+
+            course_pk = cleaned_data['course']
+            deadline = Deadline.objects.get(course=course_pk, due=due)
+            # Check if the deadline exists. If not, add deadline first
+            if not deadline:
+                deadline = add_deadline(name, due, course_pk)
+
+            # Then add the student to that deadline
+            deadline.students.add(student)
+            return redirect('home')
         else:
-            return HttpResponse("Add deadline fail")
+            return render(request, 'duelink/add_event.html', {'form': form})
+
+
+@login_required
+def add_deadline(name, due, course_pk):
+    new_deadline = Deadline.objects.create(name=name, due=due, course=course_pk)
+    new_deadline.save()
+    return new_deadline
 
 
 @login_required
