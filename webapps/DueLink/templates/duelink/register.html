@@ -9,8 +9,7 @@
         <input type="submit">
     </form>
 
-    {% block log_out %}
-        <a href='{% url 'login' %}'>Log in</a>
-    {% endblock %}
-
 {% endblock content %}
+{% block log_out %}
+    <a href='{% url 'login' %}'>Log in</a>
+{% endblock %}
