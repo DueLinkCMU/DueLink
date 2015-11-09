@@ -73,32 +73,59 @@ def get_friend_stream(request):
 
 
 @login_required
-def add_deadline(request):
+def add_event(request):
     if request.method == 'GET':
-        form = DeadlineForm()
-        return render(request, 'duelink/add_deadline.html', {'form': form})
+        form = AddEventForm()
+        return render(request, 'duelink/add_event.html', {'form': form})
 
     if request.method == 'POST':
-        print("gotcha")
-        time = request.POST['deadline_time']
-        date = request.POST['deadline_date']
-        course = request.POST['deadline_course']
-        name = request.POST['deadline_name']
-        date_time = date + " " + time
+        form = AddEventForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            name = cleaned_data['name']
+            due = cleaned_data['due']
+            student = request.user
+            # Use course pk to get course
 
-        dt = datetime.strptime(date_time, "%m/%d/%Y %H:%M")
+            course_pk = cleaned_data['course']
+            deadline = Deadline.objects.get(course=course_pk, due=due)
+            # Check if the deadline exists. If not, add deadline first
+            if not deadline:
+                deadline = add_deadline(name, due, course_pk)
 
-        new_deadline = Deadline(due=dt, course=Course.objects.get(pk=course), name=name)
-        new_deadline.save()
+            # Then add the student to that deadline
+            deadline.students.add(student)
+            return redirect('home')
+        else:
+            return render(request, 'duelink/add_event.html', {'form': form})
 
-        return HttpResponse("Add course success")
 
-        # form = DeadlineForm(request.POST, instance=new_deadline)
-        # print(form.errors)
-        # if form.is_valid():
-        #     form.save()
-        # else:
-        #     return HttpResponseForbidden("Add deadline fail")
+@login_required
+def add_deadline(name, due, course_pk):
+    new_deadline = Deadline.objects.create(name=name, due=due, course=course_pk)
+    new_deadline.save()
+    return new_deadline
+
+    # print("gotcha")
+    # time = request.POST['deadline_time']
+    # date = request.POST['deadline_date']
+    # course = request.POST['deadline_course']
+    # name = request.POST['deadline_name']
+    # date_time = date + " " + time
+
+    # dt = datetime.strptime(date_time, "%m/%d/%Y %H:%M")
+
+    # new_deadline = Deadline(due=dt, course=Course.objects.get(pk=course), name=name)
+    # new_deadline.save()
+
+    # return HttpResponse("Add course success")
+
+    # form = DeadlineForm(request.POST, instance=new_deadline)
+    # print(form.errors)
+    # if form.is_valid():
+    #     form.save()
+    # else:
+    #     return HttpResponseForbidden("Add deadline fail")
 
 
 @login_required
@@ -114,6 +141,7 @@ def add_course(request):
             return HttpResponse("success")
         else:
             return HttpResponse("Error:" + form.errors)
+
 
 def add_school(request):
     if request.method == 'GET':
