@@ -110,22 +110,55 @@ def add_deadline(request, name, due, course_pk):
     return new_deadline
 
 
+@transaction.atomic
 @login_required
 def add_task(request, deadline_id=None):
+    deadline = get_object_or_404(DueEvent, id=deadline_id)
     if request.method == 'GET':
         form = TaskForm()
-        return render(request, 'duelink/add_task.html', {'form': form})
+        return render(request, 'duelink/add_task.html', {'task_form': form, 'deadline_id': deadline_id})
 
     if request.method == 'POST':
-        form = TaskForm()
+        form = TaskForm(request.POST)
         if not deadline_id:
             return Http404
         if form.is_valid():
-            # deadline = Deadline.objects.get(id=deadline_id)
+            task = form.save(commit=False)
+            task.deadline = deadline
+            task.save()
+            return HttpResponse("success")
+        else:
+            print form
+            return HttpResponse("Error:" + form.__str__())
+    return Http404
+
+
+@login_required
+def get_tasks(request, deadline_id=None):
+    deadline = get_object_or_404(DueEvent, id=deadline_id)
+    if request.method == 'GET':
+        tasks = deadline.tasks.all()
+        task_forms = []
+        for task in tasks:
+            task_forms.append(TaskForm(task))
+        return render(request, 'duelink/tasks.html', {'tasks'})
+
+
+@login_required
+@transaction.atomic
+def update_task(request, task_id=None):
+    if request.method == 'GET':
+        return Http404
+
+    if request.method == 'POST':
+        task = get_object_or_404(Task, task_id)
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
             form.save()
             return HttpResponse("success")
         else:
-            return HttpResponse("Error:" + form.errors)
+            print form
+            return HttpResponse("Error" + form.__str__())
 
 
 @login_required
@@ -220,3 +253,10 @@ def edit_profile(request):
     profile_form.save()
 
     return redirect('profile', user.id)
+
+
+@login_required
+def display_tasks(request, deadline_id):
+    tasks = Task.objects.filter(deadline=deadline_id)
+    context = {tasks}
+    return render(request, 'duelink/tasks.html', context)

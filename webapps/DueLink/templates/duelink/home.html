@@ -26,14 +26,15 @@
         <li><a href="{% url 'friend_stream' %}">Friend Stream</a></li>
     </ul>
     <div>
+        <a href="{% url 'add_event' %}">Add Due</a>
+        <a href='{% url 'logout' %}'>Log out</a>
         <p>Your Calendar</P>
         <div id='script-warning'>
-             something wrong.
+            error occurs when loading events.
         </div>
         <div id='loading'>loading...</div>
         <div id="calendar"></div>
     </div>
 
 
-    <a href='{% url 'logout' %}'>Log out</a>
 {% endblock content %}

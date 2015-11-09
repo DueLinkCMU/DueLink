@@ -41,10 +41,22 @@ class DeadlineForm(forms.ModelForm):
         widgets = {'due': SelectDateWidget}
 
 
+# class TaskForm(forms.ModelForm):
+#     class Meta:
+#         model = Task
+#         fields = ('finished',)
+#         widgets = {'finished': forms.Select}
+#
+
 class TaskForm(forms.ModelForm):
+    finished = forms.TypedChoiceField(coerce=lambda x: bool(int(x)),
+                                      choices=((0, 'Unfinished'), (1, 'Finished')),
+                                      widget=forms.Select
+                                      )
+
     class Meta:
         model = Task
-        exclude = ('timestamp',)
+        fields = ('finished',)
 
 
 class RegistrationForm(forms.Form):
@@ -116,7 +128,7 @@ class AddEventForm(forms.Form):
         except Exception as e:
             print ("Exception" + str(e))
             raise forms.ValidationError("Datetime unexpected errors")
-    #
+
         return due_datetime
 
     def clean_deadline(self, request):

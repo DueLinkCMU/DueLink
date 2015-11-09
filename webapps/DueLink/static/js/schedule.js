@@ -49,13 +49,7 @@ function get_schedule(callback){
 }
 
 function convertUTCDateToLocalDate(str) {
-    //refer to http://stackoverflow.com/questions/10181649/convert-iso-timestamp-to-date-format-with-javascript
     date = new Date(str);
-    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
-
-    var offset = date.getTimezoneOffset() / 60;
-    var hours = date.getHours();
-
-    newDate.setHours(hours - offset);
-    return newDate.toISOString();
+    return date.toLocaleString();
 }
+

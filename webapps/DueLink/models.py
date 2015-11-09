@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+# FINISHED_CHOICES = ((False, 'Unfinished'), (True, 'Finished'))
+
 
 class School(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -71,5 +73,5 @@ class Task(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.deadline + ", " + self.finished.__str__() + ", " + self.description + ", " \
+        return self.deadline.deadline.name + ", " + str(self.finished) + ", " + self.description + ", " \
                + self.created_time.__str__()
