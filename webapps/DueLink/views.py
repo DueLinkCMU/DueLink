@@ -32,7 +32,7 @@ def get_profile(request, id):
     errors = []
     # Go to the profile page of a user matching the id
     try:
-        user = get_object_or_404(User, user=id)
+        user = get_object_or_404(User, id=id)
         self = (user == request.user)
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
