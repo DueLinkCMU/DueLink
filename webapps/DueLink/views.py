@@ -79,6 +79,7 @@ def add_event(request):
         return render(request, 'duelink/add_event.html', {'form': form})
 
     if request.method == 'POST':
+        errors = []
         form = AddEventForm(request.POST)
         if form.is_valid():
             cleaned_data = form.cleaned_data
@@ -90,14 +91,21 @@ def add_event(request):
             # Use course pk to get course
 
             course_pk = cleaned_data['course']
-            # deadline = Deadline.objects.get(course=course_pk, due=due_datetime)
-            # Check if the deadline exists. If not, add deadline first
-            if not Deadline.objects.filter(course=course_pk, due=due_datetime).count() > 0:
+            deadline = None
+            deadlines = Deadline.objects.filter(course=course_pk, due=due_datetime)
+            # Check if the deadline exists.
+            if deadline:
+                # If the deadline exists, and the event exists
+                if DueEvent.objects.filter(deadline=deadline, user=student):
+                    errors.append("Event already exists.")
+                    return render(request, 'duelink/add_event.html', {'form': form, 'errors': errors})
+                deadline = deadlines[0]
+            else:
                 deadline = add_deadline(request, name, due_datetime, course_pk)
-                deadline.students.add(student)
-
+            deadline.students.add(student)
             # Then add the student to that deadline
-
+            new_event = DueEvent.objects.create(deadline=deadline, user=student)
+            new_event.save()
             return redirect('home')
         else:
             return render(request, 'duelink/add_event.html', {'form': form})
