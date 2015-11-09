@@ -105,13 +105,13 @@ class AddEventForm(forms.Form):
     def clean_datetime(self):
         date = self.cleaned_data['deadline_date']
         time = self.cleaned_data['deadline_time']
-        date_time = date + " " + time
+        date_time_str = date + " " + time
 
-        due_date = datetime.strptime(date_time, "%m/%d/%Y %H:%M")
+        due_datetime = datetime.strptime(date_time_str, "%m/%d/%Y %H:%M")
         # if due_date > datetime.now():
         #TODO: validation
 
-        return date_time
+        return due_datetime
 
     # def clean_course(self):
     #     course_pk = self.cleaned_data['course']

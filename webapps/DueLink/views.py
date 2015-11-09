@@ -85,26 +85,30 @@ def add_event(request):
             name = cleaned_data['name']
             # due_datetime = cleaned_data['due']
             due_datetime = form.clean_datetime()
+            print(due_datetime)
             student = request.user
             # Use course pk to get course
 
             course_pk = cleaned_data['course']
-            deadline = Deadline.objects.get(course=course_pk, due=due_datetime)
+            # deadline = Deadline.objects.get(course=course_pk, due=due_datetime)
             # Check if the deadline exists. If not, add deadline first
-            if not deadline:
-                deadline = add_deadline(name, due_datetime, course_pk)
+            if not Deadline.objects.filter(course=course_pk, due=due_datetime).count() > 0:
+                deadline = add_deadline(request, name, due_datetime, course_pk)
+                deadline.students.add(student)
 
             # Then add the student to that deadline
-            deadline.students.add(student)
+
             return redirect('home')
         else:
             return render(request, 'duelink/add_event.html', {'form': form})
 
 
 @login_required
-def add_deadline(name, due, course_pk):
+def add_deadline(request, name, due, course_pk):
     new_deadline = Deadline.objects.create(name=name, due=due, course=course_pk)
+    print("step1")
     new_deadline.save()
+    print("step2")
     return new_deadline
 
     # print("gotcha")
