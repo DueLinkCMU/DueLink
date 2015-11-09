@@ -1,10 +1,10 @@
 function convertTextToUTCDate(str) {
     //refer to http://stackoverflow.com/questions/10181649/convert-iso-timestamp-to-date-format-with-javascript
-    date = new Date(str);
-    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+    var input_date = new Date(str);
+    var newDate = new Date(input_date.getTime()+input_date.getTimezoneOffset()*60*1000);
 
-    var offset = date.getTimezoneOffset() / 60;
-    var hours = date.getHours();
+    var offset = input_date.getTimezoneOffset() / 60;
+    var hours = input_date.getHours();
 
     newDate.setHours(hours + offset);
     return newDate.toISOString();
@@ -51,9 +51,8 @@ $(document).ready(function () {
     $('#timePicker').timepicker("setTime", Date.now());
     $('#datePicker').datepicker();
     $('#datePicker').datepicker('update', new Date(Date.now()));
-    $('#testdate').click(get_date);
-    $('#testtime').click(get_time);
-    $('#submit_request').click(send_form);
+    $('#submit_request').click(function() {send_form()});
+    //$('.button').on('click', send_form);
 
   // CSRF set-up copied from Django docs
   function getCookie(name) {
