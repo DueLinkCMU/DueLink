@@ -103,6 +103,7 @@ class AddEventForm(forms.Form):
         return cleaned_data
 
     def clean_datetime(self):
+        #TODO: validation
         date = self.cleaned_data['deadline_date']
         time = self.cleaned_data['deadline_time']
         date_time_str = date + " " + time
@@ -112,6 +113,13 @@ class AddEventForm(forms.Form):
         #TODO: validation
 
         return due_datetime
+
+    def clean_deadline(self):
+        name = cleaned_data['name']
+        # due_datetime = cleaned_data['due']
+        due_datetime = form.clean_datetime()
+
+
 
     # def clean_course(self):
     #     course_pk = self.cleaned_data['course']

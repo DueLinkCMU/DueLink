@@ -108,7 +108,7 @@ def add_event(request):
             new_event.save()
             return redirect('home')
         else:
-            return render(request, 'duelink/add_event.html', {'form': form})
+            return HttpResponseForbidden("Fail to add event")
 
 
 @login_required
