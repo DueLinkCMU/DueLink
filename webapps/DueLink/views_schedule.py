@@ -11,7 +11,8 @@ from models import *
 def get_schedule(request):
     # Display the global posts of all users
     if request.method == 'GET':
-        print "what the hell?"
-        context = {}
-        response = render(request, 'DueLink/schedule.json', context)
+        user = request.user
+        events = user.events.all()
+        context = {"events":events}
+        response = render(request, 'DueLink/schedule.json', context, content_type='application/json')
         return response
