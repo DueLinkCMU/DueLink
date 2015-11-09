@@ -62,9 +62,6 @@ class DueEvent(models.Model):
             return round(float(finished) / total, 2) * 100
         else:
             return 0
-    @property
-    def schedule_json(self):
-        return '{"title":"%s","start":"%s"}' % (self.deadline.name, self.deadline.due.__str__())
 
 class Task(models.Model):
     deadline = models.ForeignKey(DueEvent, related_name='tasks', on_delete=models.CASCADE)
