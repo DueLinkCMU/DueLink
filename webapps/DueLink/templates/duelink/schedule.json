@@ -8,8 +8,4 @@
   {%endspaceless%}
   {% if not forloop.last %},{% endif%}
   {% endfor %}
-  {
-    "title": "All Day Event",
-    "start": "2015-11-08T23:59:59"
-  }
 ]}
