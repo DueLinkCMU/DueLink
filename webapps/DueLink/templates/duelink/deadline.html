@@ -2,25 +2,37 @@
 
 <div class="row" id="deadline">
     <div class="col-md-8">
-        <div class="deadline-header">
-            <!-- profile image -->
-            <div class="col-md-2">
-                <a href="{% url 'profile' event.user.id %}">
-                    <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' event.user.id %}"
-                         data-holder-rendered="true"></a>
+        {% if not profile_page %}
+            <div class="deadline-header">
+                <!-- profile image -->
+                <div class="col-md-2">
+                    <a href="{% url 'profile' event.user.id %}">
+                        <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' event.user.id %}"
+                             data-holder-rendered="true"></a>
+                </div>
+                <!-- name -->
+                <div class="col-md-4">
+                    <p><span class="span-username">{{ event.user.nick_name }}</span>
+                </div>
+                <!-- due time -->
+                <div class="col-md-6">
+                    <p><span class="span-due-time">{{ event.deadline.due }}</span></p>
+                </div>
             </div>
-            <!-- name -->
-            <div class="col-md-4">
-                <p><span class="span-username">{{ event.user.nick_name }}</span>
-            </div>
-            <!-- due time -->
-            <div class="col-md-6">
-                <p><span class="span-due-time">{{ event.deadline.due }}</span></p>
-            </div>
-        </div>
-        <!-- end header -->
-
+            <!-- end header -->
+        {% endif %}
         <div class="deadline-content">
+            {% if profile_page %}
+
+                <div class="div-deadline-due">
+                    <p><span class="span-due-time">{{ event.deadline.due }}
+                        {% if self %}
+                            <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">+</button>
+                        {% endif %}
+                    </span></p>
+                </div>
+
+            {% endif %}
             <div class="div-deadline-course">
                 <p><span class="span-post-text">{{ event.deadline.course }}</span></p>
             </div>
