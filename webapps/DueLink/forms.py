@@ -42,7 +42,8 @@ class DeadlineForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        exclude = ('timestamp',)
+        exclude = ('created_time','deadline')
+
 
 
 class RegistrationForm(forms.Form):

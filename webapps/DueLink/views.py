@@ -148,20 +148,23 @@ def add_deadline(request, name, due, course_pk):
 
 @login_required
 def add_task(request, deadline_id=None):
+    deadline = get_object_or_404(DueEvent,id=deadline_id)
     if request.method == 'GET':
         form = TaskForm()
-        return render(request, 'duelink/add_task.html', {'form': form})
+        return render(request, 'duelink/add_task.html', {'task_form': form,'deadline_id': deadline_id})
 
     if request.method == 'POST':
-        form = TaskForm()
+        form = TaskForm(request.POST)
         if not deadline_id:
             return Http404
         if form.is_valid():
-            # deadline = Deadline.objects.get(id=deadline_id)
-            form.save()
+            task = form.save(commit = False)
+            task.deadline = deadline
+            task.save()
             return HttpResponse("success")
         else:
-            return HttpResponse("Error:" + form.errors)
+            print form
+            return HttpResponse("Error:" + form.__str__())
 
 
 @login_required
