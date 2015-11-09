@@ -111,27 +111,6 @@ def add_deadline(request, name, due, course_pk):
     print("step2")
     return new_deadline
 
-    # print("gotcha")
-    # time = request.POST['deadline_time']
-    # date = request.POST['deadline_date']
-    # course = request.POST['deadline_course']
-    # name = request.POST['deadline_name']
-    # date_time = date + " " + time
-
-    # dt = datetime.strptime(date_time, "%m/%d/%Y %H:%M")
-
-    # new_deadline = Deadline(due=dt, course=Course.objects.get(pk=course), name=name)
-    # new_deadline.save()
-
-    # return HttpResponse("Add course success")
-
-    # form = DeadlineForm(request.POST, instance=new_deadline)
-    # print(form.errors)
-    # if form.is_valid():
-    #     form.save()
-    # else:
-    #     return HttpResponseForbidden("Add deadline fail")
-
 
 @login_required
 def add_course(request):
