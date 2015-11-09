@@ -2,7 +2,13 @@
 {% block title %}Add Task{% endblock title %}
 
 {% block content%}
-
+    <form action="{% url 'add_task' deadline.id %}" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form }}
+        </table>
+        <input type="submit" value="Add">
+    </form>
 
 <a href='{% url 'logout' %}'>Log out</a>
 
