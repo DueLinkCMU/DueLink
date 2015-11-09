@@ -1,27 +1,4 @@
-
-
-
-function date_time() {
-    var list = $("#todo-list")
-    var max_entry = list.data("max-entry")
-    $.get("shared-todo-list/get-changes/"+ max_entry)
-      .done(function(data) {
-          list.data('max-entry', data['max-entry']);
-          for (var i = 0; i < data.items.length; i++) {
-              var item = data.items[i];
-              if (item.deleted) {
-                  $("#item_" + item.id).remove();
-              } else {
-                  var new_item = $(item.html);
-                  new_item.data("item-id", item.id);
-                  list.append(new_item);
-              }
-          }
-      });
-}
-
 function get_date() {
-    console.log("ok");
     var dl_date = $("#datePicker");
     return dl_date.val();
 }
@@ -51,7 +28,6 @@ function send_form() {
             console.log("fail");
         });
 }
-
 
 
 $(document).ready(function () {

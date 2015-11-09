@@ -1,27 +1,4 @@
-
-
-
-function date_time() {
-    var list = $("#todo-list")
-    var max_entry = list.data("max-entry")
-    $.get("shared-todo-list/get-changes/"+ max_entry)
-      .done(function(data) {
-          list.data('max-entry', data['max-entry']);
-          for (var i = 0; i < data.items.length; i++) {
-              var item = data.items[i];
-              if (item.deleted) {
-                  $("#item_" + item.id).remove();
-              } else {
-                  var new_item = $(item.html);
-                  new_item.data("item-id", item.id);
-                  list.append(new_item);
-              }
-          }
-      });
-}
-
 function get_date() {
-    console.log("ok");
     var dl_date = $("#datePicker");
     return dl_date.val();
 }
@@ -43,7 +20,7 @@ function send_form() {
     console.log(dl_name);
     console.log(dl_course);
 
-    $.post("add_deadline", {deadline_date: dl_date, deadline_time: dl_time, deadline_name: dl_name, deadline_course: dl_course})
+    $.post("add_event", {deadline_date: dl_date, deadline_time: dl_time, name: dl_name, course: dl_course})
         .done(function() {
             alert("success");
         })

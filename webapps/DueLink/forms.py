@@ -91,24 +91,13 @@ class EditProfileForm(ProfileForm):
         fields = ProfileForm.Meta.fields + ('profile_image',)
 
 class AddEventForm(forms.Form):
-    # deadline = models.ForeignKey(Deadline, related_name='events', on_delete=models.CASCADE)
-    # user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
-    # created_time = models.DateTimeField(auto_now_add=True)
-    # finished = models.BooleanField(default=False)
-
-    #     name = models.CharField(max_length=20)
-    # due = models.DateTimeField()
-    # course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    # students = models.ManyToManyField(User)
-
-    # For deadline
     name = forms.CharField(max_length=20, label='name')
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     # due = forms.DateTimeField() # TODO: format
+
     deadline_date = forms.CharField(max_length=30)
     deadline_time = forms.CharField(max_length=30)
 
-    #clean: deadline exist/ datetime
     def clean(self):
         cleaned_data = super(AddEventForm, self).clean()
         return cleaned_data

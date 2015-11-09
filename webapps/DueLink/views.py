@@ -83,15 +83,16 @@ def add_event(request):
         if form.is_valid():
             cleaned_data = form.cleaned_data
             name = cleaned_data['name']
-            due = cleaned_data['due']
+            # due_datetime = cleaned_data['due']
+            due_datetime = form.clean_datetime()
             student = request.user
             # Use course pk to get course
 
             course_pk = cleaned_data['course']
-            deadline = Deadline.objects.get(course=course_pk, due=due)
+            deadline = Deadline.objects.get(course=course_pk, due=due_datetime)
             # Check if the deadline exists. If not, add deadline first
             if not deadline:
-                deadline = add_deadline(name, due, course_pk)
+                deadline = add_deadline(name, due_datetime, course_pk)
 
             # Then add the student to that deadline
             deadline.students.add(student)
