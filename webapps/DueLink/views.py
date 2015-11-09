@@ -33,6 +33,8 @@ def get_profile(request, id):
     # Go to the profile page of a user matching the id
     try:
         user = User.objects.get(id=id)
+        self = (user == request.user)
+        profile_page = True
         profile = get_object_or_404(Profile, user=user)
         events = user.events.all()
         print profile.user.id
@@ -40,7 +42,8 @@ def get_profile(request, id):
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
 
-    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors}
+    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
+               'self': self}
     return render(request, 'duelink/deadline_stream.html', context)
 
 
@@ -67,9 +70,11 @@ def get_friend_stream(request):
     user = request.user
     profile = Profile.objects.get(user=user)
     friends = User.objects.filter(profile_friends=profile)
-
-    events = DueEvent.objects.filter(user__in=friends).order_by('deadline__due')
-    return render(request, 'duelink/friend_stream.html', {'events': events})
+    profile_page = False
+    self = False
+    events = DueEvent.objects.filter(user__in=friends).order_by('-deadline__due')
+    context = {'events': events, 'profile_page': profile_page, 'self': self}
+    return render(request, 'duelink/friend_stream.html', context)
 
 
 @login_required
@@ -118,6 +123,24 @@ def add_deadline(request, name, due, course_pk):
     new_deadline.save()
     print("step2")
     return new_deadline
+
+
+@login_required
+def add_task(request, deadline_id=None):
+    if request.method == 'GET':
+        form = TaskForm()
+        return render(request, 'duelink/add_task.html', {'form': form})
+
+    if request.method == 'POST':
+        form = TaskForm()
+        if not deadline_id:
+            return Http404
+        if form.is_valid():
+            # deadline = Deadline.objects.get(id=deadline_id)
+            form.save()
+            return HttpResponse("success")
+        else:
+            return HttpResponse("Error:" + form.errors)
 
 
 @login_required
