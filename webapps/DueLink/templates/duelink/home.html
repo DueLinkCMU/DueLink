@@ -1,0 +1,40 @@
+{% extends "dueLink/base.html" %}
+{% load staticfiles %}
+{% block links %}
+    {{ block.super }}
+
+
+    <link href="{% static 'fullcalendar-2.4.0/fullcalendar.css' %}" rel='stylesheet'/>
+    <link href="{% static 'fullcalendar-2.4.0/fullcalendar.print.css' %}" rel='stylesheet' media='print'/>
+    <link href="{% static 'css/schedule.css' %}" rel="stylesheet"/>
+
+
+    <script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+    <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
+    <script src="{% static 'fullcalendar-2.4.0/fullcalendar.min.js' %}"></script>
+    <script src="{% static 'js/schedule.js' %}"></script>
+
+{% endblock links %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+
+    <ul>
+        <li><a href="#">Schedule</a></li>
+        <li><a href="{% url 'profile' user.id %}">Deadlines</a></li>
+        <li><a href="{% url 'friend_list' %}">Friends</a></li>
+        <li><a href="{% url 'friend_stream' %}">Friend Stream</a></li>
+    </ul>
+    <div>
+        <a href="{% url 'add_event' %}">Add Due</a>
+        <a href='{% url 'logout' %}'>Log out</a>
+        <p>Your Calendar</P>
+        <div id='script-warning'>
+            error occurs when loading events.
+        </div>
+        <div id='loading'>loading...</div>
+        <div id="calendar"></div>
+    </div>
+
+
+{% endblock content %}

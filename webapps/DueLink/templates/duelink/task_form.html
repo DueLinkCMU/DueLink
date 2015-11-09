@@ -1,0 +1,22 @@
+<form id='task_form_{{ task.id }}' action="{% url 'update_task' task.id %}" method="POST">
+    {% for error in task_form.non_field_errors %}
+        <div style='color: red'>
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    <p>{{ task.description }}</p>
+    <div class='form-group'>
+        {{ task_form.finished }}
+    </div>
+
+    {% if task_form.finished.errors %}
+        <div style="color:red">{{ task_form.finished.errors }}</div>
+    {% endif %}
+
+    <div class="form-group">
+        <input type="submit" class="" value="Set"/>
+    </div>
+    {% csrf_token %}
+
+</form>

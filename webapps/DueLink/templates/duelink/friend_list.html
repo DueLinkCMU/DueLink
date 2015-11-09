@@ -1,0 +1,20 @@
+{% extends "dueLink/base.html" %}
+{% block title %}Friend List{% endblock %}
+
+{% block content %}
+    {% for friend in friend_list %}
+        <div class="row" id="friend-{{ friend.id }}">
+            <!-- image -->
+            <div class="col-md-3">
+                <a href="{% url 'profile' friend.id %}">
+                    <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' friend.id %}"
+                         data-holder-rendered="true"></a>
+            </div>
+            <!-- name -->
+            <div class="col-md-9">
+                <p><span class="span-username">{{ friend.nick_name }}</span>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

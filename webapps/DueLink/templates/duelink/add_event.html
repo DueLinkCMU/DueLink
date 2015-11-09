@@ -1,0 +1,33 @@
+{% extends "duelink/base.html" %}
+{% load staticfiles %}
+{% block links %}
+
+<script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+<script src="{% static 'jquery/jquery.timepicker.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'js/add_event.js' %}"></script>
+<link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
+<link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
+
+{% endblock links %}
+{% block title %}Add Event{% endblock title %}
+{% block content%}
+<h3>Add Event</h3>
+
+<form method="POST" action="{% url 'add_event' %}">
+    <table>
+        {{form}}
+    </table>
+</form>
+
+<div class="demo">
+    <label ><b>Select date:</b></label>
+    <!--<input id="timePicker">-->
+    <input id="timePicker" type="text" data-time-format="H:i" />
+    <input id="datePicker">
+
+</div>
+
+<button id="submit_request">submit request</button>
+
+{% endblock content%}

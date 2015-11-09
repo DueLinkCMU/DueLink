@@ -15,9 +15,21 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__)) + '/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+
+#
+MEDIA_ROOT = PROJECT_ROOT + 'media/'
+
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = PROJECT_ROOT + 'static/'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+STATIC_URL = '/static/'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'q!@t!qvbmfq$(!yiok6g*me#tdngn!n&x)ruk83@wt*ap%t+df'
@@ -26,7 +38,6 @@ SECRET_KEY = 'q!@t!qvbmfq$(!yiok6g*me#tdngn!n&x)ruk83@wt*ap%t+df'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -37,6 +48,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'DueLink',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,6 +63,11 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'webapps.urls'
+# URL to use if the authentication system requires a user to log in.
+LOGIN_URL = '/duelink/login'
+
+# Default URL to redirect to after a user logs in.
+LOGIN_REDIRECT_URL = '/duelink/'
 
 TEMPLATES = [
     {
@@ -98,5 +115,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+STATIC_ROOT = PROJECT_ROOT + 'static/'
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = PROJECT_ROOT + 'media/'
+
+MEDIA_URL = PROJECT_ROOT + '/media/'
+

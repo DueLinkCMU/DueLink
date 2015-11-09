@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block links %}
+    {% endblock links %}
+    <meta charset="UTF-8">
+    <title>{% block title %}base{% endblock %}</title>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-2" id="left-margin"></div>
+    <div class="col-md-8" id="middle">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <div class="col-md-2" id="right-margin"></div>
+</div>
+{% block log_out %}
+    <a href='{% url 'logout' %}'>Log out</a>
+{% endblock %}
+</body>
+</html>
