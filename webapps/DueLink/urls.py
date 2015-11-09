@@ -32,11 +32,11 @@ urlpatterns = [
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     url(r'^add_event$', 'DueLink.views.add_event', name='add_event'),
-    url(r'^add_task/(?P<deadline_id>\d+)$', 'DueLink.views.add_task', name='add_task'),
+    url(r'^add_task/(?P<event_id>\d+)$', 'DueLink.views.add_task', name='add_task'),
 
-    url(r'^tasks/(?P<deadline_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
+    url(r'^tasks/(?P<event_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
 
-    url(r'^get_tasks/(?P<deadline_id>\d+)$', 'DueLink.views.get_tasks', name='get_tasks'),
+    url(r'^get_tasks/(?P<event_id>\d+)$', 'DueLink.views.get_tasks', name='get_tasks'),
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
 
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),

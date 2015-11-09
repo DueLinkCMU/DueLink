@@ -112,21 +112,21 @@ def add_deadline(request, name, due, course_pk):
 
 @transaction.atomic
 @login_required
-def add_task(request, deadline_id=None):
-    deadline = get_object_or_404(DueEvent, id=deadline_id)
+def add_task(request, event_id=None):
+    event = get_object_or_404(DueEvent, id=event_id)
     if request.method == 'GET':
         form = TaskForm()
-        return render(request, 'duelink/add_task.html', {'task_form': form, 'deadline_id': deadline_id})
+        return render(request, 'duelink/add_task.html', {'task_form': form, 'event_id': event_id})
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
-        if not deadline_id:
+        if not event_id:
             return Http404
         if form.is_valid():
             task = form.save(commit=False)
-            task.deadline = deadline
+            task.event = event
             task.save()
-            # return HttpResponseRedirect('tasks', deadline_id)
+            # return HttpResponseRedirect('tasks', event_id)
             # return redirect('profile', request.user.id)
             return HttpResponse("Success")
         else:
@@ -136,14 +136,14 @@ def add_task(request, deadline_id=None):
 
 
 @login_required
-def get_tasks(request, deadline_id=None):
-    deadline = get_object_or_404(DueEvent, id=deadline_id)
+def get_tasks(request, event_id=None):
+    event = get_object_or_404(DueEvent, id=event_id)
     if request.method == 'GET':
-        tasks = deadline.tasks.all()
+        tasks = event.tasks.all()
         task_forms = []
         for task in tasks:
             task_forms.append(TaskForm(task))
-        return render(request, 'duelink/tasks.html', {'tasks'})
+        return render(request, 'duelink/tasks.html', {'tasks': tasks})
 
 
 @login_required
@@ -258,7 +258,7 @@ def edit_profile(request):
 
 
 @login_required
-def display_tasks(request, deadline_id):
-    tasks = Task.objects.filter(deadline=deadline_id)
+def display_tasks(request, event_id):
+    tasks = Task.objects.filter(event=event_id)
     context = {tasks}
     return render(request, 'duelink/tasks.html', context)

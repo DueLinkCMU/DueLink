@@ -67,7 +67,7 @@ class DueEvent(models.Model):
 
 
 class Task(models.Model):
-    deadline = models.ForeignKey(DueEvent, related_name='tasks', on_delete=models.CASCADE)
+    event = models.ForeignKey(DueEvent, related_name='tasks', on_delete=models.CASCADE)
     finished = models.BooleanField(default=False)
     description = models.CharField(max_length=100)
     created_time = models.DateTimeField(auto_now_add=True)

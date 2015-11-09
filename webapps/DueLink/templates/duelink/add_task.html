@@ -2,7 +2,7 @@
 {% block title %}Add Task{% endblock title %}
 
 {% block content%}
-    <form action="{% url 'add_task' deadline_id %}" method="post">
+    <form action="{% url 'add_task' event_id %}" method="post">
         <table>{{ task_form }}</table>
         <button>Add</button>
     {% csrf_token %}
