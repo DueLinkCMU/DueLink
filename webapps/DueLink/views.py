@@ -148,17 +148,17 @@ def add_deadline(request, name, due, course_pk):
 
 @login_required
 def add_task(request, deadline_id=None):
-    deadline = get_object_or_404(DueEvent,id=deadline_id)
+    deadline = get_object_or_404(DueEvent, id=deadline_id)
     if request.method == 'GET':
         form = TaskForm()
-        return render(request, 'duelink/add_task.html', {'task_form': form,'deadline_id': deadline_id})
+        return render(request, 'duelink/add_task.html', {'task_form': form, 'deadline_id': deadline_id})
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if not deadline_id:
             return Http404
         if form.is_valid():
-            task = form.save(commit = False)
+            task = form.save(commit=False)
             task.deadline = deadline
             task.save()
             return HttpResponse("success")
@@ -259,3 +259,10 @@ def edit_profile(request):
     profile_form.save()
 
     return redirect('profile', user.id)
+
+
+@login_required
+def display_tasks(request, deadline_id):
+    tasks = Task.objects.filter(deadline=deadline_id)
+    context = {tasks}
+    return render(request, 'duelink/tasks.html', context)
