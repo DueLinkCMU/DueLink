@@ -48,15 +48,21 @@ class DeadlineForm(forms.ModelForm):
 #         widgets = {'finished': forms.Select}
 #
 
-class TaskForm(forms.ModelForm):
+class UpdateTaskForm(forms.ModelForm):
     finished = forms.TypedChoiceField(coerce=lambda x: bool(int(x)),
                                       choices=((0, 'Unfinished'), (1, 'Finished')),
-                                      widget=forms.Select
+                                      widget=forms.Select()
                                       )
 
     class Meta:
         model = Task
         fields = ('finished',)
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ('description',)
 
 
 class RegistrationForm(forms.Form):
