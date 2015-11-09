@@ -6,6 +6,7 @@ from django.http.response import HttpResponse, HttpResponseNotFound, HttpRespons
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
@@ -105,6 +106,27 @@ def add_deadline(name, due, course_pk):
     new_deadline.save()
     return new_deadline
 
+    # print("gotcha")
+    # time = request.POST['deadline_time']
+    # date = request.POST['deadline_date']
+    # course = request.POST['deadline_course']
+    # name = request.POST['deadline_name']
+    # date_time = date + " " + time
+
+    # dt = datetime.strptime(date_time, "%m/%d/%Y %H:%M")
+
+    # new_deadline = Deadline(due=dt, course=Course.objects.get(pk=course), name=name)
+    # new_deadline.save()
+
+    # return HttpResponse("Add course success")
+
+    # form = DeadlineForm(request.POST, instance=new_deadline)
+    # print(form.errors)
+    # if form.is_valid():
+    #     form.save()
+    # else:
+    #     return HttpResponseForbidden("Add deadline fail")
+
 
 @login_required
 def add_course(request):
@@ -113,14 +135,12 @@ def add_course(request):
         return render(request, 'duelink/add_course.html', {'form': form})
 
     if request.method == 'POST':
-        school = request.POST['school']
-        a = request.POST['section']
-        print(a)
-
-        new_course = Course(school=School.objects.get(pk=school), section=a)
-        form = CourseForm(request.POST, instance=new_course)
-        if form.is_valid():
+        form = CourseForm(request.POST)
+        if form.is_valid():  # Validate input data & duplicate course sections
             form.save()
+            return HttpResponse("success")
+        else:
+            return HttpResponse("Error:" + form.errors)
 
 
 def add_school(request):
