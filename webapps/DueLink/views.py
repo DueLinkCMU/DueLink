@@ -42,8 +42,12 @@ def get_profile(request, id):
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
 
+    profile_me = get_object_or_404(Profile, user = request.user)
+    linked = profile_me.friends.filter(id = id).exists()
+
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self}
+               'self': self, 'user_id':id, 'linked':linked}
+
     return render(request, 'duelink/deadline_stream.html', context)
 
 
@@ -140,20 +144,19 @@ def get_tasks(request, event_id=None):
     event = get_object_or_404(DueEvent, id=event_id)
     if request.method == 'GET':
         tasks = event.tasks.all()
-        task_forms = []
-        for task in tasks:
-            task_forms.append(TaskForm(task))
-        return render(request, 'duelink/tasks.html', {'tasks': tasks})
+        return render(request, 'duelink/tasks.html', {'tasks': tasks,'event':event})
 
 
 @login_required
 @transaction.atomic
 def update_task(request, task_id=None):
+    task = get_object_or_404(Task, id=task_id)
     if request.method == 'GET':
-        return Http404
+        return render(request, 'duelink/task_form.html',
+                      {'task_form':UpdateTaskForm(),'task': task})
 
     if request.method == 'POST':
-        task = get_object_or_404(Task, task_id)
+        task = get_object_or_404(Task, id=task_id)
         form = UpdateTaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
@@ -262,3 +265,29 @@ def display_tasks(request, event_id):
     tasks = Task.objects.filter(event=event_id)
     context = {tasks}
     return render(request, 'duelink/tasks.html', context)
+
+@transaction.atomic
+@login_required
+def link(request,user_id):
+    user_ = get_object_or_404(User,id=user_id)
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == "POST":
+        profile.friends.add(user_)
+        profile.save()
+        return HttpResponse("success")
+
+    return Http404
+
+@transaction.atomic
+@login_required
+def unlink(request,user_id):
+    user_ = get_object_or_404(User,id=user_id)
+    profile = get_object_or_404(Profile, user=request.user)
+
+    if request.method == "POST":
+        profile.friends.remove(user_)
+        profile.save()
+        return HttpResponse("success")
+
+    return Http404

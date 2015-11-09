@@ -66,4 +66,6 @@ urlpatterns = [
     url(r'^password_reset_complete$', 'django.contrib.auth.views.password_reset_complete',
         {'template_name': 'duelink/password_reset_complete.html'
          }, name='password_reset_complete'),
+    url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
+    url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink')
 ]
