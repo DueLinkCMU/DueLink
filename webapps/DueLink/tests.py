@@ -16,7 +16,7 @@ class DueLinkModelsTest(TestCase):
 
 
 class DueLinkTest(TestCase):
-    def test_home_page(self):  # Tests that a GET request to /sio/
+    def test_login_page(self):  # Tests that a GET request to /sio/
         client = Client()  # results in an HTTP 200 (OK) response.
-        response = client.get('/duelink/')
+        response = client.get('/duelink/login')
         self.assertEqual(response.status_code, 200)
