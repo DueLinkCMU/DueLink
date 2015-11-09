@@ -16,5 +16,8 @@
     </div>
     <div class="col-md-2" id="right-margin"></div>
 </div>
+{% block log_out %}
+    <a href='{% url 'logout' %}'>Log out</a>
+{% endblock %}
 </body>
 </html>

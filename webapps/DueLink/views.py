@@ -145,6 +145,7 @@ def add_deadline(request, name, due, course_pk):
     # else:
     #     return HttpResponseForbidden("Add deadline fail")
 
+
 @transaction.atomic
 @login_required
 def add_task(request, deadline_id=None):
@@ -166,15 +167,18 @@ def add_task(request, deadline_id=None):
             print form
             return HttpResponse("Error:" + form.__str__())
     return Http404
+
+
 @login_required
-def get_tasks(request,deadline_id=None):
-    deadline = get_object_or_404(DueEvent,id=deadline_id)
+def get_tasks(request, deadline_id=None):
+    deadline = get_object_or_404(DueEvent, id=deadline_id)
     if request.method == 'GET':
         tasks = deadline.tasks.all()
         task_forms = []
         for task in tasks:
             task_forms.append(TaskForm(task))
-        return render(request, 'duelink/tasks.html',{'tasks'})
+        return render(request, 'duelink/tasks.html', {'tasks'})
+
 
 @login_required
 @transaction.atomic
@@ -191,6 +195,7 @@ def update_task(request, task_id=None):
         else:
             print form
             return HttpResponse("Error" + form.__str__())
+
 
 @login_required
 def add_course(request):

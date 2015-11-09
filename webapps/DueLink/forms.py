@@ -39,11 +39,22 @@ class DeadlineForm(forms.ModelForm):
         widgets = {'due': SelectDateWidget}
 
 
+# class TaskForm(forms.ModelForm):
+#     class Meta:
+#         model = Task
+#         fields = ('finished',)
+#         widgets = {'finished': forms.Select}
+#
+
 class TaskForm(forms.ModelForm):
+    finished = forms.TypedChoiceField(coerce=lambda x: bool(int(x)),
+                                      choices=((0, 'Unfinished'), (1, 'Finished')),
+                                      widget=forms.Select
+                                      )
+
     class Meta:
         model = Task
-        exclude = ('created_time','deadline')
-
+        fields = ('finished',)
 
 
 class RegistrationForm(forms.Form):
@@ -91,6 +102,7 @@ class EditProfileForm(ProfileForm):
         model = Profile
         fields = ProfileForm.Meta.fields + ('profile_image',)
 
+
 class AddEventForm(forms.Form):
     name = forms.CharField(max_length=20, label='name')
     course = forms.ModelChoiceField(queryset=Course.objects.all())
@@ -110,19 +122,13 @@ class AddEventForm(forms.Form):
 
         due_datetime = datetime.strptime(date_time_str, "%m/%d/%Y %H:%M")
         # if due_date > datetime.now():
-        #TODO: validation
+        # TODO: validation
 
         return due_datetime
 
-    # def clean_course(self):
-    #     course_pk = self.cleaned_data['course']
-    #     if Course.objects.filter(pk=course_pk).count() == 0:
-    #         return 0
-    #     else: # course more than 1?
-    #         return course_pk
-
-
-
-
-
-
+        # def clean_course(self):
+        #     course_pk = self.cleaned_data['course']
+        #     if Course.objects.filter(pk=course_pk).count() == 0:
+        #         return 0
+        #     else: # course more than 1?
+        #         return course_pk

@@ -3,11 +3,12 @@
     <div>
         {% for task in tasks %}
             <form {% url 'update_task' task_id %}>
-               <table>
-                   {{ task_form }}
-               </table>
-            <button>update</button>
+                <table>
+                    {{ task_form }}
+                </table>
+                <button>update</button>
             </form>
         {% endfor %}
     </div>
+
 {% endblock %}
