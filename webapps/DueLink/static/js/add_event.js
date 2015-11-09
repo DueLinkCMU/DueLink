@@ -20,7 +20,7 @@ function send_form() {
     console.log(dl_name);
     console.log(dl_course);
 
-    $.post("add_deadline", {deadline_date: dl_date, deadline_time: dl_time, deadline_name: dl_name, deadline_course: dl_course})
+    $.post("add_event", {deadline_date: dl_date, deadline_time: dl_time, name: dl_name, course: dl_course})
         .done(function() {
             alert("success");
         })
@@ -28,6 +28,7 @@ function send_form() {
             console.log("fail");
         });
 }
+
 
 
 $(document).ready(function () {

@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from models import *
 from django.forms.extras.widgets import SelectDateWidget
@@ -88,3 +89,39 @@ class EditProfileForm(ProfileForm):
     class Meta(ProfileForm.Meta):
         model = Profile
         fields = ProfileForm.Meta.fields + ('profile_image',)
+
+class AddEventForm(forms.Form):
+    name = forms.CharField(max_length=20, label='name')
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    # due = forms.DateTimeField() # TODO: format
+
+    deadline_date = forms.CharField(max_length=30)
+    deadline_time = forms.CharField(max_length=30)
+
+    def clean(self):
+        cleaned_data = super(AddEventForm, self).clean()
+        return cleaned_data
+
+    def clean_datetime(self):
+        date = self.cleaned_data['deadline_date']
+        time = self.cleaned_data['deadline_time']
+        date_time_str = date + " " + time
+
+        due_datetime = datetime.strptime(date_time_str, "%m/%d/%Y %H:%M")
+        # if due_date > datetime.now():
+        #TODO: validation
+
+        return due_datetime
+
+    # def clean_course(self):
+    #     course_pk = self.cleaned_data['course']
+    #     if Course.objects.filter(pk=course_pk).count() == 0:
+    #         return 0
+    #     else: # course more than 1?
+    #         return course_pk
+
+
+
+
+
+
