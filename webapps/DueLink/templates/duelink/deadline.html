@@ -12,7 +12,7 @@
                 </div>
                 <!-- name -->
                 <div class="col-md-4">
-                    <p><span class="span-username">{{ event.user.nick_name }}</span>
+                    <p><span class="span-username">{{ event.user.profile_user.nick_name }}</span>
                 </div>
                 <!-- due time -->
                 <div class="col-md-6">
@@ -27,6 +27,7 @@
                 <div class="div-deadline-due">
                     <p><span class="span-due-time">{{ event.deadline.due }}
                         {% if self %}
+                            <a href= "{% url 'get_tasks' event.id %}">Show Tasks</a>
                             <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">+</button>
                         {% endif %}
                     </span></p>
