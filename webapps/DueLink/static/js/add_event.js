@@ -1,3 +1,15 @@
+function convertTextToUTCDate(str) {
+    //refer to http://stackoverflow.com/questions/10181649/convert-iso-timestamp-to-date-format-with-javascript
+    date = new Date(str);
+    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+
+    newDate.setHours(hours + offset);
+    return newDate.toISOString();
+}
+
 function get_date() {
     var dl_date = $("#datePicker");
     return dl_date.val();
@@ -14,18 +26,21 @@ function send_form() {
     var dl_time = get_time();
     var dl_name = $('#id_name').val();
     var dl_course = $('#id_course').val();
+    var date_time_draft = dl_date + " " + dl_time + "+00:00";
+    var dl_datetime = convertTextToUTCDate(date_time_draft);
 
     console.log(dl_time);
     console.log(dl_date);
     console.log(dl_name);
     console.log(dl_course);
+    console.log(convertTextToUTCDate(date_time_draft));
 
-    $.post("add_event", {deadline_date: dl_date, deadline_time: dl_time, name: dl_name, course: dl_course})
+    $.post("add_event", {deadline_datetime: dl_datetime, name: dl_name, course: dl_course})
         .done(function() {
-            alert("success");
+            alert("Success: new evnet added");
         })
         .fail(function(){
-            console.log("fail");
+            alert("Fail to add new event");
         });
 }
 
@@ -33,7 +48,9 @@ function send_form() {
 
 $(document).ready(function () {
     $('#timePicker').timepicker();
+    $('#timePicker').timepicker("setTime", Date.now());
     $('#datePicker').datepicker();
+    $('#datePicker').datepicker('update', new Date(Date.now()));
     $('#testdate').click(get_date);
     $('#testtime').click(get_time);
     $('#submit_request').click(send_form);

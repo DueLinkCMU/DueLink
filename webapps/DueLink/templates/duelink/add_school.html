@@ -1,7 +1,7 @@
 {% extends "duelink/base.html" %}
 {% block title %} Add School {% endblock title %}
 {% block content %}
-    <H3>Add course </H3>
+    <H3>Admin page: Add school </H3>
     <form action="{% url 'add_school' %}" method="POST">
         {% csrf_token %}
         <table>

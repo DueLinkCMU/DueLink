@@ -1,6 +1,8 @@
 from datetime import datetime
+import dateutil.parser
 from django import forms
 from models import *
+import views
 from django.forms.extras.widgets import SelectDateWidget
 
 
@@ -90,46 +92,48 @@ class EditProfileForm(ProfileForm):
         model = Profile
         fields = ProfileForm.Meta.fields + ('profile_image',)
 
+
 class AddEventForm(forms.Form):
     name = forms.CharField(max_length=20, label='name')
     course = forms.ModelChoiceField(queryset=Course.objects.all())
-    # due = forms.DateTimeField() # TODO: format
-
-    deadline_date = forms.CharField(max_length=30)
-    deadline_time = forms.CharField(max_length=30)
+    deadline_datetime = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'hidden'}))
 
     def clean(self):
         cleaned_data = super(AddEventForm, self).clean()
         return cleaned_data
 
-    def clean_datetime(self):
-        #TODO: validation
-        date = self.cleaned_data['deadline_date']
-        time = self.cleaned_data['deadline_time']
-        date_time_str = date + " " + time
+    def clean_deadline_datetime(self):
+        # TODO: Validate empty
+        print("run clean_deadline_datetime")
+        datetime_str = self.cleaned_data['deadline_datetime']
+        print(type(datetime_str))
 
-        due_datetime = datetime.strptime(date_time_str, "%m/%d/%Y %H:%M")
-        # if due_date > datetime.now():
-        #TODO: validation
-
+        try:
+            due_datetime = dateutil.parser.parse(datetime_str)
+        except ValueError:
+            print("ValueError of dateutil.parser")
+            raise forms.ValidationError(_('DateUtil parse error'))
+        except Exception as e:
+            print ("Exception" + str(e))
+            raise forms.ValidationError("Datetime unexpected errors")
+    #
         return due_datetime
 
-    def clean_deadline(self):
-        name = cleaned_data['name']
-        # due_datetime = cleaned_data['due']
-        due_datetime = form.clean_datetime()
+    def clean_deadline(self, request):
+        print("run clean_deadline")
+        name = self.cleaned_data['name']
+        due_datetime = self.cleaned_data['deadline_datetime']
+        course_pk = self.cleaned_data['course']
+        deadline_set = Deadline.objects.filter(course=course_pk, due=due_datetime)
 
+        # Check if the deadline exists.
+        if deadline_set:
+            # If the deadline exists, and the event exists
+            if DueEvent.objects.filter(deadline=deadline_set[0], user=request.user):
+                return False
+            deadline = deadline_set[0]
+        else:
+            # Call add_deadline in views.py
+            deadline = views.add_deadline(request, name, due_datetime, course_pk)
 
-
-    # def clean_course(self):
-    #     course_pk = self.cleaned_data['course']
-    #     if Course.objects.filter(pk=course_pk).count() == 0:
-    #         return 0
-    #     else: # course more than 1?
-    #         return course_pk
-
-
-
-
-
-
+        return deadline
