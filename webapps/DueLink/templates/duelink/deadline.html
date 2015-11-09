@@ -27,6 +27,7 @@
                 <div class="div-deadline-due">
                     <p><span class="span-due-time">{{ event.deadline.due }}
                         {% if self %}
+                            <a href= "{% url 'get_tasks' event.id %}">Show Tasks</a>
                             <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">+</button>
                         {% endif %}
                     </span></p>
