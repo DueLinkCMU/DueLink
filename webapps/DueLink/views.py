@@ -189,7 +189,7 @@ def update_task(request, task_id=None):
     if request.method == 'POST':
         task = get_object_or_404(Task, task_id)
         form = TaskForm(request.POST, instance=task)
-        if form.is_valie():
+        if form.is_valid():
             form.save()
             return HttpResponse("success")
         else:
