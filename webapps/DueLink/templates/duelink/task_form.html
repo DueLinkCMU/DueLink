@@ -1,10 +1,11 @@
-<form id='task_form_{{ task_id }}' action="{% url 'update_task' task_id %}" method="POST">
+<form id='task_form_{{ task.id }}' action="{% url 'update_task' task.id %}" method="POST">
     {% for error in task_form.non_field_errors %}
         <div style='color: red'>
             {{ error }}
         </div>
     {% endfor %}
 
+    <p>{{ task.description }}</p>
     <div class='form-group'>
         {{ task_form.finished }}
     </div>
