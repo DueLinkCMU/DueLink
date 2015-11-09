@@ -1,8 +1,9 @@
 {"events":[
   {% for event in events %}
-  {"title": event.deadline.name,
-    "start": event.deadline.due //change datetime format
-  }
+  {%spaceless%}
+    {{ event.schedule_json}}
+  {%endspaceless%}
+  {% if not forloop.last %},{% endif%}
   {% endfor %}
   {
     "title": "All Day Event",
