@@ -271,9 +271,12 @@ def display_tasks(request, event_id):
 def link(request,user_id):
     user_ = get_object_or_404(User,id=user_id)
     profile = get_object_or_404(Profile, user=request.user)
-
+    profile_ = get_object_or_404(Profile, user=user_)
     if request.method == "POST":
+
         profile.friends.add(user_)
+        profile.save()
+        profile_.friends.add(request.user)
         profile.save()
         return HttpResponse("success")
 
@@ -284,10 +287,12 @@ def link(request,user_id):
 def unlink(request,user_id):
     user_ = get_object_or_404(User,id=user_id)
     profile = get_object_or_404(Profile, user=request.user)
-
+    profile_ = get_object_or_404(Profile, user = user_)
     if request.method == "POST":
         profile.friends.remove(user_)
         profile.save()
+        profile_.friends.remove(request.user)
+        profile_.save()
         return HttpResponse("success")
 
     return Http404
