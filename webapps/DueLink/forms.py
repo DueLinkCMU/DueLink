@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from models import *
 from django.forms.extras.widgets import SelectDateWidget
@@ -88,3 +89,50 @@ class EditProfileForm(ProfileForm):
     class Meta(ProfileForm.Meta):
         model = Profile
         fields = ProfileForm.Meta.fields + ('profile_image',)
+
+class AddEventForm(forms.Form):
+    # deadline = models.ForeignKey(Deadline, related_name='events', on_delete=models.CASCADE)
+    # user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
+    # created_time = models.DateTimeField(auto_now_add=True)
+    # finished = models.BooleanField(default=False)
+
+    #     name = models.CharField(max_length=20)
+    # due = models.DateTimeField()
+    # course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    # students = models.ManyToManyField(User)
+
+    # For deadline
+    name = forms.CharField(max_length=20, label='name')
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    # due = forms.DateTimeField() # TODO: format
+    deadline_date = forms.CharField(max_length=30)
+    deadline_time = forms.CharField(max_length=30)
+
+    #clean: deadline exist/ datetime
+    def clean(self):
+        cleaned_data = super(AddEventForm, self).clean()
+        return cleaned_data
+
+    def clean_datetime(self):
+        date = self.cleaned_data['deadline_date']
+        time = self.cleaned_data['deadline_time']
+        date_time = date + " " + time
+
+        due_date = datetime.strptime(date_time, "%m/%d/%Y %H:%M")
+        # if due_date > datetime.now():
+        #TODO: validation
+
+        return date_time
+
+    # def clean_course(self):
+    #     course_pk = self.cleaned_data['course']
+    #     if Course.objects.filter(pk=course_pk).count() == 0:
+    #         return 0
+    #     else: # course more than 1?
+    #         return course_pk
+
+
+
+
+
+
