@@ -126,7 +126,9 @@ def add_task(request, deadline_id=None):
             task = form.save(commit=False)
             task.deadline = deadline
             task.save()
-            return HttpResponse("success")
+            # return HttpResponseRedirect('tasks', deadline_id)
+            # return redirect('profile', request.user.id)
+            return HttpResponse("Success")
         else:
             print form
             return HttpResponse("Error:" + form.__str__())
@@ -152,7 +154,7 @@ def update_task(request, task_id=None):
 
     if request.method == 'POST':
         task = get_object_or_404(Task, task_id)
-        form = TaskForm(request.POST, instance=task)
+        form = UpdateTaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
             return HttpResponse("success")
