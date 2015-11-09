@@ -1,27 +1,11 @@
-[
-  {% for }
+{"events":[
+  {% for event in events %}
+  {"title": event.deadline.name,
+    "start": event.deadline.due //change datetime format
+  }
+  {% endfor %}
   {
     "title": "All Day Event",
     "start": "2015-11-08T23:59:59"
-  },
-  {
-    "title": "Long Event",
-    "start": "2015-11-15",
-    "end": "2015-11-20"
-  },
-  {
-    "id": "999",
-    "title": "Repeating Event",
-    "start": "2015-11-11T16:00:00-05:00"
-  },
-
-  {
-    "title": "Birthday Party",
-    "start": "2015-11-09T20:00:00-23:00"
-  },
-  {
-    "title": "Click for Google",
-    "url": "http://google.com/",
-    "start": "2015-12-01"
   }
-]
+]}
