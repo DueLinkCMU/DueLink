@@ -4,7 +4,7 @@
 {% block content%}
     <form action="{% url 'add_task' deadline_id %}" method="post">
         <table>{{ task_form }}</table>
-        <button>submit request</button>
+        <button>Add</button>
     {% csrf_token %}
     </form>
 {% endblock %}
