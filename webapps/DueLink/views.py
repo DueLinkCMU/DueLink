@@ -132,10 +132,11 @@ def add_task(request, event_id=None):
             task.save()
             # return HttpResponseRedirect('tasks', event_id)
             # return redirect('profile', request.user.id)
-            return HttpResponse("Success")
+
+            return redirect('get_tasks',event_id)
         else:
             print form
-            return HttpResponse("Error:" + form.__str__())
+            return HttpResponseForbidden("Error:" + form.__str__())
     return Http404
 
 
@@ -160,7 +161,7 @@ def update_task(request, task_id=None):
         form = UpdateTaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return HttpResponse("success")
+            return redirect('get_tasks',task.event.id)
         else:
             print form
             return HttpResponse("Error" + form.__str__())
