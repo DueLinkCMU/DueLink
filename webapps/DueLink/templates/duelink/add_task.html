@@ -1,10 +1,6 @@
-{% extends "duelink/base.html" %}
-{% block title %}Add Task{% endblock title %}
-
 {% block content%}
     <form action="{% url 'add_task' event_id %}" method="post">
-        <table>{{ task_form }}</table>
-        <button>Add</button>
+        <p>Description: {{ task_form.description }}  <button>Add</button></p>
     {% csrf_token %}
     </form>
 

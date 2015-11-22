@@ -3,7 +3,8 @@
   {%spaceless%}
   {
     "title": "{{event.deadline.name}}",
-    "start": "{{event.deadline.due |date:'c'}}"
+    "start": "{{event.deadline.due |date:'c'}}",
+    "url":"{% url 'get_tasks' event.id%}"
   }
   {%endspaceless%}
   {% if not forloop.last %},{% endif%}

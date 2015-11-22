@@ -144,8 +144,9 @@ def add_task(request, event_id=None):
 def get_tasks(request, event_id=None):
     event = get_object_or_404(DueEvent, id=event_id)
     if request.method == 'GET':
+        task_form = TaskForm()
         tasks = event.tasks.all()
-        return render(request, 'duelink/tasks.html', {'tasks': tasks, 'event': event})
+        return render(request, 'duelink/tasks.html', {'tasks': tasks, 'task_form':task_form, 'event': event, 'event_id':event_id})
 
 
 @login_required
