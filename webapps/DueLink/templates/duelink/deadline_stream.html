@@ -1,24 +1,36 @@
 <!-- template for user's deadlines -->
 {% extends "duelink/base.html" %}
+{% block links %}
+    {% load static %}
 
+{% endblock links %}
 {% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
+
+{% block profile %}
+    <li class="active"><a href="#">
+        {% if self %}
+            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
+            My Deadlines
+        {% else %}
+            {{ user.username }}'s Deadlines
+        {% endif %}
+    </a></li>
+{% endblock profile %}
 
 {% block content %}
     {% if not self %}
         {% if linked %}
-            <form action="{% url 'unlink' user_id %}" method="post">
-                <button type = "submit">unlink</button>
-            {% csrf_token %}
+            <form action="{% url 'unlink' user_id %}" method="POST">
+                <button type="submit">unlink</button>
+                {% csrf_token %}
             </form>
         {% else %}
-            <form action="{% url 'link' user_id %}" method="post">
-                <button type = "submit">link</button>
-            {% csrf_token %}
+            <form action="{% url 'link' user_id %}" method="POST">
+                <button type="submit">link</button>
+                {% csrf_token %}
             </form>
         {% endif %}
     {% endif %}
-
-
 
     <div id="profile_img"><img class="img-thumbnail" alt="100x100"
                                src="{% url 'profile_image' profile.user.id %}"

@@ -1,6 +1,19 @@
 {% extends "dueLink/base.html" %}
 {% block title %}Friend List{% endblock %}
 
+{% block links %}
+    {% load static %}
+{% endblock links %}
+
+{% block friend_list %}
+    <li class="active">
+        <a href="#">
+            <img class="nav-image" src="{% static "images/friends.png" %}">
+            <span class="text">Friends</span>
+        </a>
+    </li>
+{% endblock friend_list %}
+
 {% block content %}
     {% for friend in friend_list %}
         <div class="row" id="friend-{{ friend.id }}">
