@@ -155,6 +155,8 @@ def add_task(request):
         # Add the new task to page
         context['task'] = new_task
         response = render(request, 'duelink/task.json', context, content_type="application/json")
+        print "fuck your mother i m here!!!!!!!!!!!!!!!!!!!!!!"
+        print response
         return response
     else:
         # Return errors

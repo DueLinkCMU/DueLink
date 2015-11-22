@@ -59,7 +59,7 @@
                 </span>
                                             {% if self %}
                         <a href="{% url 'get_tasks' event.id %}">Show Tasks</a>
-                        <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">
+                        <button onclick="location.href='{% url 'add_task' %}'" class="add-task">
                             +
                         </button>
                         {% endif %}
