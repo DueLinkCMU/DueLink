@@ -1,5 +1,5 @@
 <div class="row" id="deadline-row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         {% if not profile_page %}
         <div id="deadline-header" class="deadline-header">
             <!-- profile image -->
@@ -26,43 +26,42 @@
             {% if profile_page %}
 
             <div id="deadline-content-row" class="row">
-                <div class="col-md-4">
-                <div class="div-deadline-name">
-                    <p>{{ event.deadline.name }}</p>
-                </div>
-                    </div>
 
-                <div class="col-md-8">
-                 <div class="div-deadline-course">
-                    <span class="span-post-text">Of {{ event.deadline.course.course_name }}</span>
+
+                <div class="col-md-6">
+                    <div class="div-deadline-course">
+                        <span class="span-post-text">{{ event.deadline.course.course_name }}</span>
+                    </div>
                 </div>
-                 </div>
+                    <div class="col-md-6">
+                    <div class="div-deadline-name">
+                        <p>{{ event.deadline.name }}</p>
+                    </div>
+                </div>
             </div>
 
             <div id="deadline-duedate-row" class="row">
-                <div id="deadline-due" class="div-deadline-due">
-                    <p>
+                <div class="container">
+                    <div id="deadline-due" class="div-deadline-due">
                         <span class="span-due-time">Due on: <b>{{ event.deadline.due }}</b>
-
                         </span>
-                    </p>
+                    </div>
                 </div>
             </div>
 
 
             <div id="deadline-status-row" class="row">
-                <div class="div-deadline-status">
-                   <span class="span-deadline-text">
-                    {% if event.finished %}Finished
-                    {% else %}In progress
-                    {% endif %}
-                </span>
-                                            {% if self %}
-                        <a href="{% url 'get_tasks' event.id %}">Show Tasks</a>
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <div class="div-deadline-status">
+                        {% if self %}
+                        <a href="{% url 'get_tasks' event.id %}">Tasks</a>
                         <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">
                             +
                         </button>
                         {% endif %}
+                    </div>
                 </div>
 
             </div>
@@ -73,11 +72,16 @@
         <!-- end content -->
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- draw a circle -->
         <div class="div-deadline-progress">
             <p><span class="span-post-text">{{ event.progress }}%</span></p>
         </div>
+                           <span class="span-deadline-text">
+                    {% if event.finished %}Finished
+                    {% else %}In progress
+                    {% endif %}
+                </span>
     </div>
 </div>
 
