@@ -3,7 +3,22 @@
  */
 
 function addTask() {
-    var taskForm = $(event.target).parent().parent();
+    var div = $(event.target).parent().prev();
+    var taskForm = div.parent();
+    var eventID = div.val();
+    $.post('/duelink/add_task', taskForm.serialize()).done(
+        function (data) {
+            if (data.type == 'task') { // Comment success, return the new comment
+                taskForm.parent().before(data.html);
+                var len = $('div[id^=task_]').length;
+                taskForm.parent().prev().prev().find('h3').html("Task "+len);
+                // Clear the text area
+                var taskText = taskForm.find('[name="description"]');
+                taskText.val("");
+            }else{
+                //to-jie pan
+            }
+        });
 }
 
 $(document).ready(function () {

@@ -1,6 +1,9 @@
+{% load json_filter %}
 {
+  "type":"task",
   "task_event":{{task.event.id}},
   "task_id":{{task.id}},
   "task_name":"{{task.description}}",
-  "task_finished":"{{task.finished}}"
+  "task_finished":"{{task.finished}}",
+  "html":"{%spaceless%}{% filter addslashes_doublequote%}{% include 'duelink/task.html' with task=task %}{% endfilter%}{%endspaceless%}<br>"
 }
