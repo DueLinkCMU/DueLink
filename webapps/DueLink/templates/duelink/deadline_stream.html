@@ -1,47 +1,61 @@
 <!-- template for user's deadlines -->
 {% extends "duelink/base.html" %}
 
-{% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
+{% block title %}{{ profile.nick_name }}'s Deadlines{% endblock title %}
 
 {% block content %}
 
+<div class="col-md-2">
+    <div class="container-fluid" >
+        {% if not self %}
+        {% if linked %}
+        <form action="{% url 'unlink' user_id %}" method="post">
+            <button type="submit">unlink</button>
+            {% csrf_token %}
+        </form>
+        {% else %}
+        <form action="{% url 'link' user_id %}" method="post">
+            <button type="submit">link</button>
+            {% csrf_token %}
+        </form>
+        {% endif %}
+        {% endif %}
+    </div>
+     <div id="profile_img"><img class="img-thumbnail" alt="100x100"
+                               src="{% url 'profile_image' profile.user.id %}"
+                               data-holder-rendered="true">
+    </div>
+
+    <div id="name">
+        {{ profile.user.username }}({{ profile.nick_name }}) @{{ profile.school }}
+    </div>
+ </div>
 
 
-{% if not self %}
-{% if linked %}
-<form action="{% url 'unlink' user_id %}" method="post">
-    <button type="submit">unlink</button>
-    {% csrf_token %}
-</form>
-{% else %}
-<form action="{% url 'link' user_id %}" method="post">
-    <button type="submit">link</button>
-    {% csrf_token %}
-</form>
-{% endif %}
-{% endif %}
+<div class="col-md-8">
 
+   {% for event in events %}
+        {% include 'duelink/deadline.html' %}
+    {% endfor %}
+</div>
+<div class="col-md-2">
 
-<div id="profile_img"><img class="img-thumbnail" alt="100x100"
-                           src="{% url 'profile_image' profile.user.id %}"
-                           data-holder-rendered="true"></div>
-
-<div id="name">
-    {{ profile.user.username }}({{ profile.nick_name }}) @{{ profile.school }}
 </div>
 
+
+{% endblock content %}
 {% block error %}
-{% if errors %}
-{% for error in errors %}
-<p class="error" style="color:red">
-    {{ error }}
-</p>
-{% endfor %}
-{% endif %}
-{% endblock %}
+    {% if errors %}
+        {% for error in errors %}
+            <p class="error" style="color:red">
+                {{ error }}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endblock error %}
 
-{% for event in events %}
-{% include 'duelink/deadline.html' %}
-{% endfor %}
 
-{% endblock %}
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
+{% endblock links %}

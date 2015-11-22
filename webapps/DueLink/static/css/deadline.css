@@ -1,0 +1,13 @@
+#name {
+    background: #FFF;
+    color: #1b6d85;
+    font-size: 10px;
+}
+.deadline-content {
+    border-radius: 10px;
+}
+#deadline-row {
+    margin: auto;
+    margin-bottom: 10px;
+    background: #f2dede;
+}
