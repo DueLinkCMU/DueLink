@@ -22,7 +22,14 @@
 
 <div class="col-md-2">
     <div class="container-fluid" >
-        {% if not self %}
+
+
+
+
+    <div id="profile_img"><img class="img-thumbnail" alt="100x100" src="{% url 'profile_image' profile.user.id %}"
+                               data-holder-rendered="true"></div>
+
+       {% if not self %}
         {% if linked %}
 
             <form action="{% url 'unlink' user_id %}" method="POST">
@@ -35,27 +42,10 @@
                 {% csrf_token %}
             </form>
         {% endif %}
+    {% endif %}
 
 
-    <div id="profile_img"><img class="img-thumbnail" alt="100x100" src="{% url 'profile_image' profile.user.id %}"
-                               data-holder-rendered="true">
 
-        <form action="{% url 'unlink' user_id %}" method="post">
-            <button type="submit">unlink</button>
-            {% csrf_token %}
-        </form>
-        {% else %}
-        <form action="{% url 'link' user_id %}" method="post">
-            <button type="submit">link</button>
-            {% csrf_token %}
-        </form>
-        {% endif %}
-
-    </div>
-     <div id="profile_img"><img class="img-thumbnail" alt="100x100"
-                               src="{% url 'profile_image' profile.user.id %}"
-                               data-holder-rendered="true">
-    </div>
 
     <div id="name">
         {{ profile.user.username }}({{ profile.nick_name }}) @{{ profile.school }}
