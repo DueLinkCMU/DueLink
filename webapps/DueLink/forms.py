@@ -67,12 +67,11 @@ class TaskForm(forms.ModelForm):
 
 class RegistrationForm(forms.Form):
     # TODO: form attrs
-    username = forms.CharField(max_length=30, label='username', widget=forms.TextInput())
-    email = forms.EmailField(max_length=100, label='email', widget=forms.EmailInput())
-    password1 = forms.CharField(max_length=30, label='password1', widget=forms.PasswordInput())
-    password2 = forms.CharField(max_length=30, label='password2', widget=forms.PasswordInput())
-
-    nick_name = forms.CharField(max_length=30, label='nickname', widget=forms.TextInput())
+    username = forms.CharField(max_length=30, label='Username', widget=forms.TextInput())
+    email = forms.EmailField(max_length=100, label='Email', widget=forms.EmailInput())
+    password1 = forms.CharField(max_length=30, label='Password', widget=forms.PasswordInput())
+    password2 = forms.CharField(max_length=30, label='Confirm Password', widget=forms.PasswordInput())
+    nick_name = forms.CharField(max_length=30, label='Nickname', widget=forms.TextInput())
     school = forms.ModelChoiceField(queryset=School.objects.all())
 
     def clean(self):
