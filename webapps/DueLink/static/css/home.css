@@ -1,6 +1,7 @@
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
+    width:auto;
     /*margin-bottom: 20px;*/
 }
 
@@ -26,7 +27,7 @@ div.pull-right {
 }
 
 .logout {
-    font-size: 18px;
+    font-size: 16px;
     color: #66757f;
 }
 
