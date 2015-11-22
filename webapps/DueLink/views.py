@@ -42,11 +42,11 @@ def get_profile(request, id):
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
 
-    profile_me = get_object_or_404(Profile, user = request.user)
-    linked = profile_me.friends.filter(id = id).exists()
+    profile_me = get_object_or_404(Profile, user=request.user)
+    linked = profile_me.friends.filter(id=id).exists()
 
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self, 'user_id':id, 'linked':linked}
+               'self': self, 'user_id': id, 'linked': linked}
 
     return render(request, 'duelink/deadline_stream.html', context)
 
@@ -133,7 +133,7 @@ def add_task(request, event_id=None):
             # return HttpResponseRedirect('tasks', event_id)
             # return redirect('profile', request.user.id)
 
-            return redirect('get_tasks',event_id)
+            return redirect('get_tasks', event_id)
         else:
             print form
             return HttpResponseForbidden("Error:" + form.__str__())
@@ -145,7 +145,7 @@ def get_tasks(request, event_id=None):
     event = get_object_or_404(DueEvent, id=event_id)
     if request.method == 'GET':
         tasks = event.tasks.all()
-        return render(request, 'duelink/tasks.html', {'tasks': tasks,'event':event})
+        return render(request, 'duelink/tasks.html', {'tasks': tasks, 'event': event})
 
 
 @login_required
@@ -154,14 +154,14 @@ def update_task(request, task_id=None):
     task = get_object_or_404(Task, id=task_id)
     if request.method == 'GET':
         return render(request, 'duelink/task_form.html',
-                      {'task_form':UpdateTaskForm(),'task': task})
+                      {'task_form': UpdateTaskForm(), 'task': task})
 
     if request.method == 'POST':
         task = get_object_or_404(Task, id=task_id)
         form = UpdateTaskForm(request.POST, instance=task)
         if form.is_valid():
             form.save()
-            return redirect('get_tasks',task.event.id)
+            return redirect('get_tasks', task.event.id)
         else:
             print form
             return HttpResponse("Error" + form.__str__())
@@ -267,14 +267,14 @@ def display_tasks(request, event_id):
     context = {tasks}
     return render(request, 'duelink/tasks.html', context)
 
+
 @transaction.atomic
 @login_required
-def link(request,user_id):
-    user_ = get_object_or_404(User,id=user_id)
+def link(request, user_id):
+    user_ = get_object_or_404(User, id=user_id)
     profile = get_object_or_404(Profile, user=request.user)
     profile_ = get_object_or_404(Profile, user=user_)
     if request.method == "POST":
-
         profile.friends.add(user_)
         profile.save()
         profile_.friends.add(request.user)
@@ -283,12 +283,13 @@ def link(request,user_id):
 
     return Http404
 
+
 @transaction.atomic
 @login_required
-def unlink(request,user_id):
-    user_ = get_object_or_404(User,id=user_id)
+def unlink(request, user_id):
+    user_ = get_object_or_404(User, id=user_id)
     profile = get_object_or_404(Profile, user=request.user)
-    profile_ = get_object_or_404(Profile, user = user_)
+    profile_ = get_object_or_404(Profile, user=user_)
     if request.method == "POST":
         profile.friends.remove(user_)
         profile.save()
