@@ -1,18 +1,24 @@
 {% extends "dueLink/base.html" %}
 {% block title %}Login{% endblock %}
 
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+{% endblock links %}
 {% block header %}
     <div class="topbar">
         <div class="global nav loggedout">
             <div class="container">
-                <ul class="nav actions">
-                    <li>DueLink</li>
-                    <li></li>
-                </ul>
+                <div class="sign icon">
+                    <img src="../../static/images/duelink_white.png">
+                </div>
+                <div class="pull-right">
+                    <a class="register" href='{% url 'register' %}'>Register</a>
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
+{% endblock header %}
 {% block content %}
 
     {% block error %}
@@ -64,5 +70,5 @@
 
 {% endblock %}
 {% block log_out %}
-    <a href='{% url 'register' %}'>Register</a>
+
 {% endblock %}
