@@ -1,7 +1,22 @@
 <!-- template for user's deadlines -->
 {% extends "duelink/base.html" %}
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
+{% endblock links %}
+{% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
 
-{% block title %}{{ profile.nick_name }}'s Deadlines{% endblock title %}
+
+{% block profile %}
+    <li class="active"><a href="#">
+        {% if self %}
+            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
+            My Deadlines
+        {% else %}
+            {{ user.username }}'s Deadlines
+        {% endif %}
+    </a></li>
+{% endblock profile %}
 
 {% block content %}
 
@@ -9,6 +24,22 @@
     <div class="container-fluid" >
         {% if not self %}
         {% if linked %}
+
+            <form action="{% url 'unlink' user_id %}" method="POST">
+                <button type="submit">unlink</button>
+                {% csrf_token %}
+            </form>
+        {% else %}
+            <form action="{% url 'link' user_id %}" method="POST">
+                <button type="submit">link</button>
+                {% csrf_token %}
+            </form>
+        {% endif %}
+
+
+    <div id="profile_img"><img class="img-thumbnail" alt="100x100" src="{% url 'profile_image' profile.user.id %}"
+                               data-holder-rendered="true">
+
         <form action="{% url 'unlink' user_id %}" method="post">
             <button type="submit">unlink</button>
             {% csrf_token %}
@@ -19,7 +50,7 @@
             {% csrf_token %}
         </form>
         {% endif %}
-        {% endif %}
+
     </div>
      <div id="profile_img"><img class="img-thumbnail" alt="100x100"
                                src="{% url 'profile_image' profile.user.id %}"
@@ -30,7 +61,7 @@
         {{ profile.user.username }}({{ profile.nick_name }}) @{{ profile.school }}
     </div>
  </div>
-
+</div>
 
 <div class="col-md-8">
 
@@ -41,9 +72,9 @@
 <div class="col-md-2">
 
 </div>
-
-
 {% endblock content %}
+
+
 {% block error %}
     {% if errors %}
         {% for error in errors %}
@@ -55,7 +86,3 @@
 {% endblock error %}
 
 
-{% block links %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
-{% endblock links %}

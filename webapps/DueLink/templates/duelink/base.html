@@ -23,7 +23,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
     {% block links %}
 
     {% endblock links %}
@@ -32,7 +32,78 @@
 </head>
 <body>
 {% block header %}
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+{#        <div >#}
+            <img class="sign icon" src="{% static "images/duelink_blue.png" %}"/>
+{#        </div>#}
+        <div class="container" style="display: inline-block">
 
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    {% block home %}
+                        <li>
+                            <a href="{% url 'home' %}">
+                                <img class="nav-image" src="{% static "images/schedule.png" %}">
+                                <span class="text">Schedule</span>
+                            </a>
+                        </li>
+                    {% endblock home %}
+                    {% block profile %}
+                        <li><a href="{% url 'profile' user.id %}">
+                            <img class="nav-image" src="{% url 'profile_image' user.id %}"/>
+                            <span class="text">Pimeng</span>
+                        </a></li>
+                    {% endblock profile %}
+                    {% block friend_list %}
+                        <li>
+                            <a href="{% url 'friend_list' %}">
+                                <img class="nav-image" src="{% static "images/friends.png" %}">
+                                <span class="text">Friends</span>
+                            </a>
+                        </li>
+                    {% endblock friend_list %}
+                    {% block friend_stream %}
+                        <li>
+                            <a href="{% url 'friend_stream' %}">
+                                <img class="nav-image" src="{% static "images/bell.png" %}">
+                                <span class="text">Friends' Deadlines</span>
+                            </a>
+                        </li>
+                    {% endblock friend_stream %}
+                    {% block nav_dropdown %}
+                        <!-- <li class="dropdown">
+                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                aria-expanded="false">Dropdown <span class="caret"></span></a>
+                             <ul class="dropdown-menu">
+                                 <li><a href="">Action</a></li>
+                                 <li><a href="">Another action</a></li>
+                                 <li><a href="">Something else here</a></li>
+                                 <li role="separator" class="divider"></li>
+                                 <li class="dropdown-header">Nav header</li>
+                                 <li><a href="#">Separated link</a></li>
+                                 <li><a href="#">One more separated link</a></li>
+                             </ul>
+                         </li> -->
+                    {% endblock nav_dropdown %}
+                </ul>
+
+                <div class="pull-right">
+                    <a class="logout" href='{% url 'logout' %}'>Log out</a>
+                </div>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
 {% endblock %}
 <div class="row">
     <div class="col-md-2" id="left-margin"></div>
@@ -44,7 +115,6 @@
     <div class="col-md-2" id="right-margin"></div>
 </div>
 {% block log_out %}
-    <a href='{% url 'logout' %}'>Log out</a>
 {% endblock %}
 </body>
 </html>
