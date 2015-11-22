@@ -30,5 +30,5 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
-webapps/*.sqlite3
 .idea
+webapps/*.sqlite3
