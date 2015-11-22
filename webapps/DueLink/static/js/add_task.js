@@ -3,7 +3,18 @@
  */
 
 function addTask() {
-    var taskForm = $(event.target).parent().parent();
+    var div = $(event.target).parent().previousSibling();
+    var taskForm = div.parent();
+    var eventID = div.val();
+    $.post('/duelink/add_task', taskForm.serialize() + '&event_id=' + eventID).done(
+        function (data) {
+            if (data.type == 'comment') { // Comment success, return the new comment
+                taskForm.before(data.html);
+                // Clear the text area
+                var taskText = taskForm.find('[name="description"]');
+                taskText.val("");
+            }
+        });
 }
 
 $(document).ready(function () {

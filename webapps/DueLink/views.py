@@ -116,28 +116,52 @@ def add_deadline(request, name, due, course_pk):
 
 @transaction.atomic
 @login_required
-def add_task(request, event_id=None):
+# def add_task(request, event_id=None):
+#     event = get_object_or_404(DueEvent, id=event_id)
+#     if request.method == 'GET':
+#         form = TaskForm()
+#         return render(request, 'duelink/add_task.html', {'task_form': form, 'event_id': event_id})
+# if request.method == 'POST':
+#     form = TaskForm(request.POST)
+#     if not event_id:
+#         return Http404
+#     if form.is_valid():
+#         task = form.save(commit=False)
+#         task.event = event
+#         task.save()
+#         # return HttpResponseRedirect('tasks', event_id)
+#         # return redirect('profile', request.user.id)
+#
+#         return redirect('get_tasks', event_id)
+#     else:
+#         print form
+#         return HttpResponseForbidden("Error:" + form.__str__())
+# return Http404
+@transaction.atomic
+@login_required
+def add_task(request):
+    context = {}
+    if not request.POST['event_id']:
+        raise Http404
+    form = TaskForm(request.POST)
+    event_id = request.POST['event_id']
+    print request.POST
     event = get_object_or_404(DueEvent, id=event_id)
-    if request.method == 'GET':
-        form = TaskForm()
-        return render(request, 'duelink/add_task.html', {'task_form': form, 'event_id': event_id})
 
-    if request.method == 'POST':
-        form = TaskForm(request.POST)
-        if not event_id:
-            return Http404
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.event = event
-            task.save()
-            # return HttpResponseRedirect('tasks', event_id)
-            # return redirect('profile', request.user.id)
-
-            return redirect('get_tasks', event_id)
-        else:
-            print form
-            return HttpResponseForbidden("Error:" + form.__str__())
-    return Http404
+    if form.is_valid():
+        new_task = Task.objects.create(description=form.cleaned_data['description'],
+                                       event=event)
+        new_task.save()
+        # Add the new task to page
+        context['task'] = new_task
+        response = render(request, 'duelink/task.json', context, content_type="application/json")
+        return response
+    else:
+        # Return errors
+        context['event'] = event
+        context["form"] = form
+        response = render(request, 'duelink/new_task_form.json', context, content_type='application/json')
+        return response
 
 
 @login_required
@@ -146,7 +170,8 @@ def get_tasks(request, event_id=None):
     if request.method == 'GET':
         task_form = TaskForm()
         tasks = event.tasks.all()
-        return render(request, 'duelink/tasks.html', {'tasks': tasks, 'task_form':task_form, 'event': event, 'event_id':event_id})
+        return render(request, 'duelink/tasks.html',
+                      {'tasks': tasks, 'task_form': task_form, 'event': event, 'event_id': event_id})
 
 
 @login_required
@@ -166,7 +191,7 @@ def update_task(request, task_id=None):
         else:
             task.finished = True
         task.save()
-        return redirect('get_tasks',task.event.id)
+        return redirect('get_tasks', task.event.id)
         # form = UpdateTaskForm(request.POST, instance=task)
         #
         # if form.is_valid():
