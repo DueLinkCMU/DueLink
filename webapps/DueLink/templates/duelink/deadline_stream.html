@@ -13,7 +13,7 @@
     <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
     My Deadlines
     {% else %}
-    {{ user.username }}'s Deadlines
+    {{ profile.nick_name }}'s Deadlines
 
     {% endif %}
 </a></li>
