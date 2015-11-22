@@ -1,63 +1,81 @@
 <!-- template for user's deadlines -->
 {% extends "duelink/base.html" %}
 {% block links %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/deadline.css' %}">
 {% endblock links %}
 {% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
 
 
 {% block profile %}
-    <li class="active"><a href="#">
-        {% if self %}
-            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
-            My Deadlines
-        {% else %}
-            {{ user.username }}'s Deadlines
-        {% endif %}
-    </a></li>
+<li class="active"><a href="#">
+    {% if self %}
+    <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
+    My Deadlines
+    {% else %}
+    {{ profile.nick_name }}'s Deadlines
+
+    {% endif %}
+</a></li>
 {% endblock profile %}
 
+
 {% block content %}
-<div class = "row deadline">
+
+<!--Start of user icon and link-->
 
 <div class="col-md-2">
-    <div class="container-fluid" >
-
-    <div id="profile_img"><img class="img-thumbnail" alt="100x100" src="{% url 'profile_image' profile.user.id %}"
-                               data-holder-rendered="true"></div>
-
-       {% if not self %}
-        {% if linked %}
-
-            <form action="{% url 'unlink' user_id %}" method="POST">
-                <button type="submit">unlink</button>
-                {% csrf_token %}
-            </form>
-        {% else %}
-            <form action="{% url 'link' user_id %}" method="POST">
-                <button type="submit">link</button>
-                {% csrf_token %}
-            </form>
-        {% endif %}
-    {% endif %}
-
-
-
-
-    <div id="name">
-        {{ profile.user.username }}({{ profile.nick_name }}) @{{ profile.school }}
+    <div class="row" id="deadline-icon-row">
+        <div id="profile_img"><img class="img-thumbnail" alt="100x100"
+                                   src="{% url 'profile_image' profile.user.id %}"
+                                   data-holder-rendered="true">
+        </div>
     </div>
- </div>
+    <div class="row">
+     <label id="name">
+         {{ profile.user.username }}
+         <br>
+         ({{ profile.nick_name }})
+     </label>
+        <p>@{{ profile.school }}</p>
+    </div>
+    <div class="row">
+
+        <!--link or unlink-->
+     <div class="container-fluid">
+         {% if not self %}
+         {% if linked %}
+
+         <!--<form action="{% url 'unlink' user_id %}" method="POST">-->
+             <a class="btn btn-block btn-default" id="button-unlink" type="submit">unlink</a>
+             <!--{% csrf_token %}-->
+         <!--</form>-->
+         {% else %}
+         <!--<form action="{% url 'link' user_id %}" method="POST">-->
+             <a class="btn btn-block btn-primary" id="button-link" type="submit">link</a>
+             <!--{% csrf_token %}-->
+         <!--</form>-->
+         {% endif %}
+         {% endif %}
+     </div>
+        <!--End link or unlink -->
+    </div>
 </div>
+<!--End of user icon name link-->
 
-<div class="col-md-8">
+<div class="col-md-1"></div>
 
-   {% for event in events %}
-        {% include 'duelink/deadline.html' %}
+<!--Start of deadlines-->
+<div class="col-md-8" id="deadline-panel">
+    <div class="row">
+        <br>
+    </div>
+    {% for event in events %}
+    {% include 'duelink/deadline.html' %}
     {% endfor %}
 </div>
-<div class="col-md-2">
+<!--end of deadlines-->
+<div class="col-md-1">
 
 </div>
 
@@ -66,14 +84,16 @@
 {% endblock content %}
 
 
-{% block error %}
+<!--place for errors-->
+<div class="row">
+    {% block error %}
     {% if errors %}
-        {% for error in errors %}
-            <p class="error" style="color:red">
-                {{ error }}
-            </p>
-        {% endfor %}
+    {% for error in errors %}
+    <p class="error" style="color:red">
+        {{ error }}
+    </p>
+    {% endfor %}
     {% endif %}
-{% endblock error %}
-
-
+    {% endblock error %}
+</div>
+<!--end place for errors-->

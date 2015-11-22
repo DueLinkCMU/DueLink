@@ -1,17 +1,63 @@
 #name {
     background: #FFF;
     color: #1b6d85;
-    font-size: 10px;
+    font-size: 20px;
 }
 .deadline-content {
     border-radius: 10px;
 }
-#deadline-row {
+#deadline-content {
     margin: auto;
     margin-bottom: 10px;
     background: #f2dede;
+	border-radius: 10px;
 }
-
-.row.deadline{
-    margin-top: 100px;
+#deadline-content {
+	margin-left: -40px;
+}
+#deadline-icon-row {
+    margin: 20px -20px 20px -20px;
+}
+.span-coursename-text {
+    font-size: 14px;
+    background-color: #843534;
+}
+.div-deadline-progress {
+    margin: 30px 0px 10px 0px;
+}
+.div-deadline-coursename {
+    margin: 10px 0px 20px 0px ;
+}
+#button-link {
+	max-width: 150px;
+}
+#button-unlink {
+	max-width: 150px;
+}
+.span-status {
+	float:right;
+}
+.circle {
+	background: #b9def0;
+	border-radius:50%;
+	color: black;
+	display:table;
+	/*height: 120px;*/
+	font-weight: bold;
+	font-size: 1.2em;
+	width: 120px;
+	margin:0 auto;
+	text-align: right;
+	padding-top: 50px;
+	padding-left: 0px;
+	padding-right:38px;
+	padding-bottom: 50px;
+}
+.circle span {
+	display:table-cell;
+	vertical-align:middle;
+	height:80px;
+	width:180px;
+	text-align:center;
+	padding: 0 15px;
 }

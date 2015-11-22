@@ -1,5 +1,6 @@
-<div class="row" id="deadline-row">
-    <div class="col-md-8">
+<div class="row" id="deadline-row" >
+    <div class="col-md-1"></div>
+    <div class="col-md-8" id="deadline-content">
         {% if not profile_page %}
         <div id="deadline-header" class="deadline-header">
             <!-- profile image -->
@@ -22,62 +23,78 @@
         </div>
         <!-- end header -->
         {% endif %}
-        <div class="deadline-content">
+        <div class="deadline-content" >
             {% if profile_page %}
 
-            <div id="deadline-content-row" class="row">
-                <div class="col-md-4">
-                <div class="div-deadline-name">
-                    <p>{{ event.deadline.name }}</p>
-                </div>
+            <!--Course name-->
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="div-deadline-name">
+                       <span style="float:left" class="span-deadline-text"><h3>{{ event.deadline.name }}</h3>
+                           </span>
+
                     </div>
-
-                <div class="col-md-8">
-                 <div class="div-deadline-course">
-                    <span class="span-post-text">Of {{ event.deadline.course.course_name }}</span>
                 </div>
-                 </div>
             </div>
 
+            <!--End of course name-->
+
+            <!--Due date-->
             <div id="deadline-duedate-row" class="row">
-                <div id="deadline-due" class="div-deadline-due">
-                    <p>
-                        <span class="span-due-time">Due on: <b>{{ event.deadline.due }}</b>
-
-                        </span>
-                    </p>
-                </div>
-            </div>
-
-
-            <div id="deadline-status-row" class="row">
-                <div class="div-deadline-status">
-                   <span class="span-deadline-text">
-                    {% if event.finished %}Finished
+                <div class="col-md-12">
+                    <div id="deadline-due" class="div-deadline-due">
+                        <span class="span-due-time" style="float:left">Due on: <b>{{ event.deadline.due }}</b>
+                            </span>
+                        <span class="span-status"
+                              {% if event.finished %} style="color:red" {% else %} style="color:green" {% endif %}
+                        >
+                       {% if event.finished %}Finished
                     {% else %}In progress
                     {% endif %}
-                </span>
-                                            {% if self %}
-                        <a href="{% url 'get_tasks' event.id %}">Show Tasks</a>
-                        <button onclick="location.href='{% url 'add_task' %}'" class="add-task">
-                            +
-                        </button>
-                        {% endif %}
+                        </span>
+                    </div>
                 </div>
+            </div>
+            <!--End of due date-->
 
+            <div id="deadline-course-row" class="row">
+                <div class="col-md-12">
+                    <div class="div-deadline-coursename">
+                        <kbd class="span-coursename-text">{{ event.deadline.course.course_name }}</kbd>
+                          <span style="float:right;">
+                        {% if self %}
+                        <a style="float:right" href="{% url 'get_tasks' event.id %}">Tasks</a>
+
+                        {% endif %}
+                            </span>
+                    </div>
+                    </div>
             </div>
 
+            <!--<div id="deadline-status-row" class="row">-->
+                <!--<div class="col-md-6">-->
+                    <!--<div class="div-deadline-status">-->
+                        <!--{% if self %}-->
+                        <!--<a href="{% url 'get_tasks' event.id %}">Tasks</a>-->
+
+                        <!--{% endif %}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
             {% endif %}
 
         </div>
         <!-- end content -->
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <!-- draw a circle -->
-        <div class="div-deadline-progress">
-            <p><span class="span-post-text">{{ event.progress }}%</span></p>
-        </div>
+        <span class="container circle" >
+        <!--<span class="span-deadline-text">-->
+           <!--<span> {{ event.progress }}</span>-->
+                   {{ event.progress }}%
+                <!--</span>-->
+        </span>
     </div>
 </div>
 

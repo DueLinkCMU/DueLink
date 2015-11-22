@@ -63,7 +63,7 @@
                     {% block profile %}
                         <li><a href="{% url 'profile' user.id %}">
                             <img class="nav-image" src="{% url 'profile_image' user.id %}"/>
-                            <span class="text">Pimeng</span>
+                            <span class="text">{{ user.profile_user.nick_name   }}</span>
                         </a></li>
                     {% endblock profile %}
                     {% block friend_list %}
@@ -104,16 +104,16 @@
                 </div>
             </div><!--/.nav-collapse -->
         </div>
-    </nav>
+    <!--</nav>-->
 {% endblock %}
 <div class="row">
-    <div class="col-md-2" id="left-margin"></div>
-    <div class="col-md-8" id="middle">
+    <div class="col-md-1" id="left-margin"></div>
+    <div class="col-md-9" id="middle">
         {% block content %}
 
         {% endblock %}
     </div>
-    <div class="col-md-2" id="right-margin"></div>
+    <div class="col-md-1" id="right-margin"></div>
 </div>
 {% block log_out %}
 {% endblock %}
