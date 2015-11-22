@@ -1,5 +1,5 @@
 
-<div id = "task_{{ task.id }}" class="box effect">
+<div id="task_{{ task.id }}" class="box effect">
     <form id='task_form_{{ task.id }}' action="{% url 'update_task' task.id %}" method="POST">
         <h3>Task {{ forloop.counter }}</h3>
         <hr>
