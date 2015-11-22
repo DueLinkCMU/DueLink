@@ -144,8 +144,9 @@ def add_task(request, event_id=None):
 def get_tasks(request, event_id=None):
     event = get_object_or_404(DueEvent, id=event_id)
     if request.method == 'GET':
+        task_form = TaskForm()
         tasks = event.tasks.all()
-        return render(request, 'duelink/tasks.html', {'tasks': tasks, 'event': event})
+        return render(request, 'duelink/tasks.html', {'tasks': tasks, 'task_form':task_form, 'event': event, 'event_id':event_id})
 
 
 @login_required
@@ -158,13 +159,22 @@ def update_task(request, task_id=None):
 
     if request.method == 'POST':
         task = get_object_or_404(Task, id=task_id)
-        form = UpdateTaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            return redirect('get_tasks', task.event.id)
+
+        if task.finished:
+            task.finished = False
+
         else:
-            print form
-            return HttpResponse("Error" + form.__str__())
+            task.finished = True
+        task.save()
+        return redirect('get_tasks',task.event.id)
+        # form = UpdateTaskForm(request.POST, instance=task)
+        #
+        # if form.is_valid():
+        #     form.save()
+        #     return redirect('get_tasks',task.event.id)
+        # else:
+        #     print form
+        #     return HttpResponse("Error" + form.__str__())
 
 
 @login_required

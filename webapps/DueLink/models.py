@@ -50,7 +50,6 @@ class DueEvent(models.Model):
     user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
     finished = models.BooleanField(default=False)
-
     @property
     def progress(self):
         if self.finished:

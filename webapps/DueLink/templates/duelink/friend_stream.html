@@ -1,9 +1,22 @@
 {% extends "dueLink/base.html" %}
 {% block title %}Friend Stream{% endblock %}
 
+{% block links %}
+    {% load static %}
+{% endblock links %}
+
+{% block friend_stream %}
+    <li class="active">
+        <a href="#">
+            <img class="nav-image" src="{% static "images/bell.png" %}">
+            <span class="text">Friends' Deadlines</span>
+        </a>
+    </li>
+{% endblock friend_stream %}
+
 {% block content %}
     {% for event in events %}
-            {% include 'duelink/deadline.html' %}
+        {% include 'duelink/deadline.html' %}
     {% endfor %}
 
-{% endblock %}
+{% endblock content %}

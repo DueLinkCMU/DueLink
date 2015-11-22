@@ -1,0 +1,40 @@
+.navbar.navbar-default.navbar-fixed-top {
+    background: #ffffff;
+    height: 56px;
+    /*margin-bottom: 20px;*/
+}
+
+.nav-image {
+    max-width: 25px;
+    max-height: 25px;
+}
+
+.text {
+    font-family: "Microsoft YaHei", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    color: #66757f;
+    vertical-align: middle;
+}
+
+.calendar {
+    margin-top: 70px;
+}
+
+div.pull-right {
+    height: 50px;
+    padding-top: 10px;
+}
+
+.logout {
+    font-size: 18px;
+    color: #66757f;
+}
+
+img.navbar-brand {
+    max-width: 100px;
+    max-height: 50px;
+}
+
+.sign.icon {
+    margin-top: -45px;
+}
