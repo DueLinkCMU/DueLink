@@ -19,12 +19,10 @@
 {% endblock profile %}
 
 {% block content %}
+<div class = "row deadline">
 
 <div class="col-md-2">
     <div class="container-fluid" >
-
-
-
 
     <div id="profile_img"><img class="img-thumbnail" alt="100x100" src="{% url 'profile_image' profile.user.id %}"
                                data-holder-rendered="true"></div>
@@ -62,6 +60,9 @@
 <div class="col-md-2">
 
 </div>
+
+</div>
+
 {% endblock content %}
 
 
