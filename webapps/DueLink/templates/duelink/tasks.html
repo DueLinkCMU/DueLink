@@ -1,13 +1,13 @@
 {% extends 'duelink/base.html' %}
 {% block content %}
-   Progress: {{ event.progress }} %
+    Progress: {{ event.progress }} %
     <div>
         {% for task in tasks %}
-           <p>Task:{{ task.description }}</p>
-            <p>Finished:{{ task.finished }}</p>
-            <a href="{% url 'update_task' task.id %}">Edit</a>
-            <br>
+            <div id="task_{{ task.id }}">
+                {% include 'duelink/task.html' with task=task %}
+                <br>
+            </div>
         {% endfor %}
-         <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">+</button>
+        <button onclick="location.href='{% url 'add_task' event.deadline.id %}'" class="add-task">+</button>
     </div>
 {% endblock %}

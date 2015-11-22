@@ -158,13 +158,20 @@ def update_task(request, task_id=None):
 
     if request.method == 'POST':
         task = get_object_or_404(Task, id=task_id)
-        form = UpdateTaskForm(request.POST, instance=task)
-        if form.is_valid():
-            form.save()
-            return redirect('get_tasks',task.event.id)
+        if task.finished:
+            task.finished = False
         else:
-            print form
-            return HttpResponse("Error" + form.__str__())
+            task.finished = True
+        task.save()
+        return redirect('get_tasks',task.event.id)
+        # form = UpdateTaskForm(request.POST, instance=task)
+        #
+        # if form.is_valid():
+        #     form.save()
+        #     return redirect('get_tasks',task.event.id)
+        # else:
+        #     print form
+        #     return HttpResponse("Error" + form.__str__())
 
 
 @login_required
