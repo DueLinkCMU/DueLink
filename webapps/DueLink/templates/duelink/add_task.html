@@ -1,4 +1,5 @@
-<form action="{% url 'add_task' event_id %}" method="post" id="add-new-task">
+<form action="{% url 'add_task' event_id %}" method="POST" id="add-new-task">
+    <input type="hidden" name="event_id" value="{{ event.id }}">
     <p>Description: {{ task_form.description }}
         <button id="add-task" onclick="addTask()" class="">Add</button>
         <!--<button>Add</button>--></p>
