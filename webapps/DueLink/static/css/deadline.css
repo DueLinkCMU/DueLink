@@ -42,12 +42,16 @@
 	border-radius:50%;
 	color: black;
 	display:table;
-	height: 120px;
-	/*font-weight: bold;*/
+	/*height: 120px;*/
+	font-weight: bold;
 	font-size: 1.2em;
 	width: 120px;
 	margin:0 auto;
-	padding: 50px;
+	text-align: right;
+	padding-top: 50px;
+	padding-left: 0px;
+	padding-right:38px;
+	padding-bottom: 50px;
 }
 .circle span {
 	display:table-cell;
