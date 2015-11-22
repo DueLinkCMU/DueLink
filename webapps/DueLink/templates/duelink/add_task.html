@@ -1,7 +1,6 @@
-{% block content%}
-    <form action="{% url 'add_task' event_id %}" method="post">
-        <p>Description: {{ task_form.description }}  <button>Add</button></p>
+<form action="{% url 'add_task' event_id %}" method="post" id="add-new-task">
+    <p>Description: {{ task_form.description }}
+        <button id="add-task" onclick="addTask()" class="">Add</button>
+        <!--<button>Add</button>--></p>
     {% csrf_token %}
-    </form>
-
-{% endblock %}
+</form>
