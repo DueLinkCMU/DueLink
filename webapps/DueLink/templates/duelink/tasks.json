@@ -1,0 +1,8 @@
+{
+[
+{% for task in tasks%}
+{% include 'duelink/task.json'%}
+{% if not forloop.last %},{% endif%}
+{%endfor%}
+]
+}
