@@ -19,7 +19,7 @@
     margin: 20px -20px 20px -20px;
 }
 .span-coursename-text {
-    font-size: 16px;
+    font-size: 14px;
     background-color: #843534;
 }
 .div-deadline-progress {
@@ -28,7 +28,15 @@
 .div-deadline-coursename {
     margin: 10px 0px 20px 0px ;
 }
-
+#button-link {
+	max-width: 150px;
+}
+#button-unlink {
+	max-width: 150px;
+}
+.span-status {
+	float:right;
+}
 .circle {
 	background: #b9def0;
 	border-radius:50%;
