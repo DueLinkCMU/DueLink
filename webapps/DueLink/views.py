@@ -289,7 +289,7 @@ def link(request, user_id):
         profile.save()
         profile_.friends.add(request.user)
         profile.save()
-        return HttpResponse("success")
+        return redirect('profile',user_id)
 
     return Http404
 
@@ -305,6 +305,6 @@ def unlink(request, user_id):
         profile.save()
         profile_.friends.remove(request.user)
         profile_.save()
-        return HttpResponse("success")
+        return redirect('profile', user_id)
 
     return Http404

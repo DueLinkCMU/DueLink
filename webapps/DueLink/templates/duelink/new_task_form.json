@@ -1,0 +1,2 @@
+{% load json_filter %}
+{"type":"form", "html":"{% spaceless %}{% filter addslashes_doublequote %}{% include 'duelink/add_task.html' %}{% endfilter %}{% endspaceless %}"}

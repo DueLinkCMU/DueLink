@@ -71,7 +71,7 @@ div.checkbox {
 
 .sign.icon {
     display: inline-block;
-    margin: auto auto auto  41%;
+    margin: auto auto auto 55%;
     text-align: center;
 }
 
@@ -83,17 +83,17 @@ div.pull-right {
     height: 50px;
     padding-top: 10px;
 }
+
 .register {
-font-size: 18px;
-color: #ffffff;
+    font-size: 18px;
+    color: #ffffff;
 }
 
-
 /*.carpet {*/
-    /*width: 8px;*/
-    /*height: 4px;*/
-    /*margin-top: 0;*/
-    /*vertical-align: middle;*/
-    /*border-top-color: #fff*/
+/*width: 8px;*/
+/*height: 4px;*/
+/*margin-top: 0;*/
+/*vertical-align: middle;*/
+/*border-top-color: #fff*/
 
 /*}*/

@@ -1,7 +1,12 @@
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
+<<<<<<< HEAD
     width:auto;
+=======
+
+    /*max-width: 80px;*/
+>>>>>>> development
     /*margin-bottom: 20px;*/
 }
 
@@ -9,6 +14,7 @@
     display: inline-block;
     max-width: 80%;
 }
+
 
 .nav-image {
     max-width: 25px;
