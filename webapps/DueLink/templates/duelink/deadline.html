@@ -1,5 +1,6 @@
 <div class="row" id="deadline-row">
-    <div class="col-md-9">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
         {% if not profile_page %}
         <div id="deadline-header" class="deadline-header">
             <!-- profile image -->
@@ -25,21 +26,24 @@
         <div class="deadline-content">
             {% if profile_page %}
 
-            <div id="deadline-content-row" class="row">
-
-
+            <!--Course name-->
+            <div class="row">
                 <div class="col-md-6">
                     <div class="div-deadline-course">
                         <span class="span-post-text">{{ event.deadline.course.course_name }}</span>
                     </div>
                 </div>
-                    <div class="col-md-6">
+            </div>
+            <div id="deadline-content-row" class="row">
+                <div class="col-md-6">
                     <div class="div-deadline-name">
                         <p>{{ event.deadline.name }}</p>
                     </div>
                 </div>
             </div>
+            <!--End of course name-->
 
+            <!--Due date-->
             <div id="deadline-duedate-row" class="row">
                 <div class="container">
                     <div id="deadline-due" class="div-deadline-due">
@@ -48,7 +52,7 @@
                     </div>
                 </div>
             </div>
-
+            <!--End of due date-->
 
             <div id="deadline-status-row" class="row">
                 <div class="col-md-6">
@@ -60,9 +64,7 @@
                         {% endif %}
                     </div>
                 </div>
-
             </div>
-
             {% endif %}
 
         </div>
@@ -74,7 +76,7 @@
         <div class="div-deadline-progress">
             <p><span class="span-post-text">{{ event.progress }}%</span></p>
         </div>
-                           <span class="span-deadline-text">
+        <span class="span-deadline-text">
                     {% if event.finished %}Finished
                     {% else %}In progress
                     {% endif %}

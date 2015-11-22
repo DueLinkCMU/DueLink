@@ -37,7 +37,7 @@
 {#        <div >#}
             <img class="sign icon" src="{% static "images/duelink_blue.png" %}"/>
 {#        </div>#}
-        <div class="container" style="display: inline-block">
+        <div class="container">
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -106,13 +106,13 @@
     <!--</nav>-->
 {% endblock %}
 <div class="row">
-    <div class="col-md-2" id="left-margin"></div>
-    <div class="col-md-8" id="middle">
+    <div class="col-md-1" id="left-margin"></div>
+    <div class="col-md-9" id="middle">
         {% block content %}
 
         {% endblock %}
     </div>
-    <div class="col-md-2" id="right-margin"></div>
+    <div class="col-md-1" id="right-margin"></div>
 </div>
 {% block log_out %}
 {% endblock %}
