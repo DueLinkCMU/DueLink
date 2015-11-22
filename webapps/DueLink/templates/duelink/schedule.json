@@ -1,9 +1,10 @@
+{% load ISO8061 %}
 {"events":[
   {% for event in events %}
   {%spaceless%}
   {
     "title": "{{event.deadline.name}}",
-    "start": "{{event.deadline.due |date:'c'}}",
+    "start": "{% filter iso8061 %}{{event.deadline.due |date:'c'}}{%endfilter%}",
     "url":"{% url 'get_tasks' event.id%}"
   }
   {%endspaceless%}
