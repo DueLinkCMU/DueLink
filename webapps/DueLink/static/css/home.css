@@ -1,7 +1,13 @@
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
+    /*max-width: 80px;*/
     /*margin-bottom: 20px;*/
+}
+
+.container {
+    display: inline-block;
+    max-width: 80%;
 }
 
 .nav-image {
