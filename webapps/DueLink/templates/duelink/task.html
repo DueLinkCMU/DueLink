@@ -1,0 +1,23 @@
+
+<div id = "task_{{ task.id }}" class="box effect">
+    <form id='task_form_{{ task.id }}' action="{% url 'update_task' task.id %}" method="POST">
+        <h3>Task {{ forloop.counter }}</h3>
+        <hr>
+        <p>{{ task.description }}</p>
+        <hr>
+        <div>
+            <p>
+                {% if task.finished %}
+                    Status : finished
+                {% else %}
+
+                    Status : not finished
+                {% endif %}
+                <button type="submit" >Change Status</button>
+            </p>
+
+        </div>
+
+        {% csrf_token %}
+    </form>
+</div>
