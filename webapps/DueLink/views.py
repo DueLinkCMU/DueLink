@@ -216,7 +216,7 @@ def add_course(request):
             form.save()
             return HttpResponse("success")
         else:
-            return HttpResponse("Error:" + form.errors)
+            return HttpResponse(form.errors)
 
 
 def add_school(request):
