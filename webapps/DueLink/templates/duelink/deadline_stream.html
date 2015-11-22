@@ -31,17 +31,19 @@
 
        {% if not self %}
         {% if linked %}
-        <form action="{% url 'unlink' user_id %}" method="post">
-            <button type="submit">unlink</button>
-            {% csrf_token %}
-        </form>
+
+            <form action="{% url 'unlink' user_id %}" method="POST">
+                <button type="submit">unlink</button>
+                {% csrf_token %}
+            </form>
         {% else %}
-        <form action="{% url 'link' user_id %}" method="post">
-            <button type="submit">link</button>
-            {% csrf_token %}
-        </form>
+            <form action="{% url 'link' user_id %}" method="POST">
+                <button type="submit">link</button>
+                {% csrf_token %}
+            </form>
         {% endif %}
     {% endif %}
+
 
 
 

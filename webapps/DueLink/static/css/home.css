@@ -1,8 +1,16 @@
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
+
+    /*max-width: 80px;*/
     /*margin-bottom: 20px;*/
 }
+
+.container {
+    display: inline-block;
+    max-width: 80%;
+}
+
 
 .nav-image {
     max-width: 25px;
@@ -22,7 +30,7 @@
 
 div.pull-right {
     height: 50px;
-    padding-top: 10px;
+    padding-top: 13px;
 }
 
 .logout {
