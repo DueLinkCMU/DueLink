@@ -41,7 +41,7 @@ urlpatterns = [
 
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
     url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
-    url(r'^get_schedule$', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
+    url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
 
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
