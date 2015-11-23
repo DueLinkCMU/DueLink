@@ -3,6 +3,7 @@
 {% block links %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
+  <script src="{% static "js/profile.js" %}"></script>
 {% endblock links %}
 {% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
 
@@ -47,12 +48,12 @@
          {% if linked %}
 
          <!--<form action="{% url 'unlink' user_id %}" method="POST">-->
-             <a class="btn btn-block btn-default" id="button-unlink" type="submit">unlink</a>
+             <a id="button-link" class="btn btn-block btn-default" onclick="unlink({{ user_id }})" type="submit">unlink</a>
              <!--{% csrf_token %}-->
          <!--</form>-->
          {% else %}
          <!--<form action="{% url 'link' user_id %}" method="POST">-->
-             <a class="btn btn-block btn-primary" id="button-link" type="submit">link</a>
+             <a id="button-link" class="btn btn-block btn-primary" onclick="link({{ user_id }})" type="submit">link</a>
              <!--{% csrf_token %}-->
          <!--</form>-->
          {% endif %}

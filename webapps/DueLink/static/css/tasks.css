@@ -4,6 +4,14 @@ body {background:#ccc}
     margin-top:100px;
 }
 
+.unfinished{
+    color: red;
+}
+
+.finished{
+    color: forestgreen;
+}
+
 .box h3{
     margin-top: 10px;
   text-align:left;
@@ -24,12 +32,39 @@ body {background:#ccc}
 .box button{
     float: right;
 }
+
 .box {
 	width:70%;
 	background:#FFF;
 	margin: auto;
     padding: 10px;
 }
+
+.box-progress h3{
+    margin-top: 10px;
+  text-align:center;
+	position:relative;
+}
+
+.box-progress hr{
+    margin-top:0;
+    margin-bottom: 0;
+}
+
+.box-progress p{
+    text-align: center;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+
+.box-progress {
+    width:30%;
+	background:#FFF;
+	margin: auto;
+    padding: 10px;
+}
+
+
 
 div{
    text-align: center;

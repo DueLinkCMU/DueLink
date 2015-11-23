@@ -6,16 +6,17 @@
         <p>{{ task.description }}</p>
         <hr>
         <div>
-            <p>
+            <p id="task_status_{{ task.id }}">
                 {% if task.finished %}
-                    Status : finished
+                    <span class="finished">Status : finished </span>
+
                 {% else %}
 
-                    Status : not finished
+                    <span class="unfinished">Status : not finished</span>
                 {% endif %}
-                <button type="submit" >Change Status</button>
+                <input type="hidden" name="task_id" value={{ task.id }}>
+                <button type="button" onclick="updateTask()">Change Status</button>
             </p>
-
         </div>
 
         {% csrf_token %}

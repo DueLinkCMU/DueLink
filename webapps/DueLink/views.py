@@ -155,7 +155,6 @@ def add_task(request):
         # Add the new task to page
         context['task'] = new_task
         response = render(request, 'duelink/task.json', context, content_type="application/json")
-        print "fuck your mother i m here!!!!!!!!!!!!!!!!!!!!!!"
         print response
         return response
     else:
@@ -193,7 +192,8 @@ def update_task(request, task_id=None):
         else:
             task.finished = True
         task.save()
-        return redirect('get_tasks', task.event.id)
+        response = render(request, 'duelink/task.json', {"task": task}, content_type="application/json")
+        return response
         # form = UpdateTaskForm(request.POST, instance=task)
         #
         # if form.is_valid():
@@ -203,6 +203,7 @@ def update_task(request, task_id=None):
         #     print form
         #     return HttpResponse("Error" + form.__str__())
 
+    return HttpResponseForbidden("Error")
 
 @login_required
 def add_course(request):
@@ -316,9 +317,9 @@ def link(request, user_id):
         profile.save()
         profile_.friends.add(request.user)
         profile.save()
-        return redirect('profile',user_id)
+        return HttpResponse("success link")
 
-    return Http404
+    return HttpResponseForbidden
 
 
 @transaction.atomic
@@ -332,6 +333,6 @@ def unlink(request, user_id):
         profile.save()
         profile_.friends.remove(request.user)
         profile_.save()
-        return redirect('profile', user_id)
+        return HttpResponse("success unlink")
 
-    return Http404
+    return HttpResponseForbidden
