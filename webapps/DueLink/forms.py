@@ -110,7 +110,7 @@ class EditProfileForm(ProfileForm):
 
 
 class AddEventForm(forms.Form):
-    name = forms.CharField(max_length=20, label='name')
+    name = forms.CharField(max_length=20, label='Event Name')
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     deadline_datetime = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'hidden'}))
 

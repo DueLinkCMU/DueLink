@@ -5,17 +5,17 @@
     <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
     <script src="{% static "js/profile.js" %}"></script>
 {% endblock links %}
-{% block title %}{{ profile.nick_name }}'s Deadlines{% endblock %}
+{% block title %}{{ profile.nick_name }}'s Dues{% endblock %}
 
 
 {% block profile %}
-    <li class="active"><a href="#">
-        {% if self %}
-            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
-            My Deadlines
-        {% else %}
-            {{ profile.nick_name }}'s Deadlines
 
+<li class="active"><a href="#">
+    {% if self %}
+    <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
+    My Dues
+    {% else %}
+    {{ profile.nick_name }}'s Dues
         {% endif %}
     </a></li>
 {% endblock profile %}
