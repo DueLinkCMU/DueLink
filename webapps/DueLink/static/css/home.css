@@ -10,7 +10,6 @@
     max-width: 80%;
 }
 
-
 .nav-image {
     max-width: 25px;
     max-height: 25px;
@@ -24,17 +23,20 @@
 }
 
 .calendar {
-    margin-top: 70px;
+    margin-top: 20px;
 }
 
 div.pull-right {
+    display: inline-block;
     height: 50px;
     padding-top: 13px;
+    white-space:nowrap;
 }
 
 .logout {
     font-size: 16px;
     color: #66757f;
+    float: right;
 }
 
 img.navbar-brand {
@@ -45,3 +47,31 @@ img.navbar-brand {
 .sign.icon {
     margin-top: -45px;
 }
+.pull-right.search {
+
+    max-width: 180px;
+}
+
+.search-input {
+
+    width: 100%;
+    padding: 8px 27px 6px 12px;
+    font-size: 12px;
+    line-height: 1;
+    color: #292f33;
+    background-color: #f5f8fa;
+    border: 1px solid #e1e8ed;
+    border-radius: 21px;
+    transition: all .2s ease-in-out;
+    margin-right: -20%;
+}
+button.search.icon {
+    border:none;
+    border-radius: 15px;
+    background: inherit;
+}
+img.search.icon {
+    width: 18px;
+    height: 18px;
+}
+
