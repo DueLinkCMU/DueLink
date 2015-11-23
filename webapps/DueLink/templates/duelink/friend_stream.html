@@ -20,7 +20,7 @@
 {% block content %}
     <div class="col-md-2">
     </div>
-    <div class="col-md-8" id="friend-stream-panel">
+    <div class="col-md-9" id="friend-stream-panel">
         {% for event in events %}
             {#        event event.deadline.name #}
             {#        {% include 'duelink/deadline.html' %}#}
@@ -35,9 +35,12 @@
                 </div>
                 <!-- due time -->
                 <div class="col-md-1"></div>
-                <div class="col-md-5">
+                <div class="col-md-9">
                     <div class="row" id="row-due-name">
+                         <span class="span-due-name"> {{ event.deadline.course }}: </span>
+                        </br>
                        <span class="span-due-name"> {{ event.deadline.name }}</span>
+
                     </div>
                     <div class="row">
                         <span class="span-due-on">Due on:  </span><span class="span-due-time">{{ event.deadline.due }}</span>
@@ -46,7 +49,7 @@
             </div>
         {% endfor %}
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
     </div>
 
 {% endblock content %}

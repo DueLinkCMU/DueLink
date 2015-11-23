@@ -77,7 +77,7 @@ def get_friend_stream(request):
     friends = User.objects.filter(profile_friends=profile)
     profile_page = False
     self = False
-    events = DueEvent.objects.filter(user__in=friends).order_by('-deadline__due')
+    events = DueEvent.objects.filter(user__in=friends).order_by('deadline__due')
     context = {'events': events, 'profile_page': profile_page, 'self': self}
     return render(request, 'duelink/friend_stream.html', context)
 
