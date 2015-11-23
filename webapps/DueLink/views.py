@@ -24,7 +24,7 @@ def home(request):
     # Display the global posts of all users
     if request.method == 'GET':
         context = {}
-        response = render(request, 'DueLink/home.html', context)
+        response = render(request, 'duelink/home.html', context)
         return response
 
 
