@@ -14,23 +14,23 @@
 {% block title %}Add Event{% endblock title %}
 {% block content%}
 <div class="container" style="margin-top: 50px">
-<h3>Add Event</h3>
+    <h3>Add Event</h3>
 
-<form method="POST" action="{% url 'add_event' %}">
-    <table>
-        {{form}}
-    </table>
-</form>
+    <form method="POST" action="{% url 'add_event' %}">
+        <table>
+            {{form}}
+        </table>
+    </form>
 
-<div class="demo">
-    <label ><b>Select date:</b></label>
-    <!--<input id="timePicker">-->
-    <input id="timePicker" type="text" data-time-format="H:i" />
-    <input id="datePicker">
-
-</div>
-
-<button id="submit_request">submit request</button>
+    <div class="demo">
+        <label><b>Select date:</b></label>
+        <!--<input id="timePicker">-->
+        <input id="timePicker" type="text" data-time-format="H:i"/>
+        <input id="datePicker">
 
     </div>
+
+    <button id="submit_request">submit request</button>
+
+</div>
 {% endblock content%}
