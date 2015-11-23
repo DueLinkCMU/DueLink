@@ -122,7 +122,6 @@ class AddEventForm(forms.Form):
 
     def clean_deadline_datetime(self):
         datetime_str = self.cleaned_data['deadline_datetime']
-        print(type(datetime_str))
 
         try:
             due_datetime = dateutil.parser.parse(datetime_str)

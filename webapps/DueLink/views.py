@@ -109,9 +109,7 @@ def add_event(request):
 @login_required
 def add_deadline(request, name, due, course_pk):
     new_deadline = Deadline.objects.create(name=name, due=due, course=course_pk)
-    print("step1")
     new_deadline.save()
-    print("step2")
     return new_deadline
 
 
