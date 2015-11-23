@@ -8,8 +8,16 @@
 {% endblock links %}
 {% block content %}
     <div class="tasks">
-        <div>
-            <h3>Progress: {{ event.progress }}%</h3>
+        <div class="box-progress effect">
+            <h3>{{ event.deadline.course.course_name }}</h3>
+            <hr>
+            <h4>{{ event.deadline.name }}</h4>
+            <div class="progress">
+                <div id="progress" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow={{ event.progress }}
+                     aria-valuemin="0" aria-valuemax="100" style="width:{{ event.progress }}%">
+                    {{ event.progress }}% Complete
+                </div>
+            </div>
         </div>
         <br>
         {% for task in tasks %}

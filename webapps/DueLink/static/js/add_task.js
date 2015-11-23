@@ -15,6 +15,9 @@ function addTask() {
                 // Clear the text area
                 var taskText = taskForm.find('[name="description"]');
                 taskText.val("");
+               $('#progress').attr('aria-valuenow',data.progress)
+                .attr('style',"width:"+data.progress+"%")
+                .html(data.progress+"% complete");
             }else{
                 //to-jie pan
             }
@@ -28,6 +31,9 @@ function updateTask() {
             //$('#task_'+task_id).
             if (data.type == 'task') { // Comment success, return the new comment
                 $('#task_status_'+task_id).html($(data.html).find("#task_status_"+task_id).html());
+               $('#progress').attr('aria-valuenow',data.progress)
+                .attr('style',"width:"+data.progress+"%")
+                .html(data.progress+"% complete");
             }else{
                 //to-jie pan
             }
