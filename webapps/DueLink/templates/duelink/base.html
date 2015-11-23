@@ -30,6 +30,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}base{% endblock %}</title>
 </head>
+
 <body>
 {% block header %}
     <!-- Fixed navbar -->
@@ -104,8 +105,9 @@
                 </div>
             </div><!--/.nav-collapse -->
         </div>
-    <!--</nav>-->
-{% endblock %}
+    </nav>
+{% endblock header%}
+
 <div class="row">
     <div class="col-md-1" id="left-margin"></div>
     <div class="col-md-9" id="middle">
@@ -115,7 +117,8 @@
     </div>
     <div class="col-md-1" id="right-margin"></div>
 </div>
+
 {% block log_out %}
-{% endblock %}
+{% endblock log_out %}
 </body>
 </html>
