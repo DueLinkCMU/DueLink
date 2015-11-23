@@ -46,10 +46,9 @@
                         <span class="span-due-time" style="float:left">Due on: <b>{{ event.deadline.due }}</b>
                             </span>
                         <span class="span-status"
-                              {% if event.finished %} style="color:red" {% else %} style="color:green" {% endif %}
-                        >
+                              {% if event.finished %} style="color:red" {% else %} style="color:green" {% endif %} >
                        {% if event.finished %}Finished
-                    {% else %}In progress
+                    {% else %}In Progress
                     {% endif %}
                         </span>
                     </div>

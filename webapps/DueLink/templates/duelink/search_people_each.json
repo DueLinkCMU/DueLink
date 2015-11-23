@@ -1,0 +1,4 @@
+{% load json_filter %}
+{
+'name':'{{each.user.username}}'
+}

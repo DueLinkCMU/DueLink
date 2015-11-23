@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
     Http404
+from django.utils.html import escape
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
@@ -335,3 +336,14 @@ def unlink(request, user_id):
         return redirect('profile', user_id)
 
     return Http404
+
+
+@login_required
+def search_people(request, search_name):
+    name = escape(search_name)
+    print(name)
+    users = User.objects.filter(username__icontains=name)
+    if users.count() == 0:
+        return Http404
+
+    return render(request, 'duelink/search_people_result.json', users, content_type='application/json')
