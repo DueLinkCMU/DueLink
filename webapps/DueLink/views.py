@@ -156,11 +156,7 @@ def add_task(request):
         # Add the new task to page
         context['task'] = new_task
         response = render(request, 'duelink/task.json', context, content_type="application/json")
-        print response
-        return response
-    else:
-        # Return errors
-        context['event'] = event
+        t['event'] = event
         context["form"] = form
         response = render(request, 'duelink/new_task_form.json', context, content_type='application/json')
         return response
@@ -348,6 +344,7 @@ def search_people(request):
     result_username = Profile.objects.filter(user__in=User.objects.filter(username__icontains=name))
     result_nickname = Profile.objects.filter(nick_name__icontains=name)
     result_join = result_username | result_nickname
+
     if result_join.count() == 0:
         return HttpResponseNotFound("Sorry, can't find such people")
 

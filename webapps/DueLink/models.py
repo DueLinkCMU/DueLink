@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # FINISHED_CHOICES = ((False, 'Unfinished'), (True, 'Finished'))
 
 
@@ -31,7 +32,7 @@ class Course(models.Model):
     students = models.ManyToManyField(User, related_name='course_students')
 
     def __unicode__(self):
-        return self.school.name + ": " + self.course_name
+        return self.school.name + ": " + self.course_number + " " + self.course_name
 
 
 class Deadline(models.Model):
@@ -50,6 +51,7 @@ class DueEvent(models.Model):
     user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
     created_time = models.DateTimeField(auto_now_add=True)
     finished = models.BooleanField(default=False)
+
     @property
     def progress(self):
         if self.finished:
