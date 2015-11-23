@@ -154,7 +154,10 @@ def add_task(request):
         # Add the new task to page
         context['task'] = new_task
         response = render(request, 'duelink/task.json', context, content_type="application/json")
-        t['event'] = event
+        return response
+    else:
+        # Return errors
+        context['event'] = event
         context["form"] = form
         response = render(request, 'duelink/new_task_form.json', context, content_type='application/json')
         return response

@@ -23,7 +23,7 @@ input.submit.button.login {
 
 form.form.login {
     max-width: 392px;
-    margin: auto;
+    margin: auto auto auto 37%;
 }
 
 div.prompt.username {
@@ -70,8 +70,8 @@ div.checkbox {
 }
 
 .sign.icon {
-    display: inline-block;
-    margin: auto auto auto 55%;
+    display: inline;
+    margin: auto auto auto 52.5%;
     text-align: center;
 }
 
@@ -80,13 +80,17 @@ div.checkbox {
 /*}*/
 
 div.pull-right {
+    display: inline-block;
     height: 50px;
-    padding-top: 10px;
+    padding-top: 13px;
+    white-space: nowrap;
 }
 
 .register {
+    float: right;
     font-size: 18px;
     color: #ffffff;
+    /*color: black;*/
 }
 
 /*.carpet {*/

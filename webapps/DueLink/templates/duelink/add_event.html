@@ -1,9 +1,7 @@
 {% extends "duelink/base.html" %}
 {% load staticfiles %}
 {% block links %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static "css/add_event.css" %}">
-    {% load add_css %}
+
 
     <script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
     <script src="{% static 'jquery/jquery.timepicker.min.js' %}"></script>
@@ -12,15 +10,15 @@
     <script src="{% static 'js/add_event.js' %}"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/add_event.css" %}">
+    {% load add_css %}
 {% endblock links %}
 {% block title %}Add Event{% endblock title %}
 {% block content %}
     <div class="container" id="add-event">
 
         <form class="form add-event" action="{% url 'add_event' %}" method="POST">
-            {% csrf_token %}
-
             <h2 class="form add-event header">Add new event</h2>
 
             {% for error in form.non_field_errors %}
@@ -31,7 +29,7 @@
 
             <table>
                 <tr>
-                    <td>{{ form.name|add_css:"form-control" }}</td>
+                    <td>{{ form.name|add_css_id:"form-control" }}</td>
                     <td class="error">{{ form.name.errors }}</td>
                 </tr>
                 <tr class="select course">
@@ -41,7 +39,7 @@
                 </tr>
                 <tr>
 
-                    <td>{{ form.course|add_css:"form-control" }}</td>
+                    <td>{{ form.course|add_css_id:"form-control" }}</td>
                     <td class="error">{{ form.course.errors }}</td>
                 </tr>
 
@@ -49,7 +47,7 @@
             {% for field in form.hidden_fields %}
                 {{ field }}
             {% endfor %}
-            {% csrf_token %}
+        {% csrf_token %}
         </form>
 
 
