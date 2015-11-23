@@ -99,21 +99,25 @@
                 {% endblock nav_dropdown %}
             </ul>
 
-            <div class="pull-right">
-                <div role="search" class="pull-right search">
-                    <form class="navbar search" action="" method="POST" style="display: inline-block">
-                        <span>
-                        <input class="search-input" type="text" id="search-query" placeholder="Search for Friend"
-                               autocomplete="off"></span>
-                            <span class="search-action">
-                                <button type="submit" class="search icon" tabindex="-1">
-                                    <img class="search icon" src="{% static "images/search.png" %}">
-                                </button>
-                            </span>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar search" action="" method="POST" style="display: inline-block; margin-top: 10px">
+                    <span>
+                    <input class="search-input" type="text" id="search-query" placeholder="Search for Friend"
+                           autocomplete="off"></span>
+                        <span class="search-action">
+                            <button type="submit" class="search icon" tabindex="-1">
+                                <img class="search icon" src="{% static "images/search.png" %}">
+                            </button>
+                        </span>
                     </form>
-                </div>
-                <a class="logout" href='{% url 'logout' %}'>Log out</a>
-            </div>
+                </li>
+                <li>
+                   <a class="logout" href='{% url 'logout' %}'>Log out</a>
+                </li>
+            </ul>
+
+
         </div><!--/.nav-collapse -->
     </div>
     <!--</nav>-->

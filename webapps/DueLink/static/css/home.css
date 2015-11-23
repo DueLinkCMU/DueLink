@@ -32,6 +32,7 @@ div.pull-right {
     height: 50px;
     padding-top: 13px;
     white-space:nowrap;
+    width:400px;
 }
 
 .logout {
