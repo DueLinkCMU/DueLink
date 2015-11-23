@@ -203,6 +203,7 @@ def update_task(request, task_id=None):
 
     return HttpResponseForbidden("Error")
 
+
 @login_required
 def add_course(request):
     if request.method == 'GET':
@@ -338,7 +339,6 @@ def unlink(request, user_id):
 
 @login_required
 def search_people(request):
-
     if not 'search_term' in request.POST:
         return HttpResponseForbidden("Not a valid request")
     name = request.POST['search_term']
@@ -347,7 +347,8 @@ def search_people(request):
     result_join = result_username | result_nickname
 
     if result_join.count() == 0:
-        return HttpResponseNotFound("Sorry, can't find such people")
+        context = {'search_result': 'Sorry, can\'t find such user.'}
+        return render(request, 'duelink/404.html', context)
 
     context = {'friend_list': result_join, 'search_result': True}
     return render(request, 'duelink/friend_list.html', context)
