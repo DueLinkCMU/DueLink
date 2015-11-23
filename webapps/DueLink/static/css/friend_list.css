@@ -1,3 +1,15 @@
 .row {
     margin-top: 50px;
+
+}
+.span-username {
+    font-size: 24px;
+}
+.info-column {
+    /*background: #e6e6e6;*/
+    border-radius: 5px;
+    /*padding: 0px;*/
+    padding: 15px 0px 15px 0px;
+        background: #fff;
+    border: 1px solid #e1e8ed;
 }

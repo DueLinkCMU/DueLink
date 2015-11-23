@@ -350,5 +350,5 @@ def search_people(request):
     if result_join.count() == 0:
         return HttpResponseNotFound("Sorry, can't find such people")
 
-    context = {'friend_list': result_join, 'search_result': True}
+    context = {'friend_list': result_join, 'search_result': True, 'search_term': name}
     return render(request, 'duelink/friend_list.html', context)

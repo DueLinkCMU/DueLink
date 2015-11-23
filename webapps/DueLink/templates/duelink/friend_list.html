@@ -17,21 +17,29 @@
 
 {% block content %}
     {% if search_result %}
-    <h3>Search result</h3>
+    <h3>Search result for: {{ search_term }}</h3>
     {% endif %}
     {% for friend in friend_list %}
         <div class="row" id="friend-{{ friend.id }}">
             <!-- image -->
-            <div class="col-md-3">
+            <div class="col-md-2"></div>
+            <div class="col-md-8 info-column">
+            <div class="col-md-4">
                 <a href="{% url 'profile' friend.id %}">
-                    <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' friend.id %}"
+                    <img class="img-thumbnail" alt="100x100" width="100px" src="{% url 'profile_image' friend.id %}"
                          data-holder-rendered="true"></a>
             </div>
             <!-- name -->
-            <div class="col-md-9">
-                <p><span class="span-username">{{ friend.nick_name }}</span>
+            <div class="col-md-8">
+                <span class="span-username"><a href="{% url 'profile' friend.id %}">{{ friend.nick_name }}</a></span>
+                <span>({{ friend.user }})</span>
+                </br>
+                <span>@{{ friend.school }}</span>
+
             </div>
         </div>
+        </div>
+        <div class="col-md-2"></div>
     {% endfor %}
 
 {% endblock %}

@@ -1,3 +1,7 @@
+body {
+    background: #f5f8fa;
+}
+
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
