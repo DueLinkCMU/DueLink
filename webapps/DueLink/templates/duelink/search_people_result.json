@@ -1,8 +1,3 @@
-{
-[
-{% for each in peoples%}
-{% include 'duelink/search_people_each.json'%}
-{% if not forloop.last %},{% endif%}
-{%endfor%}
-]
-}
+{"result": {
+  "people": [{% for each in users%}{% include 'duelink/search_people_each.json'%}{% if not forloop.last %},{% endif%}{%endfor%}]
+}}

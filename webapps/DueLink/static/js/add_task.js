@@ -16,7 +16,7 @@ function addTask() {
                 var taskText = taskForm.find('[name="description"]');
                 taskText.val("");
             }else{
-                //to-jie pan
+                //TODO:to-jie pan
             }
         });
 }

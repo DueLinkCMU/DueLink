@@ -102,9 +102,10 @@
 
             <ul class="nav navbar-nav navbar-right" >
                 <li id="nav-search-logout">
-                    <form class="navbar search" action="" method="POST" style="display: inline-block; margin-top: 10px">
+                    <form class="navbar search" action="{% url 'search_people' %}" method="POST" style="display: inline-block; margin-top: 10px">
+                        {% csrf_token %}
                     <span>
-                    <input class="search-input" type="text" id="search-people-field" placeholder="Search for Friend"
+                    <input class="search-input" type="text" name="search_term" id="search-people-field" placeholder="Search for Friend"
                            autocomplete="off"></span>
                         <span class="search-action">
                             <button type="submit" class="search icon" tabindex="-1" id="search-people-btn">

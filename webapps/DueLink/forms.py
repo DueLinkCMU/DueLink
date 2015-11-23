@@ -29,9 +29,9 @@ class CourseForm(forms.ModelForm):
             courses_same_course_num = Course.objects.filter(course_number=cleaned_data['course_number'])
             for each in courses_same_course_num:
                 if each.section == cleaned_data['section']:
-                    return False
+                    raise forms.ValidationError("Section invalid")
         else:
-            return True
+            return cleaned_data['section']
 
 
 class DeadlineForm(forms.ModelForm):
@@ -115,13 +115,12 @@ class AddEventForm(forms.Form):
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     deadline_datetime = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'hidden'}))
 
+    # TODO: validate add only course you select
     def clean(self):
         cleaned_data = super(AddEventForm, self).clean()
         return cleaned_data
 
     def clean_deadline_datetime(self):
-        # TODO: Validate empty
-        print("run clean_deadline_datetime")
         datetime_str = self.cleaned_data['deadline_datetime']
         print(type(datetime_str))
 

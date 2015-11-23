@@ -1,4 +1,3 @@
-{% load json_filter %}
 {
-'name':'{{each.user.username}}'
+"name":"{{each.username}}"
 }

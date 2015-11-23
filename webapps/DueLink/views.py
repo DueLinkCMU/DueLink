@@ -339,11 +339,16 @@ def unlink(request, user_id):
 
 
 @login_required
-def search_people(request, search_name):
-    name = escape(search_name)
-    print(name)
-    users = User.objects.filter(username__icontains=name)
-    if users.count() == 0:
-        return Http404
+def search_people(request):
 
-    return render(request, 'duelink/search_people_result.json', users, content_type='application/json')
+    if not 'search_term' in request.POST:
+        return HttpResponseForbidden("Not a valid request")
+    name = request.POST['search_term']
+    result_username = Profile.objects.filter(user__in=User.objects.filter(username__icontains=name))
+    result_nickname = Profile.objects.filter(nick_name__icontains=name)
+    result_join = result_username | result_nickname
+    if result_join.count() == 0:
+        return HttpResponseNotFound("Sorry, can't find such people")
+
+    context = {'friend_list': result_join, 'search_result': True}
+    return render(request, 'duelink/friend_list.html', context)
