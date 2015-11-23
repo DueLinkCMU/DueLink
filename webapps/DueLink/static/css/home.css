@@ -27,7 +27,7 @@
 }
 
 .calendar {
-    margin-top: 20px;
+    margin-top: 70px;
 }
 
 div.pull-right {
@@ -80,3 +80,6 @@ img.search.icon {
     height: 18px;
 }
 
+.add-event {
+    color: #66757f;
+}
