@@ -21,6 +21,19 @@ function addTask() {
         });
 }
 
+function updateTask() {
+    var task_id = $(event.target).prev().val();
+    $.post('/duelink/update_task/'+task_id).done(
+        function (data) {
+            //$('#task_'+task_id).
+            if (data.type == 'task') { // Comment success, return the new comment
+                $('#task_status_'+task_id).html($(data.html).find("#task_status_"+task_id).html());
+            }else{
+                //to-jie pan
+            }
+        });
+}
+
 $(document).ready(function () {
   // CSRF set-up copied from Django docs
   function getCookie(name) {

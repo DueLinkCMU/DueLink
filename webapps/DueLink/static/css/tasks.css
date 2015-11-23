@@ -4,6 +4,14 @@ body {background:#ccc}
     margin-top:100px;
 }
 
+.unfinished{
+    color: red;
+}
+
+.finished{
+    color: lawngreen;
+}
+
 .box h3{
     margin-top: 10px;
   text-align:left;
