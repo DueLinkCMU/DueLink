@@ -22,7 +22,7 @@ input.submit.button.register {
 }
 
 form.form.register {
-    margin-left: 30%;
+    margin-left: 37%;
 }
 
 
@@ -61,7 +61,7 @@ input.form-control:-ms-input-placeholder {
     font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
     font-size: 35px;
     /*padding-left: -20%;*/
-    margin: 8% auto 5% -40%;
+    margin: 8% auto 5% -42%;
 }
 
 div.checkbox {
@@ -74,8 +74,8 @@ div.checkbox {
 }
 
 .sign.icon {
-    display: inline-block;
-    margin: auto auto auto 55%;
+    display: inline;
+    margin: auto auto auto 52.5%;
     text-align: center;
 }
 
@@ -84,12 +84,16 @@ div.checkbox {
 /*}*/
 
 div.pull-right {
+    display: inline-block;
     height: 50px;
-    padding-top: 10px;
+    padding-top: 13px;
+    white-space:nowrap;
 }
 .login {
+    float: right;
     font-size: 18px;
     color: #ffffff;
+    /*color: black;*/
 }
 
 
@@ -99,5 +103,4 @@ div.pull-right {
     /*margin-top: 0;*/
     /*vertical-align: middle;*/
     /*border-top-color: #fff*/
-
 /*}*/
