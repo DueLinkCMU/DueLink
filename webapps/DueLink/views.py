@@ -317,9 +317,9 @@ def link(request, user_id):
         profile.save()
         profile_.friends.add(request.user)
         profile.save()
-        return redirect('profile',user_id)
+        return HttpResponse("success link")
 
-    return Http404
+    return HttpResponseForbidden
 
 
 @transaction.atomic
@@ -333,6 +333,6 @@ def unlink(request, user_id):
         profile.save()
         profile_.friends.remove(request.user)
         profile_.save()
-        return redirect('profile', user_id)
+        return HttpResponse("success unlink")
 
-    return Http404
+    return HttpResponseForbidden
