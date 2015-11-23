@@ -10,6 +10,7 @@
     margin: auto;
     margin-bottom: 10px;
     background: #f2dede;
+    /*background: #e6e6e6;*/
 	border-radius: 10px;
 }
 #deadline-content {
@@ -36,6 +37,9 @@
 }
 .span-status {
 	float:right;
+}
+#deadline-stream-whole {
+	margin-top: 70px;
 }
 .circle {
 	background: #b9def0;

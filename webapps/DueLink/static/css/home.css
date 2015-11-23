@@ -5,6 +5,10 @@
     /*max-width: 80px;*/
 }
 
+#nav-search-logout {
+    height:60px;
+}
+
 .container {
     display: inline-block;
     max-width: 80%;
@@ -46,7 +50,7 @@ img.navbar-brand {
 }
 
 .sign.icon {
-    margin-top: -45px;
+    margin-top: -50px;
 }
 .pull-right.search {
 

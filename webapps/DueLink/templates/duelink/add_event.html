@@ -12,6 +12,7 @@
 {% endblock links %}
 {% block title %}Add Event{% endblock title %}
 {% block content%}
+<div class="container" style="margin-top: 50px">
 <h3>Add Event</h3>
 
 <form method="POST" action="{% url 'add_event' %}">
@@ -30,4 +31,5 @@
 
 <button id="submit_request">submit request</button>
 
+    </div>
 {% endblock content%}

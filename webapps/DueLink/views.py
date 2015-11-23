@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
     Http404
+from django.utils.html import escape
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
@@ -336,3 +337,19 @@ def unlink(request, user_id):
         return HttpResponse("success unlink")
 
     return HttpResponseForbidden
+
+
+@login_required
+def search_people(request):
+
+    if not 'search_term' in request.POST:
+        return HttpResponseForbidden("Not a valid request")
+    name = request.POST['search_term']
+    result_username = Profile.objects.filter(user__in=User.objects.filter(username__icontains=name))
+    result_nickname = Profile.objects.filter(nick_name__icontains=name)
+    result_join = result_username | result_nickname
+    if result_join.count() == 0:
+        return HttpResponseNotFound("Sorry, can't find such people")
+
+    context = {'friend_list': result_join, 'search_result': True}
+    return render(request, 'duelink/friend_list.html', context)

@@ -35,7 +35,7 @@ function updateTask() {
                 .attr('style',"width:"+data.progress+"%")
                 .html(data.progress+"% complete");
             }else{
-                //to-jie pan
+                //TODO:to-jie pan
             }
         });
 }
