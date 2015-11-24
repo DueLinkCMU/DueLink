@@ -23,6 +23,7 @@ function send_form() {
     $.post("add_event", {deadline_datetime: dl_datetime, name: dl_name, course: dl_course})
         .done(function() {
             alert("Success: new evnet added");
+            document.location.href = "home";
 
         })
         .fail(function(){

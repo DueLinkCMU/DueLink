@@ -28,7 +28,7 @@ class Course(models.Model):
     course_name = models.CharField(max_length=80)
     section = models.CharField(max_length=5)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
-    instructor = models.CharField(max_length=40)
+    instructor = models.CharField(max_length=80)
     students = models.ManyToManyField(User, related_name='course_students')
 
     def __unicode__(self):
