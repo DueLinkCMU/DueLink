@@ -1,9 +1,55 @@
-{% extends "dueLink/base.html" %}
+{% extends "duelink/base.html" %}
 {% block title %}Friend Stream{% endblock %}
 
-{% block content %}
-    {% for event in events %}
-            {% include 'duelink/deadline.html' %}
-    {% endfor %}
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/friends.css" %}">
+    {#    for css in events loop#}
+    {#    <link rel="stylesheet" href="{% static 'css/deadline.css' %}">#}
+{% endblock links %}
 
-{% endblock %}
+{% block friend_stream %}
+    <li class="active">
+        <a href="#">
+            <img class="nav-image" src="{% static "images/bell.png" %}">
+            <span class="text">Friends' Dues</span>
+        </a>
+    </li>
+{% endblock friend_stream %}
+
+{% block content %}
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-9" id="friend-stream-panel">
+        {% for event in events %}
+            {#        event event.deadline.name #}
+            {#        {% include 'duelink/deadline.html' %}#}
+            <div class="row" id="friend-stream-each">
+                <div class="col-md-2">
+                    <a href="{% url 'profile' event.user.id %}">
+                        <img class="img-thumbnail" alt="60x60" src="{% url 'profile_image' event.user.id %}"
+                             data-holder-rendered="true"></a>
+
+                    <p style="text-align: center" class="friend-name">
+                        <span>{{ event.user.profile_user.nick_name }}</span>
+                </div>
+                <!-- due time -->
+                <div class="col-md-1"></div>
+                <div class="col-md-9">
+                    <div class="row" id="row-due-name">
+                         <span class="span-due-name"> {{ event.deadline.course }}: </span>
+                        </br>
+                       <span class="span-due-name"> {{ event.deadline.name }}</span>
+
+                    </div>
+                    <div class="row">
+                        <span class="span-due-on">Due on:  </span><span class="span-due-time">{{ event.deadline.due }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-1">
+    </div>
+
+{% endblock content %}

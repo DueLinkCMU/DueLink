@@ -1,12 +1,38 @@
 {% extends 'duelink/base.html' %}
+
+{% load static %}
+{% block links %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/tasks.css' %}">
+    <script src="{% static "js/add_task.js" %}"></script>
+{% endblock links %}
 {% block content %}
-   Progress: {{ event.progress }} %
-    <div>
+    <div class="tasks">
+        <div class="box-progress effect">
+            <h3>{{ event.deadline.course.course_name }}</h3>
+            <hr>
+            <h4>{{ event.deadline.name }}</h4>
+            <div class="progress">
+                <div id="progress" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow={{ event.progress }}
+                     aria-valuemin="0" aria-valuemax="100" style="width:{{ event.progress }}%">
+                    {{ event.progress }}% Complete
+                </div>
+            </div>
+        </div>
+        <br>
         {% for task in tasks %}
-           <p>Task:{{ task.description }}</p>
-            <p>Finished:{{ task.finished }}</p>
-            <a href="{% url 'update_task' task.id %}">Edit</a>
+            {% include 'duelink/task.html' with task=task %}
             <br>
         {% endfor %}
+
+        <div class = "box effect">
+            <h3>New Task</h3>
+            <hr>
+            {% include 'duelink/add_task.html' %}
+        </div>
+        <br>
+        <div>
+            <a href = '{% url 'profile' user.id %}'>back</a>
+        </div>
     </div>
-{% endblock %}
+{% endblock content %}

@@ -1,13 +1,5 @@
-function convertTextToUTCDate(str) {
-    //refer to http://stackoverflow.com/questions/10181649/convert-iso-timestamp-to-date-format-with-javascript
-    var input_date = new Date(str);
-    var newDate = new Date(input_date.getTime()+input_date.getTimezoneOffset()*60*1000);
-
-    var offset = input_date.getTimezoneOffset() / 60;
-    var hours = input_date.getHours();
-
-    newDate.setHours(hours + offset);
-    return newDate.toISOString();
+function parseDate(str) {
+    return moment(str).utc().format();
 }
 
 function get_date() {
@@ -27,24 +19,17 @@ function send_form() {
     var dl_name = $('#id_name').val();
     var dl_course = $('#id_course').val();
     var date_time_draft = dl_date + " " + dl_time + "+00:00";
-    var dl_datetime = convertTextToUTCDate(date_time_draft);
-
-    console.log(dl_time);
-    console.log(dl_date);
-    console.log(dl_name);
-    console.log(dl_course);
-    console.log(convertTextToUTCDate(date_time_draft));
-
+    var dl_datetime = parseDate(date_time_draft);
     $.post("add_event", {deadline_datetime: dl_datetime, name: dl_name, course: dl_course})
         .done(function() {
             alert("Success: new evnet added");
+            document.location.href = "home";
+
         })
         .fail(function(){
             alert("Fail to add new event");
         });
 }
-
-
 
 $(document).ready(function () {
     $('#timePicker').timepicker();

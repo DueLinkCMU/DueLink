@@ -20,6 +20,7 @@ from django.contrib.auth.views import password_reset, password_reset_done, passw
 
 urlpatterns = [
     url(r'^$', 'DueLink.views.home', name='home'),
+    url(r'^home$', 'DueLink.views.home', name='home'),
     # Route for built-in authentication with our own custom login page
     url(r'^login$', 'django.contrib.auth.views.login', {'template_name': 'duelink/login.html'}, name='login'),
     url(r'^register$', 'DueLink.views.register', name='register'),
@@ -32,7 +33,7 @@ urlpatterns = [
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     url(r'^add_event$', 'DueLink.views.add_event', name='add_event'),
-    url(r'^add_task/(?P<event_id>\d+)$', 'DueLink.views.add_task', name='add_task'),
+    url(r'^add_task$', 'DueLink.views.add_task', name='add_task'),
 
     url(r'^tasks/(?P<event_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
 
@@ -67,5 +68,6 @@ urlpatterns = [
         {'template_name': 'duelink/password_reset_complete.html'
          }, name='password_reset_complete'),
     url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
-    url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink')
+    url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink'),
+    url(r'^search_people$', 'DueLink.views.search_people', name='search_people')
 ]

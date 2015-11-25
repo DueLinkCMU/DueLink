@@ -1,15 +1,70 @@
-{% extends "dueLink/base.html" %}
+{% extends "duelink/base.html" %}
 {% block title %}Register{% endblock %}
+
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/register.css" %}">
+    {% load add_css %}
+{% endblock links %}
+
+{% block header %}
+<div class="topbar">
+        <div class="global nav loggedout">
+            <div class="container">
+                <div class="sign icon">
+                    <img src="{% static "images/duelink_white.png" %}"/>
+                </div>
+                <div class="pull-right">
+                    <a class="login" href='{% url 'login' %}'>Login</a>
+                    {#            <ul class="dropdown login">#}
+                    {#                <a class="dropdown-toggle js-dropdown-toggle dropdown-signin" >#}
+                    {#                    <small>Have an account?</small>#}
+                    {#                    <span class="emphasize"> Log in</span>#}
+                    {#                    <span class="carpet"></span>#}
+                    {#                </a>#}
+                    {#                <div class="dropdown-menu dropdown-form" id="signin-dropdown">#}
+                    {#                    <div class="signin-dialog-body">#}
+                    {#                        <div>Have an account?</div>#}
+                    {#                        <form action="">#}
+                    {##}
+                    {#                        </form>#}
+                    {#                    </div>#}
+                    {#                </div>#}
+                    {#            </ul>#}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
+
 {% block content %}
-    <form action="{% url 'register' %}" method="POST">
+    <form class="form register" action="{% url 'register' %}" method="POST">
         {% csrf_token %}
-        <table>
-            {{ form }}
-        </table>
-        <input type="submit">
+
+            <h2 class="form register header">Join DueLink today!</h2>
+
+            {% for error in form.non_field_errors %}
+                <p class="error">
+                    {{ error }}
+                </p>
+            {% endfor %}
+
+            <table>
+                {% for field in form.visible_fields %}
+                    <tr>
+                       <td>{{ field|add_css:"form-control" }}</td>
+                        <td class="error">{{ field.errors }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% for field in form.hidden_fields %}
+                {{ field }}
+            {% endfor %}
+            {% csrf_token %}
+            <input class="submit button register" id="register" type="submit" value="Register"/>
     </form>
 
 {% endblock content %}
 {% block log_out %}
-    <a href='{% url 'login' %}'>Log in</a>
+
 {% endblock %}

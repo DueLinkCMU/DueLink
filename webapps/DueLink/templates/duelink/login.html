@@ -1,5 +1,24 @@
-{% extends "dueLink/base.html" %}
+{% extends "duelink/base.html" %}
 {% block title %}Login{% endblock %}
+
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+{% endblock links %}
+{% block header %}
+    <div class="topbar">
+        <div class="global nav loggedout">
+            <div class="container">
+                <div class="sign icon">
+                    <img src="{% static "images/duelink_white.png" %}"/>
+                </div>
+                <div class="pull-right">
+                    <a class="register" href='{% url 'register' %}'>Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock header %}
 {% block content %}
 
     {% block error %}
@@ -10,23 +29,46 @@
         {% endif %}
     {% endblock %}
 
-    <form class="" action="{% url 'login' %}" method="POST">
-        <h2 class="">Please login</h2>
-        <input type="text" id="inputUserName" class="" placeholder="Username" name="username" required
-               autofocus>
-        <input type="password" id="inputPassword" class="" placeholder="Password" name="password" required>
+    <form class="form login" action="{% url 'login' %}" method="POST">
+        <h2 class="form login header">Please login</h2>
 
+        <div class="textbox">
+            <div class="prompt username" data-fieldname="username">
+                <div class="field">
+                    <input type="text" id="inputUserName" class="form-control" placeholder="Username" name="username"
+                           required
+                           autofocus>
+
+                    <div class="side-tip">
+                    </div>
+                </div>
+            </div>
+            <div class="prompt password" data-fieldname="password">
+                <div class="field">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                           name="password" required>
+
+                    <div class="side-tip">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
+
             <label onclick="location.href='{% url 'password_reset' %}'" class="forget">Forget Password</label>
+
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in">
+
+        <input class="submit button login" type="submit" value="Sign in">
         <input type="hidden" name="next" value="{{ next }}"/>
         {% csrf_token %}
     </form>
+
+
 {% endblock %}
 {% block log_out %}
-    <a href='{% url 'register' %}'>Register</a>
+
 {% endblock %}

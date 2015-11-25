@@ -39,7 +39,6 @@ $(document).ready(function() {
 
 function get_schedule(callback){
     $.get('/duelink/get_schedule/').done(function (data){
-        console.log("asd");
         var events = data.events;
         for (var i = 0; i < events.length; i++) {
             events[i].start = convertUTCDateToLocalDate(events[i].start); //change data format
@@ -49,7 +48,6 @@ function get_schedule(callback){
 }
 
 function convertUTCDateToLocalDate(str) {
-    date = new Date(str);
-    return date.toLocaleString();
+    return moment(str).local().format("YYYY-MM-DDTHH:mm:ss");
 }
 
