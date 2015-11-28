@@ -10,12 +10,12 @@
 
 {% block profile %}
 
-<li class="active"><a href="#">
-    {% if self %}
-    <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
-    My Dues
-    {% else %}
-    {{ profile.nick_name }}'s Dues
+    <li class="active"><a href="#">
+        {% if self %}
+            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
+            My Dues
+        {% else %}
+            {{ profile.nick_name }}'s Dues
         {% endif %}
     </a></li>
 {% endblock profile %}
@@ -69,7 +69,7 @@
         <div class="col-md-1"></div>
 
         <!--Start of deadlines-->
-        <div class="col-md-8" id="deadline-panel">
+        <div class="col-md-9" id="deadline-panel">
             <div class="row">
                 <br>
             </div>
@@ -77,11 +77,6 @@
                 {% include 'duelink/deadline.html' %}
             {% endfor %}
         </div>
-        <!--end of deadlines-->
-        <div class="col-md-1">
-
-        </div>
-
     </div>
 
     </div>

@@ -38,7 +38,7 @@ def get_profile(request, id):
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
         events = user.events.all()
-        print profile.user.id
+        print (profile.user.id)
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)

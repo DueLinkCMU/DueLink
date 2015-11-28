@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
 
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
-    url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
+    url(r'^add_course$', 'DueLink.views_admin.add_course', name='add_course'),
     url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
 
     # # Route to logout a user and send them back to the login page
@@ -68,5 +68,8 @@ urlpatterns = [
          }, name='password_reset_complete'),
     url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
     url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink'),
-    url(r'^search_people$', 'DueLink.views.search_people', name='search_people')
+    url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
+
+
+    url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course')
 ]

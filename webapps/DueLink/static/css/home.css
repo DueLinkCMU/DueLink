@@ -42,10 +42,13 @@ div.pull-right {
     width:400px;
 }
 
-.logout {
+.dropdown-menu {
+    min-width: 60px;
+}
+.dropdown-items {
     font-size: 16px;
     color: #66757f;
-    float: right;
+    float: left;
 }
 
 img.navbar-brand {

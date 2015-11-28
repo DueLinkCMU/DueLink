@@ -151,3 +151,4 @@ class AddEventForm(forms.Form):
             deadline = views.add_deadline(request, name, due_datetime, course_pk)
 
         return deadline
+    
