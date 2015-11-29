@@ -113,8 +113,8 @@ def add_deadline(request, name, due, course_pk):
     return new_deadline
 
 
-@transaction.atomic
-@login_required
+# @transaction.atomic
+# @login_required
 # def add_task(request, event_id=None):
 #     event = get_object_or_404(DueEvent, id=event_id)
 #     if request.method == 'GET':

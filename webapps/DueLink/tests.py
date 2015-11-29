@@ -1,8 +1,6 @@
-from django.test import TestCase
-
-# Create your tests here.
 from django.test import TestCase, Client
-from DueLink.models import *
+from models import *
+from forms import *
 
 
 class DueLinkModelsTest(TestCase):
@@ -53,7 +51,20 @@ class DueLinkCourseMgmtTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Course.objects.filter(pk = 1).count() == 0)
 
-        # test no permission client
+        # test no permission client, should be redirect to login
         client_no_perm = Client()
         response_no_perm = client_no_perm.post('/duelink/admin/delete_course', {'courses': 1})
         self.assertEqual(response_no_perm.status_code, 302)
+
+
+class DueLinkEventTest(TestCase):
+    fixtures = ['test_data.json']
+    def test_adding_event(self):
+        client = Client()
+        client.login(username='admin2', password='123')
+        context = {'deadline_datetime': '2015-11-29T12:34:00+00:00', 'name': 'randomeizze', 'course':'1'}
+        response = client.post('/duelink/add_event', context)
+        # response = client.get('add_event')
+        print(response)
+        self.assertTrue(Deadline.objects.filter(name='randomeizze').count() != 0)
+
