@@ -144,7 +144,7 @@ def add_task(request):
         raise Http404
     form = TaskForm(request.POST)
     event_id = request.POST['event_id']
-    print request.POST
+    print(request.POST)
     event = get_object_or_404(DueEvent, id=event_id)
 
     if form.is_valid():
@@ -207,11 +207,11 @@ def update_task(request, task_id=None):
 @login_required
 def add_course(request):
     if request.method == 'GET':
-        form = CourseForm()
+        form = AddCourseForm()
         return render(request, 'duelink/add_course.html', {'form': form})
 
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = AddCourseForm(request.POST)
         if form.is_valid():  # Validate input data & duplicate course sections
             form.save()
             return HttpResponse("success")

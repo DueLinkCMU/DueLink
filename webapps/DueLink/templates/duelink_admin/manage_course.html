@@ -1,0 +1,30 @@
+{% extends "duelink/base.html" %}
+{% load add_css %}
+{% load staticfiles %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/admin_page.css" %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
+{% endblock links %}
+{% block title %} Add Course {% endblock title %}
+{% block content %}
+    <div class="container-fluid" id="manage-course">
+
+    {% block alert %}
+    {% endblock alert %}
+
+        <ul class="nav nav-pills">
+            <li role="presentation" {% if add_course %}class="active"  {% endif %}><a
+                    href="{% url 'add_course' %}">Add Course</a></li>
+            <li role="presentation" {% if delete_course %}class="active"  {% endif %}><a
+                    href="{% url 'delete_course' %}">Delete Course</a></li>
+            {#TODO:#}
+            <li role="presentation" {% if TODO %}class="active" {% endif %}><a
+                    href="{% url 'home' %}">TODO</a></li>
+        </ul>
+
+        {% block addcourse %}
+        {% endblock addcourse %}
+        {% block deletecourse %}
+        {% endblock deletecourse %}
+
+{% endblock content %}

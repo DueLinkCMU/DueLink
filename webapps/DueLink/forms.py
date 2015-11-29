@@ -18,20 +18,32 @@ class SchoolForm(forms.ModelForm):
         fields = ('name',)
 
 
-class CourseForm(forms.ModelForm):
+class AddCourseForm(forms.ModelForm):
     class Meta:
         model = Course
         exclude = ('students',)
 
     def clean_section(self):
-        cleaned_data = super(CourseForm, self).clean()
-        if Course.objects.filter(course_number=cleaned_data['course_number']).count() > 0:
-            courses_same_course_num = Course.objects.filter(course_number=cleaned_data['course_number'])
-            for each in courses_same_course_num:
+        cleaned_data = super(AddCourseForm, self).clean()
+        # Check both courses with same name and num
+        courses_same_course_num = Course.objects.filter(course_number=cleaned_data['course_number'])
+        courses_same_course_name = Course.objects.filter(course_number=cleaned_data['course_name'])
+        courses_exist = courses_same_course_num | courses_same_course_name
+        if courses_exist.count() > 0:
+            for each in courses_exist:
                 if each.section == cleaned_data['section']:
                     raise forms.ValidationError("Section invalid")
+            # if no return, any request with existing course num will be fail
+            return cleaned_data['section']
         else:
             return cleaned_data['section']
+
+class DeleteCourseForm(forms.Form):
+    courses = forms.ModelChoiceField(queryset=Course.objects.all())
+
+    def clean(self):
+        cleaned_data = super(DeleteCourseForm, self).clean()
+        return cleaned_data
 
 
 class DeadlineForm(forms.ModelForm):
