@@ -1,6 +1,5 @@
 from django.test import TestCase, Client
 from models import *
-from forms import *
 
 
 class DueLinkModelsTest(TestCase):
@@ -20,36 +19,57 @@ class DueLinkTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class DueLinkCourseMgmtTest(TestCase):
+class DueLinkEventTest(TestCase):
     fixtures = ['test_data.json']
-    def test_add_course(self):
+
+    def test_adding_event(self):
         client = Client()
         client.login(username='admin2', password='123')
-        post_context = {'course_name': 'unittest', 'course_number': '15315',
-                                  'section': 'A', 'instructor': 'RB', 'school': "1"}
 
-        response = client.post('/duelink/admin/add_course', post_context, follow=True)
+        context = {'name': 'test', 'course': 2, 'deadline_datetime': '2015-11-29T12:34:00+00:00'}
+        response = client.post('/duelink/add_event', context)
+        self.assertEqual(DueEvent.objects.filter(deadline__name='test').count(), 1)
+
+
+class DueLinkGetTaskTest(TestCase):
+    fixtures = ['test_data.json']
+
+    def test_get_tast(self):
+        client = Client()
+        client.login(username='admin2', password='123')
+        response = client.get('/duelink/get_tasks/1')
+        self.assertEqual(response.status_code, 200)
+
+
+class DueLinkCourseMgmtTest(TestCase):
+    fixtures = ['test_data.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
+    def test_add_course(self):
+        post_context = {'course_name': 'unittest', 'course_number': '15315',
+                        'section': 'A', 'instructor': 'RB', 'school': "1"}
+        response = self.client.post('/duelink/admin/add_course', post_context, follow=True)
         self.assertTrue(Course.objects.filter(course_name='unittest').count() == 1)
-        self.assertTrue(response.content.find('Successfully'.encode()) >= 0)
+        self.assertTrue(response.content.find('Successfully'.encode()) > 0)
 
         # The app should not add new course as it has duplicated section
-        response_duplicate_request = client.post('/duelink/admin/add_course'
-                                                 , post_context, follow=True)
+        self.client.post('/duelink/admin/add_course'
+                    , post_context, follow=True)
         self.assertEqual(Course.objects.filter(course_name='unittest').count(), 1)
 
         # Test adding new section, should be OK
         post_context['section'] = 'N'
-        response_new_section = client.post('/duelink/admin/add_course', post_context, follow=True)
-        self.assertTrue(response.content.find('Successfully'.encode()) >= 0)
+        response_new_section = self.client.post('/duelink/admin/add_course', post_context, follow=True)
+        self.assertTrue(response_new_section.content.find('Successfully'.encode()) > 0)
         self.assertEqual(Course.objects.filter(course_name='unittest').count(), 2)
 
-
     def test_delete_course(self):
-        client = Client()
-        client.login(username='admin2', password='123')
-        response = client.post('/duelink/admin/delete_course', {'courses': 1})
+        response = self.client.post('/duelink/admin/delete_course', {'courses': 1})
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(Course.objects.filter(pk = 1).count() == 0)
+        self.assertTrue(Course.objects.filter(pk=1).count() == 0)
 
         # test no permission client, should be redirect to login
         client_no_perm = Client()
@@ -57,14 +77,18 @@ class DueLinkCourseMgmtTest(TestCase):
         self.assertEqual(response_no_perm.status_code, 302)
 
 
-class DueLinkEventTest(TestCase):
+class DueLinkTaskTest(TestCase):
     fixtures = ['test_data.json']
-    def test_adding_event(self):
-        client = Client()
-        client.login(username='admin2', password='123')
-        context = {'deadline_datetime': '2015-11-29T12:34:00+00:00', 'name': 'randomeizze', 'course':'1'}
-        response = client.post('/duelink/add_event', context)
-        # response = client.get('add_event')
-        print(response)
-        self.assertTrue(Deadline.objects.filter(name='randomeizze').count() != 0)
 
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
+    def test_add_task(self):
+        response = self.client.post('/duelink/add_task', {'event_id': '1', 'description': 'Test_task'})
+        self.assertTrue(response.content.find('Test_task'.encode()) > 0)
+
+        # Test none-exist event id, should return 404
+        response_nonexist_event = self.client.post('/duelink/add_task',
+                                                   {'event_id': '10086', 'description': 'Test_task_nonexist'})
+        self.assertEqual(response_nonexist_event.status_code, 404)

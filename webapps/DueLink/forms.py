@@ -23,6 +23,7 @@ class AddCourseForm(forms.ModelForm):
         model = Course
         exclude = ('students',)
 
+
     def clean_section(self):
         cleaned_data = super(AddCourseForm, self).clean()
         # Check both courses with same name and num
@@ -37,6 +38,7 @@ class AddCourseForm(forms.ModelForm):
             return cleaned_data['section']
         else:
             return cleaned_data['section']
+
 
 class DeleteCourseForm(forms.Form):
     courses = forms.ModelChoiceField(queryset=Course.objects.all())
@@ -140,7 +142,7 @@ class AddEventForm(forms.Form):
             print("ValueError of dateutil.parser")
             raise forms.ValidationError(('DateUtil parse error'))
         except Exception as e:
-            print ("Exception" + str(e))
+            print("Exception" + str(e))
             raise forms.ValidationError(("Datetime unexpected errors"))
 
         return due_datetime
@@ -152,7 +154,7 @@ class AddEventForm(forms.Form):
         course_pk = self.cleaned_data['course']
         deadline_set = Deadline.objects.filter(course=course_pk, due=due_datetime)
 
-        # Check if the deadline exists.
+        # # Check if the deadline exists.
         if deadline_set:
             # If the deadline exists, and the event exists
             if DueEvent.objects.filter(deadline=deadline_set[0], user=request.user):
@@ -163,4 +165,3 @@ class AddEventForm(forms.Form):
             deadline = views.add_deadline(request, name, due_datetime, course_pk)
 
         return deadline
-    

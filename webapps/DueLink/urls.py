@@ -33,10 +33,9 @@ urlpatterns = [
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     url(r'^add_event$', 'DueLink.views.add_event', name='add_event'),
+
     url(r'^add_task$', 'DueLink.views.add_task', name='add_task'),
-
     url(r'^tasks/(?P<event_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
-
     url(r'^get_tasks/(?P<event_id>\d+)$', 'DueLink.views.get_tasks', name='get_tasks'),
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
 
@@ -72,6 +71,7 @@ urlpatterns = [
     url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
 
 
+    # Admin pages for user with special permissions
     url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course', name='delete_course'),
     url(r'^admin/add_course$', 'DueLink.views_admin.add_course', name='add_course'),
     url(r'^admin/manage_course$', 'DueLink.views_admin.manage_course', name='manage_course')
