@@ -58,3 +58,21 @@ def delete_course(request):
         else:
             context = {'delete_course_form': form, 'fail_flag': True, 'delete_course': True}
             return render(request, 'duelink_admin/delete_course.html', context)
+
+@login_required
+@permission_required('DueLink.add_school')
+def add_school(request):
+    if request.method == 'GET':
+        form = AddSchoolForm()
+        context = {'add_school_form': form, 'add_school': True}
+        return render(request, 'duelink_admin/add_school.html', context)
+
+    if request.method == 'POST':
+        form = AddSchoolForm(request.POST)
+        if form.is_valid():
+            form.save()
+            context = {'add_school_form': form, 'add_school': True, 'success_flag': True}
+            return render(request, 'duelink_admin/add_school.html', context)
+        else:
+            context = {'add_school_form': form, 'add_school': True, 'fail_flag': True}
+            return render(request, 'duelink_admin/add_school.html', context)

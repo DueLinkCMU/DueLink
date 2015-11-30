@@ -74,5 +74,10 @@ urlpatterns = [
     # Admin pages for user with special permissions
     url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course', name='delete_course'),
     url(r'^admin/add_course$', 'DueLink.views_admin.add_course', name='add_course'),
-    url(r'^admin/manage_course$', 'DueLink.views_admin.manage_course', name='manage_course')
+    url(r'^admin/manage_course$', 'DueLink.views_admin.manage_course', name='manage_course'),
+
+    url(r'^admin/add_school$', 'DueLink.views_admin.add_school', name='add_school'),
+    # url(r'^admin/delete_school$', 'DueLink.views_admin.delete_school', name='delete_school'),
+
+
 ]

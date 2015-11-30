@@ -13,21 +13,14 @@ input.form-control {
     margin-left: 100px;
 }
 
-#submit-add-course {
-    background: #55acee none no-repeat;
-    box-shadow: none;
-    border: 0;
-    border-radius: 5px;
-    margin-top: 10px;
-}
-#submit-delete-course {
-    background: #55acee none no-repeat;
-    box-shadow: none;
-    border: 0;
-    border-radius: 5px;
-    margin-top: 10px;
-}
 #table-addcourse {
     width:100%;
     max-width:500px;
+}
+.btn.btn-lg.btn-primary.btn-manage-page {
+       background: #55acee none no-repeat;
+    box-shadow: none;
+    border: 0;
+    border-radius: 5px;
+    margin-top: 10px;
 }

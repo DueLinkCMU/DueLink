@@ -12,7 +12,7 @@ class ProfileForm(forms.ModelForm):
         fields = ('nick_name', 'school', 'profile_image')
 
 
-class SchoolForm(forms.ModelForm):
+class AddSchoolForm(forms.ModelForm):
     class Meta:
         model = School
         fields = ('name',)

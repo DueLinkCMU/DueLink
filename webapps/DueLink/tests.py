@@ -92,3 +92,11 @@ class DueLinkTaskTest(TestCase):
         response_nonexist_event = self.client.post('/duelink/add_task',
                                                    {'event_id': '10086', 'description': 'Test_task_nonexist'})
         self.assertEqual(response_nonexist_event.status_code, 404)
+
+    def test_change_task_status(self):
+        old_status = Task.objects.get(pk=1).finished
+        response = self.client.post('/duelink/update_task/' + '1')
+        self.assertNotEqual(Task.objects.get(pk=1).finished, old_status)
+
+
+
