@@ -1,8 +1,12 @@
 from datetime import datetime
 import dateutil.parser
 from django import forms
+from forms import *
 from models import *
 import views
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
+    Http404
 from django.forms.extras.widgets import SelectDateWidget
 
 
@@ -23,7 +27,6 @@ class AddCourseForm(forms.ModelForm):
         model = Course
         exclude = ('students',)
 
-
     def clean_section(self):
         cleaned_data = super(AddCourseForm, self).clean()
         # Check both courses with same name and num
@@ -38,6 +41,39 @@ class AddCourseForm(forms.ModelForm):
             return cleaned_data['section']
         else:
             return cleaned_data['section']
+
+
+class AddSectionForm(forms.Form):
+    origin_course = forms.ModelChoiceField(queryset=Course.objects.all())
+    new_section = forms.CharField(max_length=4)
+    new_instructor = forms.CharField(max_length=80, required=False, label='Instructor, blank if the same')
+
+    def clean(self):
+        cleaned_data = super(AddSectionForm, self).clean()
+        return cleaned_data
+    #
+    # def clean_origin_course(self):
+    #     try:
+    #         origin_course = get_object_or_404(Course, id=self.cleaned_data['origin_course'])
+    #     except Http404:
+    #         raise forms.ValidationError("The original course does not exist")
+    #
+    #     return origin_course
+
+    def clean_new_section(self):
+        course = self.cleaned_data['origin_course']
+        courses_same_course_num = Course.objects.filter(course_number=course.course_number)
+        courses_same_course_name = Course.objects.filter(course_number=course.course_name)
+        courses_exist = courses_same_course_num | courses_same_course_name
+
+        if courses_exist.count() > 0:
+            for each in courses_exist:
+                if each.section == self.cleaned_data['new_section']:
+                    raise forms.ValidationError("Section invalid")
+            # if no return, any request with existing course num will be fail
+            return self.cleaned_data['new_section']
+        else:
+            return self.cleaned_data['new_section']
 
 
 class DeleteCourseForm(forms.Form):

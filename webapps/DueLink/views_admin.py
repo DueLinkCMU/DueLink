@@ -39,6 +39,40 @@ def add_course(request):
 
 
 @login_required
+@permission_required('DueLink.add_course')
+def add_section(request):
+    if request.method == 'GET':
+        form = AddSectionForm()
+        context = {'add_section_form': form, 'add_section': True}
+        return render(request, 'duelink_admin/add_section.html', context)
+
+    if request.method == 'POST':
+        form = AddSectionForm(request.POST)
+        if form.is_valid():
+            origin_course = form.cleaned_data['origin_course']
+            new_course = Course(course_name=origin_course.course_name, course_number=origin_course.course_number,
+                                school=origin_course.school)
+            new_course.section =  form.cleaned_data['new_section']
+            if form.cleaned_data['new_instructor'] == None:
+                new_course.instructor = origin_course.instructor
+            else:
+                new_course.instructor = form.cleaned_data['new_instructor']
+            new_course.save()
+
+            response_form = AddSectionForm()
+            context = {'add_section_form': response_form, 'success_flag': True, 'add_section': True}
+            return render(request, 'duelink_admin/add_section.html', context)
+        else:
+            context = {'add_section_form': form, 'fail_flag': True, 'add_section': True}
+            return render(request, 'duelink_admin/add_section.html', context)
+
+
+
+
+
+
+
+@login_required
 @permission_required('DueLink.delete_course')
 def delete_course(request):
     if request.method == 'GET':

@@ -1,0 +1,42 @@
+{% extends 'duelink_admin/manage_course.html' %}
+{% load add_css %}
+{% load staticfiles %}
+{#For alert header#}
+{% block alert %}
+    {% if success_flag %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Successfully add section
+        </div>
+    {% endif %}
+    {% if fail_flag %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Fail to add section
+        </div>
+    {% endif %}
+{% endblock alert %}
+
+{% block addsection %}
+    <h3>Add section</h3>
+    <form action="{% url 'add_section' %}" method="POST">
+        <table>
+            <tr>
+                <td>{{ add_section_form.origin_course|add_css_id:"form-control" }}</td>
+                <td>{{ add_section_form.origin_course.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ add_section_form.new_section|add_css_id:"form-control" }}</td>
+                <td>{{ add_section_form.new_section.errors }}</td>
+            </tr>
+            <tr>
+                <td>{{ add_section_form.new_instructor|add_css_id:"form-control" }}</td>
+                <td>{{ add_section_form.new_instructor.errors }}</td>
+            </tr>
+        </table>
+        <input type="submit" class="btn btn-lg btn-primary btn-manage-page" id="submit-add-section" value="Add">
+        {% csrf_token %}
+    </form>
+{% endblock addsection %}

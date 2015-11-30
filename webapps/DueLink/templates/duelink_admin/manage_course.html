@@ -9,18 +9,21 @@
 {% block content %}
     <div class="container-fluid" id="manage-course">
 
-    {% block alert %}
-    {% endblock alert %}
+        {% block alert %}
+        {% endblock alert %}
 
-{#    the views_admin sends booleans to tell which tab is active according to current page#}
+        {#    the views_admin sends booleans to tell which tab is active according to current page#}
         <ul class="nav nav-pills">
             <li role="presentation" {% if add_course %}class="active"  {% endif %}><a
                     href="{% url 'add_course' %}">Add Course</a></li>
+            <li role="presentation" {% if add_section %}class="active" {% endif %}><a
+                    href="{% url 'add_section' %}">Add Section</a></li>
             <li role="presentation" {% if delete_course %}class="active"  {% endif %}><a
                     href="{% url 'delete_course' %}">Delete Course</a></li>
             {#TODO:#}
             <li role="presentation" {% if add_school %}class="active" {% endif %}><a
                     href="{% url 'add_school' %}">Add School</a></li>
+
         </ul>
 
         {% block addcourse %}
@@ -29,6 +32,8 @@
         {% endblock deletecourse %}
         {% block addschool %}
         {% endblock addschool %}
+        {% block addsection %}
+        {% endblock addsection %}
 
 
 {% endblock content %}

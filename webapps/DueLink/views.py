@@ -38,7 +38,7 @@ def get_profile(request, id):
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
         events = user.events.all()
-        print (profile.user.id)
+        # print (profile.user.id)
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
@@ -144,7 +144,7 @@ def add_task(request):
         raise Http404
     form = TaskForm(request.POST)
     event_id = request.POST['event_id']
-    print(request.POST)
+    # print(request.POST)
     event = get_object_or_404(DueEvent, id=event_id)
 
     if form.is_valid():
