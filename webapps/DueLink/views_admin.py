@@ -76,3 +76,5 @@ def add_school(request):
         else:
             context = {'add_school_form': form, 'add_school': True, 'fail_flag': True}
             return render(request, 'duelink_admin/add_school.html', context)
+
+
