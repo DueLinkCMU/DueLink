@@ -80,4 +80,5 @@ urlpatterns = [
     # url(r'^admin/delete_school$', 'DueLink.views_admin.delete_school', name='delete_school'),
 
 
+
 ]
