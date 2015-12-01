@@ -1,6 +1,6 @@
 from django.test import TestCase, Client, TransactionTestCase, SimpleTestCase
 from DueLink.models import School, DueEvent, Course, Task
-
+import DueLink
 
 class DueLinkModelsTest(TestCase):
     def test_simple_add(self):
@@ -70,7 +70,13 @@ class DueLinkTaskTest(TestCase):
         response = self.client.post('/duelink/update_task/' + '1')
         self.assertNotEqual(Task.objects.get(pk=1).finished, old_status)
 
-
+class DueLinkTestForm(TestCase):
+    fixtures = ['test_data.json']
+    def test_form(self):
+        course = Course.objects.get(pk=1)
+        form = DueLink.forms.AddEventForm({'origin_course': course, 'new_section': course.section})
+        form.is_valid()
+        self.assertFalse(form.is_valid())
 
 
 class DueLinkAddCourseTest(TransactionTestCase):
