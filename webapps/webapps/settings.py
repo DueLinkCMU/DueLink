@@ -87,7 +87,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'webapps.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -97,7 +96,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -112,7 +110,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 STATIC_ROOT = PROJECT_ROOT + 'static/'
@@ -123,3 +120,5 @@ MEDIA_ROOT = PROJECT_ROOT + 'media/'
 
 MEDIA_URL = PROJECT_ROOT + '/media/'
 
+if os.environ['USER'] == 'jenkins':
+    from jenkins_settings import *
