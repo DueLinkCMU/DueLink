@@ -1,5 +1,5 @@
 from django.test import TestCase, Client, TransactionTestCase, SimpleTestCase
-from models import *
+from DueLink.models import School, DueEvent, Course, Task
 
 
 class DueLinkModelsTest(TestCase):
@@ -49,7 +49,6 @@ class DueLinkGetTaskTest(TestCase):
         response = client.get('/duelink/get_tasks/1')
         self.assertEqual(response.status_code, 200)
 
-
 class DueLinkTaskTest(TestCase):
     fixtures = ['test_data.json']
 
@@ -70,6 +69,8 @@ class DueLinkTaskTest(TestCase):
         old_status = Task.objects.get(pk=1).finished
         response = self.client.post('/duelink/update_task/' + '1')
         self.assertNotEqual(Task.objects.get(pk=1).finished, old_status)
+
+
 
 
 class DueLinkAddCourseTest(TransactionTestCase):
@@ -100,6 +101,8 @@ class DueLinkAddCourseTest(TransactionTestCase):
 
 class DueLinkDeleteCourseTest(TransactionTestCase):
     def test_delete_course(self):
+        client = Client()
+        client.login(username='admin2', password='123')
         response = self.client.post('/duelink/admin/delete_course', {'courses': 1}, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Course.objects.filter(id=1).count() == 0)
@@ -108,3 +111,4 @@ class DueLinkDeleteCourseTest(TransactionTestCase):
         client_no_perm = Client()
         response_no_perm = client_no_perm.post('/duelink/admin/delete_course', {'courses': 1})
         self.assertEqual(response_no_perm.status_code, 302)
+

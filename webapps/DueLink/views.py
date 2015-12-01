@@ -11,8 +11,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
-from forms import *
-from models import *
+from DueLink.forms import *
+from DueLink.models import *
 
 
 # Create your views here.
