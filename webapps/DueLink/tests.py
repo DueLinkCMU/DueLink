@@ -2,6 +2,8 @@ from django.test import TestCase, Client, TransactionTestCase, SimpleTestCase
 from DueLink.models import School, DueEvent, Course, Task
 import DueLink
 
+# http://stackoverflow.com/questions/853796/problems-with-contenttypes-when-loading-a-fixture-in-django
+
 class DueLinkModelsTest(TestCase):
     def test_simple_add(self):
         self.assertTrue(School.objects.all().count() == 0)
@@ -34,7 +36,6 @@ class DueLinkEventTest(TestCase):
     def test_adding_event(self):
         client = Client()
         client.login(username='admin2', password='123')
-
         context = {'name': 'test', 'course': 2, 'deadline_datetime': '2015-11-29T12:34:00+00:00'}
         response = client.post('/duelink/add_event', context)
         self.assertEqual(DueEvent.objects.filter(deadline__name='test').count(), 1)
@@ -48,6 +49,7 @@ class DueLinkGetTaskTest(TestCase):
         client.login(username='admin2', password='123')
         response = client.get('/duelink/get_tasks/1')
         self.assertEqual(response.status_code, 200)
+
 
 class DueLinkTaskTest(TestCase):
     fixtures = ['test_data.json']
@@ -70,10 +72,13 @@ class DueLinkTaskTest(TestCase):
         response = self.client.post('/duelink/update_task/' + '1')
         self.assertNotEqual(Task.objects.get(pk=1).finished, old_status)
 
+
 class DueLinkTestForm(TestCase):
     fixtures = ['test_data.json']
+
     def test_form(self):
         course = Course.objects.get(pk=1)
+        # Test adding existing section, form.is_valid() should be False
         form = DueLink.forms.AddEventForm({'origin_course': course, 'new_section': course.section})
         form.is_valid()
         self.assertFalse(form.is_valid())
@@ -106,15 +111,23 @@ class DueLinkAddCourseTest(TransactionTestCase):
 
 
 class DueLinkDeleteCourseTest(TransactionTestCase):
+    fixtures = ['test_data2.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
     def test_delete_course(self):
-        client = Client()
-        client.login(username='admin2', password='123')
-        response = self.client.post('/duelink/admin/delete_course', {'courses': 1}, follow=True)
+
+        response = self.client.post('/duelink/admin/delete_course', {'courses': '1'}, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(Course.objects.filter(id=1).count() == 0)
+        self.assertTrue(Course.objects.filter(pk=1).count() == 0)
 
         # test no permission client, should be redirect to login
         client_no_perm = Client()
         response_no_perm = client_no_perm.post('/duelink/admin/delete_course', {'courses': 1})
         self.assertEqual(response_no_perm.status_code, 302)
 
+    def test_delete_none_exist(self):
+        response = self.client.post('/duelink/admin/delete_course', {'course': 10000}, follow=True)
+        self.assertTrue(response.content.find('Fail'.encode()) >= 0)
