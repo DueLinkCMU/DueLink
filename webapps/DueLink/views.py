@@ -35,6 +35,7 @@ def get_profile(request, id):
     try:
         user = get_object_or_404(User, id=id)
         self = (user == request.user)
+
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
         events = user.events.all()
@@ -48,6 +49,9 @@ def get_profile(request, id):
 
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
                'self': self, 'user_id': id, 'linked': linked}
+    if self:
+        num_of_course = Course.objects.filter(students=user).count()
+        context['num_of_course'] = num_of_course
 
     return render(request, 'duelink/deadline_stream.html', context)
 
@@ -352,3 +356,30 @@ def search_people(request):
 
     context = {'friend_list': result_join, 'search_result': True, 'search_term': name}
     return render(request, 'duelink/friend_list.html', context)
+
+
+@login_required
+def subscribe_course(request):
+    if request.method == 'GET':
+        form = SubscribeCourseForm()
+        context = {'subscribe_course_form': form}
+        return render(request, 'duelink/subscribe_course.html', context)
+
+    if request.method == 'POST':
+        form = SubscribeCourseForm(request.POST)
+        if form.is_valid() and form.clean_exist(request.user):
+            course = form.cleaned_data['course']
+            course.students.add(request.user)
+            context = {'new_subscribe_course': course}
+            return render(request, 'duelink_json/course.json', context, content_type='application/json')
+        else:
+            return HttpResponseForbidden("Invalid or subscribed course")
+
+
+@login_required
+def display_user_course(request):
+    user = request.user
+    courses = Course.objects.filter(students=user)
+
+    context = {'courses': courses}
+    return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')

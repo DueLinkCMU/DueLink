@@ -40,8 +40,10 @@ urlpatterns = [
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
 
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
-    url(r'^add_course$', 'DueLink.views_admin.add_course', name='add_course'),
     url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
+
+    url(r'^display_user_course', 'DueLink.views.display_user_course', name='display_user_course'),
+    url(r'^subscribe_course', 'DueLink.views.subscribe_course', name='subscribe_course'),
 
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
@@ -66,10 +68,9 @@ urlpatterns = [
     url(r'^password_reset_complete$', 'django.contrib.auth.views.password_reset_complete',
         {'template_name': 'duelink/password_reset_complete.html'
          }, name='password_reset_complete'),
-    url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
-    url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink'),
+    url(r'^link/(?P<user_id>\d+)$', 'DueLink.views.link', name='link'),
+    url(r'^unlink/(?P<user_id>\d+)$', 'DueLink.views.unlink', name='unlink'),
     url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
-
 
     # Admin pages for user with special permissions
     url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course', name='delete_course'),
@@ -79,7 +80,5 @@ urlpatterns = [
 
     url(r'^admin/add_school$', 'DueLink.views_admin.add_school', name='add_school'),
     # url(r'^admin/delete_school$', 'DueLink.views_admin.delete_school', name='delete_school'),
-
-
 
 ]

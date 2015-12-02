@@ -4,8 +4,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
     Http404
-from forms import *
-from models import *
+from DueLink.forms import *
+from DueLink.models import *
 
 
 @permission_required('DueLink.add_course')
@@ -52,7 +52,7 @@ def add_section(request):
             origin_course = form.cleaned_data['origin_course']
             new_course = Course(course_name=origin_course.course_name, course_number=origin_course.course_number,
                                 school=origin_course.school)
-            new_course.section =  form.cleaned_data['new_section']
+            new_course.section = form.cleaned_data['new_section']
             if form.cleaned_data['new_instructor'] == None:
                 new_course.instructor = origin_course.instructor
             else:
@@ -65,11 +65,6 @@ def add_section(request):
         else:
             context = {'add_section_form': form, 'fail_flag': True, 'add_section': True}
             return render(request, 'duelink_admin/add_section.html', context)
-
-
-
-
-
 
 
 @login_required
@@ -93,6 +88,7 @@ def delete_course(request):
             context = {'delete_course_form': form, 'fail_flag': True, 'delete_course': True}
             return render(request, 'duelink_admin/delete_course.html', context)
 
+
 @login_required
 @permission_required('DueLink.add_school')
 def add_school(request):
@@ -110,5 +106,3 @@ def add_school(request):
         else:
             context = {'add_school_form': form, 'add_school': True, 'fail_flag': True}
             return render(request, 'duelink_admin/add_school.html', context)
-
-

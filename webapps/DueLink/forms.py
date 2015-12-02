@@ -2,7 +2,7 @@ from datetime import datetime
 import dateutil.parser
 from django import forms
 from forms import *
-from models import *
+from DueLink.models import *
 import views
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
@@ -51,14 +51,6 @@ class AddSectionForm(forms.Form):
     def clean(self):
         cleaned_data = super(AddSectionForm, self).clean()
         return cleaned_data
-    #
-    # def clean_origin_course(self):
-    #     try:
-    #         origin_course = get_object_or_404(Course, id=self.cleaned_data['origin_course'])
-    #     except Http404:
-    #         raise forms.ValidationError("The original course does not exist")
-    #
-    #     return origin_course
 
     def clean_new_section(self):
         course = self.cleaned_data['origin_course']
@@ -201,3 +193,26 @@ class AddEventForm(forms.Form):
             deadline = views.add_deadline(request, name, due_datetime, course_pk)
 
         return deadline
+
+
+class SubscribeCourseForm(forms.Form):
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+
+    def clean(self):
+        cleaned_data = super(SubscribeCourseForm, self).clean()
+        return cleaned_data
+
+    def clean_exist(self, user):
+        course = self.cleaned_data['course']
+        print(course)
+        print(user)
+        try:
+            if user in course.students.all():
+                return False
+            return True
+        except Http404:
+            print("Course not exist")
+            return False
+        except Exception:
+            print("Unexpected error: course is not Course object or user is not User object")
+            return False
