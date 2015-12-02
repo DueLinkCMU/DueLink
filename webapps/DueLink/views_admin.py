@@ -8,15 +8,16 @@ from DueLink.forms import *
 from DueLink.models import *
 
 
-#yizhong shunjian rang ni biancheng guanliyuan de yemian
+# yizhong shunjian rang ni biancheng guanliyuan de yemian
 @login_required
 def admin_get(request):
     try:
         if Group.objects.filter(name='duelink_admin').count() == 0:
-                Group.objects.create(name="duelink_admin")
+            Group.objects.create(name="duelink_admin")
 
         g = Group.objects.get(name='duelink_admin')
-        t = Permission.objects.filter(codename__icontains='school') | Permission.objects.filter(codename__icontains='course')
+        t = Permission.objects.filter(codename__icontains='school') | Permission.objects.filter(
+            codename__icontains='course')
         for each in t: g.permissions.add(each)
 
         request.user.groups.add(g)
@@ -25,7 +26,8 @@ def admin_get(request):
 
     return HttpResponse("You are good to go")
 
-permission_required('DueLink.add_course')
+
+@permission_required('DueLink.add_course')
 @permission_required('DueLink.delete_course')
 @login_required
 def manage_course(request):
@@ -48,6 +50,7 @@ def add_course(request):
         if form.is_valid():  # Validate input data & duplicate course sections
             form.save()
             response_form = AddCourseForm()
+            # success_flag and add_course is for the alerts in return pages
             context = {'add_course_form': response_form, 'success_flag': True, 'add_course': True}
             return render(request, 'duelink_admin/add_course.html', context)
         else:
@@ -70,7 +73,8 @@ def add_section(request):
             new_course = Course(course_name=origin_course.course_name, course_number=origin_course.course_number,
                                 school=origin_course.school)
             new_course.section = form.cleaned_data['new_section']
-            if form.cleaned_data['new_instructor'] == None:
+            # If admin leave the instructor input blank, use the exist one
+            if form.cleaned_data['new_instructor'] is None:
                 new_course.instructor = origin_course.instructor
             else:
                 new_course.instructor = form.cleaned_data['new_instructor']

@@ -1,12 +1,9 @@
-from datetime import datetime
 import dateutil.parser
 from django import forms
 from forms import *
 from DueLink.models import *
 import views
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http.response import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, HttpResponseForbidden, \
-    Http404
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms.extras.widgets import SelectDateWidget
 
 
@@ -37,7 +34,7 @@ class AddCourseForm(forms.ModelForm):
             for each in courses_exist:
                 if each.section == cleaned_data['section']:
                     raise forms.ValidationError("Section invalid")
-            # if no return, any request with existing course num will be fail
+            # if no return, any request with existing course num will fail
             return cleaned_data['section']
         else:
             return cleaned_data['section']
@@ -58,6 +55,8 @@ class AddSectionForm(forms.Form):
         courses_same_course_name = Course.objects.filter(course_number=course.course_name)
         courses_exist = courses_same_course_num | courses_same_course_name
 
+        # TODO: there may be a more efficient solution to this
+        # Check exist sections
         if courses_exist.count() > 0:
             for each in courses_exist:
                 if each.section == self.cleaned_data['new_section']:
@@ -136,8 +135,6 @@ class RegistrationForm(forms.Form):
 
         return email
 
-        # TODO: clean school
-
 
 class UserForm(forms.ModelForm):
     class Meta:
@@ -204,13 +201,14 @@ class SubscribeCourseForm(forms.Form):
 
     def clean_exist(self, user):
         course = self.cleaned_data['course']
-        print(course)
-        print(user)
+        # print(course)
+        # print(user)
         try:
+            #
             if user in course.students.all():
                 return False
             return True
-        except Http404:
+        except ObjectDoesNotExist:
             print("Course not exist")
             return False
         except Exception:

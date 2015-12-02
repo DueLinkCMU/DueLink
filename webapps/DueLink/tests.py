@@ -2,6 +2,7 @@ from django.test import TestCase, Client, TransactionTestCase, SimpleTestCase
 from DueLink.models import School, DueEvent, Course, Task
 import DueLink
 
+
 # http://stackoverflow.com/questions/853796/problems-with-contenttypes-when-loading-a-fixture-in-django
 
 class DueLinkModelsTest(TestCase):
@@ -21,7 +22,7 @@ class DueLinkTest(TestCase):
 
 
 class DueLinkTestSchool(TestCase):
-    fixtures = ['test_data.json']
+    fixtures = ['test_data2.json']
 
     def test_add_school(self):
         client2 = Client()
@@ -31,7 +32,7 @@ class DueLinkTestSchool(TestCase):
 
 
 class DueLinkEventTest(TestCase):
-    fixtures = ['test_data.json']
+    fixtures = ['test_data2.json']
 
     def test_adding_event(self):
         client = Client()
@@ -42,7 +43,7 @@ class DueLinkEventTest(TestCase):
 
 
 class DueLinkGetTaskTest(TestCase):
-    fixtures = ['test_data.json']
+    fixtures = ['test_data2.json']
 
     def test_get_tast(self):
         client = Client()
@@ -52,7 +53,7 @@ class DueLinkGetTaskTest(TestCase):
 
 
 class DueLinkTaskTest(TestCase):
-    fixtures = ['test_data.json']
+    fixtures = ['test_data2.json']
 
     def setUp(self):
         self.client = Client()
@@ -74,7 +75,7 @@ class DueLinkTaskTest(TestCase):
 
 
 class DueLinkTestForm(TestCase):
-    fixtures = ['test_data.json']
+    fixtures = ['test_data2.json']
 
     def test_form(self):
         course = Course.objects.get(pk=1)
@@ -85,7 +86,7 @@ class DueLinkTestForm(TestCase):
 
 
 class DueLinkAddCourseTest(TransactionTestCase):
-    fixtures = ['test_data.json']
+    fixtures = ['test_data2.json']
 
     def setUp(self):
         self.client = Client()
@@ -118,7 +119,6 @@ class DueLinkDeleteCourseTest(TransactionTestCase):
         self.client.login(username='admin2', password='123')
 
     def test_delete_course(self):
-
         response = self.client.post('/duelink/admin/delete_course', {'courses': '1'}, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(Course.objects.filter(pk=1).count() == 0)
@@ -131,3 +131,22 @@ class DueLinkDeleteCourseTest(TransactionTestCase):
     def test_delete_none_exist(self):
         response = self.client.post('/duelink/admin/delete_course', {'course': 10000}, follow=True)
         self.assertTrue(response.content.find('Fail'.encode()) >= 0)
+
+
+class AccessTest(TransactionTestCase):
+    fixtures = ['test_data2.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
+    def test_admin(self):
+        response = self.client.get('/duelink/admin/add_course')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/duelink/admin/delete_course')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/duelink/admin/add_school')
+        self.assertEqual(response.status_code, 200)
+        response = self.client.get('/duelink/admin/add_section')
+        self.assertEqual(response.status_code, 200)
+
