@@ -17,9 +17,12 @@
 
 <!--TODO: friendlist style -->
 {% block content %}
+    <div class="row">
+    <div class="col-md-2"></div>
     {% if search_result %}
-    <h3>Search result for: {{ search_term }}</h3>
+    <span class="search-result">Search result for: {{ search_term }}</span>
     {% endif %}
+    </div>
     {% for friend in friend_list %}
         <div class="row" id="friend-{{ friend.id }}">
             <!-- image -->
