@@ -21,7 +21,7 @@ class DueLinkTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-class DueLinkTestSchool(TestCase):
+class DueLinkTestAddSchool(TestCase):
     fixtures = ['test_data2.json']
 
     def test_add_school(self):
@@ -29,6 +29,8 @@ class DueLinkTestSchool(TestCase):
         client2.login(username='admin2', password='123')
         response = client2.post('/duelink/admin/add_school', {'name': "testbbbb"}, follow=True)
         self.assertTrue(School.objects.filter(name='testbbbb').count() > 0)
+        response = client2.post('/duelink/admin/add_school', {'name': "testbbbb"}, follow=True)
+        self.assertTrue(response.content.find('Fail'.encode()) > 0)
 
 
 class DueLinkEventTest(TestCase):
@@ -64,9 +66,9 @@ class DueLinkTaskTest(TestCase):
         self.assertTrue(response.content.find('Test_task'.encode()) > 0)
 
         # Test none-exist event id, should return 404
-        response_nonexist_event = self.client.post('/duelink/add_task',
-                                                   {'event_id': '10086', 'description': 'Test_task_nonexist'})
-        self.assertEqual(response_nonexist_event.status_code, 404)
+        response_noneexist_event = self.client.post('/duelink/add_task',
+                                                   {'event_id': '10086', 'description': 'Test_task_none_exist'})
+        self.assertEqual(response_noneexist_event.status_code, 404)
 
     def test_change_task_status(self):
         old_status = Task.objects.get(pk=1).finished
@@ -133,6 +135,31 @@ class DueLinkDeleteCourseTest(TransactionTestCase):
         self.assertTrue(response.content.find('Fail'.encode()) >= 0)
 
 
+class AddSectionTest(TransactionTestCase):
+    fixtures = ['test_data2.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
+    def test_add_section(self):
+        course = Course(course_name='unittest', course_number='15315', section='A', instructor='RB', school_id=1)
+        course.save()
+        post_context = {'origin_course': str(course.pk), 'new_section': 'X', 'new_instructor': 'CD'}
+        response = self.client.post('/duelink/admin/add_section', post_context)
+        self.assertTrue(Course.objects.filter(course_name='unittest', section='X', instructor='CD').exists())
+
+        # Test add section without input new_instructor
+        post_context = {'origin_course': str(course.pk), 'new_section': 'Y'}
+        response = self.client.post('/duelink/admin/add_section', post_context)
+        self.assertTrue(Course.objects.filter(course_name='unittest', section='Y').exists())
+
+        # Test add duplicated section
+        post_context = {'origin_course': str(course.pk), 'new_section': 'A'}
+        response = self.client.post('/duelink/admin/add_section', post_context)
+        self.assertTrue(response.content.find('Fail'.encode()) > 0)
+
+
 class AccessTest(TransactionTestCase):
     fixtures = ['test_data2.json']
 
@@ -149,4 +176,5 @@ class AccessTest(TransactionTestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/duelink/admin/add_section')
         self.assertEqual(response.status_code, 200)
-
+        response = self.client.get('/duelink/admin/manage_course', follow=True)
+        self.assertEqual(response.status_code, 200)

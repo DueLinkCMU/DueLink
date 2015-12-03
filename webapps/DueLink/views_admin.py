@@ -74,7 +74,7 @@ def add_section(request):
                                 school=origin_course.school)
             new_course.section = form.cleaned_data['new_section']
             # If admin leave the instructor input blank, use the exist one
-            if form.cleaned_data['new_instructor'] is None:
+            if form.cleaned_data['new_instructor'] is None or form.cleaned_data['new_instructor'] == '':
                 new_course.instructor = origin_course.instructor
             else:
                 new_course.instructor = form.cleaned_data['new_instructor']
