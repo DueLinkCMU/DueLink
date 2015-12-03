@@ -1,3 +1,6 @@
+~ Test server: http://54.165.106.68:8080
+密码见测试.py里那个
+
 
 ###Sprint 3 Backlog###
 
@@ -5,7 +8,7 @@
 - User can type course name or number to search the course(**Working**)  
 - Users set events as private/public
 - User can set event as private, so that people linked to them cannot see it on friend stream
-- Email notification(1hour's work): https://github.com/django-ses/django-ses
+- Email notification(**1 hour's work**): https://github.com/django-ses/django-ses
 
 ####Project team(**Not Started!**) ####
 - Build new models for project team
@@ -19,7 +22,7 @@
 
 ####Unit test####
 - Improve coverage(**good-progress 68% lines**)  
-    2~3 labor hrs to cover views.py
+    (**2~3 labor hrs to cover views.py**)
 
 ####Admin User####
 - Add admin user who has privilege to add course/school to system(**90%**)
