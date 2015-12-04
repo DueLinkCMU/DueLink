@@ -348,3 +348,11 @@ def search_people(request):
 
     context = {'friend_list': result_join, 'search_result': True}
     return render(request, 'duelink/friend_list.html', context)
+
+@login_required
+def search_course(request):
+    #return a courses.json
+    context = {}
+    context['courses'] = Course.objects.all()
+    if request.method == "GET":
+        return render(request, 'duelink/courses.json', context,  content_type = "application/json")

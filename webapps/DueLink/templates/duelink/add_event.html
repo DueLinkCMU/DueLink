@@ -6,6 +6,8 @@
 <script src="{% static 'jquery/jquery.timepicker.min.js' %}"></script>
 <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
 <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
+<script src="{% static 'horsey/horsey.min.js' %}"></script>
+<script src="{% static 'js/search_course.js' %}"></script>
 <script src="{% static 'js/add_event.js' %}"></script>
 <link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
 <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
@@ -17,6 +19,8 @@
 <h3>Add Event</h3>
 
 <form method="POST" action="{% url 'add_event' %}">
+    <label>Select Course</label>
+    <input name = "search_course" id = "search_course" type = "text">
     <table>
         {{form}}
     </table>

@@ -68,5 +68,6 @@ urlpatterns = [
          }, name='password_reset_complete'),
     url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
     url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink'),
-    url(r'^search_people$', 'DueLink.views.search_people', name='search_people')
+    url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
+    url(r'^search_course$', 'DueLink.views.search_course', name='search_course')
 ]

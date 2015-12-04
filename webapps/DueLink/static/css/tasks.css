@@ -1,4 +1,4 @@
-body {background:#ccc}
+body {background:#ffffff}
 
 .tasks{
     margin-top:100px;
@@ -35,7 +35,7 @@ body {background:#ccc}
 
 .box {
 	width:70%;
-	background:#FFF;
+	background:#fff8cb;
 	margin: auto;
     padding: 10px;
 }
@@ -59,7 +59,7 @@ body {background:#ccc}
 
 .box-progress {
     width:30%;
-	background:#FFF;
+	background:#fff8cb;
 	margin: auto;
     padding: 10px;
 }
