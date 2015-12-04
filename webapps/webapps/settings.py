@@ -84,9 +84,14 @@ TEMPLATES = [
         },
     },
 ]
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+
+EMAIL_HOST = 'localhost'
+DEFAULT_FROM_EMAIL = 'Server <admin@duelink.com>'
+EMAIL_PORT = 25
 
 WSGI_APPLICATION = 'webapps.wsgi.application'
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 

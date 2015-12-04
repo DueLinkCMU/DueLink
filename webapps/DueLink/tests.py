@@ -1,6 +1,6 @@
 from django.test import TestCase, Client, TransactionTestCase, SimpleTestCase
+from DueLink.forms import AddEventForm
 from DueLink.models import School, DueEvent, Course, Task
-import DueLink
 
 
 # http://stackoverflow.com/questions/853796/problems-with-contenttypes-when-loading-a-fixture-in-django
@@ -82,7 +82,7 @@ class DueLinkTestForm(TestCase):
     def test_form(self):
         course = Course.objects.get(pk=1)
         # Test adding existing section, form.is_valid() should be False
-        form = DueLink.forms.AddEventForm({'origin_course': course, 'new_section': course.section})
+        form = AddEventForm({'origin_course': course, 'new_section': course.section})
         form.is_valid()
         self.assertFalse(form.is_valid())
 
