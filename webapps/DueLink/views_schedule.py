@@ -14,5 +14,5 @@ def get_schedule(request):
         user = request.user
         events = user.events.all()
         context = {"events":events}
-        response = render(request, 'DueLink/schedule.json', context, content_type='application/json')
+        response = render(request, 'duelink/schedule.json', context, content_type='application/json')
         return response

@@ -25,10 +25,10 @@ class Profile(models.Model):
 
 class Course(models.Model):
     course_number = models.CharField(max_length=10)
-    course_name = models.CharField(max_length=50)
-    section = models.CharField(max_length=4)
+    course_name = models.CharField(max_length=80)
+    section = models.CharField(max_length=5)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
-    instructor = models.CharField(max_length=40)
+    instructor = models.CharField(max_length=80)
     students = models.ManyToManyField(User, related_name='course_students')
 
     def __unicode__(self):

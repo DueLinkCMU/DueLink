@@ -24,7 +24,7 @@ def home(request):
     # Display the global posts of all users
     if request.method == 'GET':
         context = {}
-        response = render(request, 'DueLink/home.html', context)
+        response = render(request, 'duelink/home.html', context)
         return response
 
 
@@ -77,7 +77,7 @@ def get_friend_stream(request):
     friends = User.objects.filter(profile_friends=profile)
     profile_page = False
     self = False
-    events = DueEvent.objects.filter(user__in=friends).order_by('-deadline__due')
+    events = DueEvent.objects.filter(user__in=friends).order_by('deadline__due')
     context = {'events': events, 'profile_page': profile_page, 'self': self}
     return render(request, 'duelink/friend_stream.html', context)
 
@@ -154,7 +154,10 @@ def add_task(request):
         # Add the new task to page
         context['task'] = new_task
         response = render(request, 'duelink/task.json', context, content_type="application/json")
-        t['event'] = event
+        return response
+    else:
+        # Return errors
+        context['event'] = event
         context["form"] = form
         response = render(request, 'duelink/new_task_form.json', context, content_type='application/json')
         return response
@@ -199,6 +202,7 @@ def update_task(request, task_id=None):
         #     return HttpResponse("Error" + form.__str__())
 
     return HttpResponseForbidden("Error")
+
 
 @login_required
 def add_course(request):
@@ -335,7 +339,6 @@ def unlink(request, user_id):
 
 @login_required
 def search_people(request):
-
     if not 'search_term' in request.POST:
         return HttpResponseForbidden("Not a valid request")
     name = request.POST['search_term']
@@ -344,9 +347,10 @@ def search_people(request):
     result_join = result_username | result_nickname
 
     if result_join.count() == 0:
-        return HttpResponseNotFound("Sorry, can't find such people")
+        context = {'search_result': 'Sorry, can\'t find such user.'}
+        return render(request, 'duelink/404.html', context)
 
-    context = {'friend_list': result_join, 'search_result': True}
+    context = {'friend_list': result_join, 'search_result': True, 'search_term': name}
     return render(request, 'duelink/friend_list.html', context)
 
 @login_required

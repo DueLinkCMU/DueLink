@@ -1,3 +1,7 @@
+body {
+    background: #f5f8fa;
+}
+
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
@@ -27,7 +31,7 @@
 }
 
 .calendar {
-    margin-top: 20px;
+    margin-top: 70px;
 }
 
 div.pull-right {
@@ -80,3 +84,6 @@ img.search.icon {
     height: 18px;
 }
 
+.add-event {
+    color: #66757f;
+}

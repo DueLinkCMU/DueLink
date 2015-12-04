@@ -1,3 +1,35 @@
 .row {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
+}
+
+.friend-name {
+    font-size: 18px;
+    color: #1b6d85;
+}
+
+#friend-stream-panel {
+    margin-top: 100px;
+}
+
+.span-due-name {
+    font-size: 18px;
+    font-weight: 500;
+    display: inline-block;
+    /*color: #aab8c2;*/
+}
+
+#row-due-name {
+    margin-bottom: 30px;
+}
+.span-due-on {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#friend-stream-each {
+    background: #fff;
+    padding-top:10px;
+    margin-bottom:20px;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
 }

@@ -66,7 +66,6 @@ class TaskForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.Form):
-    # TODO: form attrs
     username = forms.CharField(max_length=30, label='Username', widget=forms.TextInput())
     email = forms.EmailField(max_length=100, label='Email', widget=forms.EmailInput())
     password1 = forms.CharField(max_length=30, label='Password', widget=forms.PasswordInput())
@@ -78,20 +77,20 @@ class RegistrationForm(forms.Form):
         cleaned_data = super(RegistrationForm, self).clean()
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-                raise forms.ValidationError(_("The two passwords doesn't match."))
+                raise forms.ValidationError(("The two passwords doesn't match."))
         return cleaned_data
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username__exact=username):
-            raise forms.ValidationError(_("The username is occupied, please try another one."))
+            raise forms.ValidationError(("The username is occupied, please try another one."))
 
         return username
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email__exact=email):
-            raise forms.ValidationError(_("This email is occupied."))
+            raise forms.ValidationError(("This email is occupied."))
 
         return email
 
@@ -111,7 +110,7 @@ class EditProfileForm(ProfileForm):
 
 
 class AddEventForm(forms.Form):
-    name = forms.CharField(max_length=20, label='name')
+    name = forms.CharField(max_length=20, label='Event Name')
     course = forms.ModelChoiceField(queryset=Course.objects.all())
     deadline_datetime = forms.CharField(widget=forms.DateTimeInput(attrs={'type': 'hidden'}))
 
@@ -127,10 +126,10 @@ class AddEventForm(forms.Form):
             due_datetime = dateutil.parser.parse(datetime_str)
         except ValueError:
             print("ValueError of dateutil.parser")
-            raise forms.ValidationError(_('DateUtil parse error'))
+            raise forms.ValidationError(('DateUtil parse error'))
         except Exception as e:
             print ("Exception" + str(e))
-            raise forms.ValidationError(_("Datetime unexpected errors"))
+            raise forms.ValidationError(("Datetime unexpected errors"))
 
         return due_datetime
 

@@ -1,0 +1,12 @@
+{% extends "dueLink/base.html" %}
+{% load staticfiles %}
+
+{% block links %}
+    {{ block.super }}
+    {% load static %}
+{% endblock links %}
+{% block title %}404{% endblock %}
+
+{% block content %}
+    <h1 class="search result" style="margin-top: 70px; color: #aab8c2"> {{ search_result }} </h1>
+{% endblock content %}

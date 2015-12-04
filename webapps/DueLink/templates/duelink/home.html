@@ -1,4 +1,4 @@
-{% extends "dueLink/base.html" %}
+{% extends "duelink/base.html" %}
 {% load staticfiles %}
 {% block links %}
     {{ block.super }}
@@ -28,8 +28,8 @@
 {% block content %}
 
     <div class="calendar">
-        <a href="{% url 'add_event' %}">Add Due</a>
-        <p>Your Calendar</P>
+        <a class="add-event" href="{% url 'add_event' %}">Add Due</a>
+        <p>My Calendar</P>
         <div id='script-warning'>
             error occurs when loading events.
         </div>

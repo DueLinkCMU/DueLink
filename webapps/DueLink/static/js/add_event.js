@@ -15,14 +15,19 @@ function get_time() {
 
 function send_form() {
     var dl_date = get_date();
-    var dl_time = get_time();
+    var m_d_y = dl_date.split("/");
+    var year = m_d_y[2];
+    var month = m_d_y[0];
+    var day = m_d_y[1];
+    var dl_time = get_time() + ":00";
     var dl_name = $('#id_name').val();
     var dl_course = $('#id_course').val();
-    var date_time_draft = dl_date + " " + dl_time + "+00:00";
-    var dl_datetime = parseDate(date_time_draft);
+    var date_time_draft = year + "-" + month + "-" + day + " " + dl_time;
+    var dl_datetime = moment(date_time_draft).toISOString();
     $.post("add_event", {deadline_datetime: dl_datetime, name: dl_name, course: dl_course})
         .done(function() {
             alert("Success: new evnet added");
+            document.location.href = "home";
 
         })
         .fail(function(){
