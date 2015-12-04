@@ -274,35 +274,6 @@ def register(request):
 
 
 @login_required
-@transaction.atomic
-def edit_profile(request):
-    user = request.user
-    profile_to_edit = get_object_or_404(Profile, user=user)
-    user_to_to_edit = get_object_or_404(User, id=user.id)
-
-    context = {}
-    if request.method == 'GET':
-        user_form = UserForm(instance=user_to_to_edit)
-        profile_form = EditProfileForm(instance=profile_to_edit)  # Creates form from the
-        context = {'profile_form': profile_form,
-                   'user_form': user_form}  # profile_to_edit)
-        return render(request, 'duelink/edit_profile.html', context)
-
-    # if method is POST, get form data to update the model
-    user_form = UserForm(request.POST, instance=user_to_to_edit)
-    profile_form = EditProfileForm(request.POST, request.FILES, instance=profile_to_edit)
-    context['profile_form'] = profile_form
-    context['user_form'] = user_form
-
-    if not profile_form.is_valid() or not user_form.is_valid():
-        return render(request, 'duelink/edit_profile.html', context)
-    user_form.save()
-    profile_form.save()
-
-    return redirect('profile', user.id)
-
-
-@login_required
 def display_tasks(request, event_id):
     tasks = Task.objects.filter(event=event_id)
     context = {tasks}
@@ -359,10 +330,53 @@ def search_people(request):
 
 
 @login_required
+def display_user_course(request):
+    user = request.user
+    skim = False
+    if 'skim' in request.POST:
+        if request.POST['skim'] == '1':
+           skim = True
+
+    courses = Course.objects.filter(students=user)
+
+    context = {'courses': courses, 'skim': skim}
+    return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')
+
+
+@login_required
+@transaction.atomic
+def edit_profile(request):
+    user = request.user
+    profile_to_edit = get_object_or_404(Profile, user=user)
+    user_to_to_edit = get_object_or_404(User, id=user.id)
+
+    context = {}
+    if request.method == 'GET':
+        user_form = UserForm(instance=user_to_to_edit)
+        profile_form = EditProfileForm(instance=profile_to_edit)  # Creates form from the
+        context = {'profile_form': profile_form,
+                   'user_form': user_form, 'edit_profile': True}  # profile_to_edit)
+        return render(request, 'duelink/edit_profile.html', context)
+
+    # if method is POST, get form data to update the model
+    user_form = UserForm(request.POST, instance=user_to_to_edit)
+    profile_form = EditProfileForm(request.POST, request.FILES, instance=profile_to_edit)
+    context['profile_form'] = profile_form
+    context['user_form'] = user_form
+
+    if not profile_form.is_valid() or not user_form.is_valid():
+        return render(request, 'duelink/edit_profile.html', context)
+    user_form.save()
+    profile_form.save()
+
+    return redirect('profile', user.id)
+
+
+@login_required
 def subscribe_course(request):
     if request.method == 'GET':
         form = SubscribeCourseForm()
-        context = {'subscribe_course_form': form}
+        context = {'subscribe_course_form': form, 'subscribe_course': True}
         return render(request, 'duelink/subscribe_course.html', context)
 
     if request.method == 'POST':
@@ -370,16 +384,22 @@ def subscribe_course(request):
         if form.is_valid() and form.clean_exist(request.user):
             course = form.cleaned_data['course']
             course.students.add(request.user)
-            context = {'new_subscribe_course': course}
-            return render(request, 'duelink_json/course.json', context, content_type='application/json')
+            context = {'courses': [course,]}
+            return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')
         else:
             return HttpResponseForbidden("Invalid or subscribed course")
 
 
 @login_required
-def display_user_course(request):
-    user = request.user
-    courses = Course.objects.filter(students=user)
-
-    context = {'courses': courses}
-    return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')
+def unsubscribe_course(request):
+    if request.method == 'POST':
+        form = UnsubscribeCourseForm(request.POST)
+        if form.is_valid() and form.valid_user(request.user):
+            print(form.cleaned_data['course_id'])
+            course = Course.objects.get(id=form.cleaned_data['course_id'])
+            course.students.remove(request.user)
+            return HttpResponse("Un-subscribed course")
+        else:
+            return HttpResponseForbidden("Fail to un-subscribe course")
+    else:
+        return HttpResponseForbidden("Invalid request method, should be POST")

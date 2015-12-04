@@ -1,0 +1,44 @@
+#user-settings {
+    margin-top: 80px;
+    max-width: 100%;
+}
+.container.container-subscribe-course {
+    max-width: 100%;
+    padding-left: 0px;
+}
+
+.h3-subscribe-course {
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+.span-edit-user {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1%;
+}
+.span-edit-profile {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.row.row-course-subscription {
+    margin-left: 0px;
+    margin-bottom: 10px;
+}
+#table-user-edit {
+    width: 100%;
+}
+.form-control {
+    margin-bottom: 8px;
+}
+
+#table-profile-edit {
+    width: 100%;
+}
+
+#nav-user-settings {
+    margin-left: 120px;
+    margin-bottom: 20px;
+}
+

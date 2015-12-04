@@ -1,5 +1,5 @@
 function parseDate(str) {
-    return moment(str).utc().format();
+    return moment(str, "MM-DD-YYYY HH:mm").utc().format();
 }
 
 function get_date() {
@@ -18,8 +18,9 @@ function send_form() {
     var dl_time = get_time();
     var dl_name = $('#id_name').val();
     var dl_course = $('#id_course').val();
-    var date_time_draft = dl_date + " " + dl_time + "+00:00";
+    var date_time_draft = dl_date + " " + dl_time;
     var dl_datetime = parseDate(date_time_draft);
+    alert(dl_datetime);
     $.post("add_event", {deadline_datetime: dl_datetime, name: dl_name, course: dl_course})
         .done(function() {
             alert("Success: new evnet added");
@@ -33,7 +34,7 @@ function send_form() {
 
 $(document).ready(function () {
     $('#timePicker').timepicker();
-    $('#timePicker').timepicker("setTime", Date.now());
+    $('#timePicker').timepicker("setTime", new Date(Date.now()));
     $('#datePicker').datepicker();
     $('#datePicker').datepicker('update', new Date(Date.now()));
     $('#submit_request').click(function() {send_form()});
