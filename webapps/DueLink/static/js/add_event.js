@@ -35,6 +35,7 @@ function send_form() {
         });
 }
 
+
 $(document).ready(function () {
     $('#timePicker').timepicker();
     $('#timePicker').timepicker("setTime", Date.now());
@@ -66,6 +67,4 @@ $(document).ready(function () {
     }
   });
 
-    //load course
-    loadCourse();
 });

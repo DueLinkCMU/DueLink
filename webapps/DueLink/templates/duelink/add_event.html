@@ -6,11 +6,12 @@
     <script src="{% static 'jquery/jquery.timepicker.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
     <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
-    <script src="{% static 'horsey/horsey.min.js' %}"></script>
-    <script src="{% static 'js/search_course.js' %}"></script>
     <script src="{% static 'js/add_event.js' %}"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
+    <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
+
+
     {% load static %}
     <link rel="stylesheet" href="{% static "css/add_event.css" %}">
     {% load add_css %}
@@ -21,8 +22,7 @@
 
 
         <form class="form add-event" action="{% url 'add_event' %}" method="POST">
-         <label>Select Course</label>
-        <input name = "search_course" id = "search_course" type = "text">
+
             <h2 class="form add-event header">Add new event</h2>
 
 
@@ -52,7 +52,8 @@
             {% for field in form.hidden_fields %}
                 {{ field }}
             {% endfor %}
-        {% csrf_token %}
+
+            {% csrf_token %}
         </form>
 
 
@@ -67,4 +68,21 @@
         <button class="submit button add-event" id="submit_request">Submit Request</button>
 
     </div>
+
+    <script src="{% static "js/search_course.js" %}"></script>
+    <script src="{% static "chosen/chosen.jquery.min.js"%}" type="text/javascript"></script>
+    <script src="{% static 'js/search_course.js' %}"></script>
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select'           : {},
+            '.chosen-select-deselect'  : {allow_single_deselect:true},
+            '.chosen-select-no-single' : {disable_search_threshold:10},
+            '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+            '.chosen-select-width'     : {width:"95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+
 {% endblock content %}
