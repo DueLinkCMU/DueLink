@@ -392,3 +392,84 @@ def display_user_course(request):
     context = {'courses': courses}
     return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')
 
+
+@transaction.atomic
+@login_required
+def create_team(request, user_id):
+    user_ = get_object_or_404(User, id=user_id)
+    profile = get_object_or_404(Profile, user=request.user)
+    profile_ = get_object_or_404(Profile, user=user_)
+    if request.method == "POST":
+        profile.friends.add(user_)
+        profile.save()
+        profile_.friends.add(request.user)
+        profile.save()
+        return HttpResponse("success link")
+
+    return HttpResponseForbidden
+
+@transaction.atomic
+@login_required
+def add_member(request, team_id):
+    user_ = get_object_or_404(User, id=user_id)
+    profile = get_object_or_404(Profile, user=request.user)
+    profile_ = get_object_or_404(Profile, user=user_)
+    if request.method == "POST":
+        profile.friends.add(user_)
+        profile.save()
+        profile_.friends.add(request.user)
+        profile.save()
+        return HttpResponse("success link")
+
+    return HttpResponseForbidden
+
+@transaction.atomic
+@login_required
+def remove_member(request, team_id):
+    user_ = get_object_or_404(User, id=user_id)
+    profile = get_object_or_404(Profile, user=request.user)
+    profile_ = get_object_or_404(Profile, user=user_)
+    if request.method == "POST":
+        profile.friends.add(user_)
+        profile.save()
+        profile_.friends.add(request.user)
+        profile.save()
+        return HttpResponse("success link")
+
+    return HttpResponseForbidden
+
+@login_required
+def get_team_list(request):
+    context = {}
+    user = request.user
+    friend_list = user.profile_friends.all()
+    context['friend_list'] = friend_list
+    return render(request, 'duelink/friend_list.html', context)
+
+
+@login_required
+def get_team_stream(request, id):
+    errors = []
+    # Go to the profile page of a user matching the id
+    try:
+        user = get_object_or_404(User, id=id)
+        self = (user == request.user)
+
+        profile_page = True
+        profile = get_object_or_404(Profile, user=user)
+        events = user.events.all()
+        # print (profile.user.id)
+    except ObjectDoesNotExist:
+        errors.append('This user does not exist.')
+        return render(request, 'duelink/deadline_stream.html', errors)
+
+    profile_me = get_object_or_404(Profile, user=request.user)
+    linked = profile_me.friends.filter(id=id).exists()
+
+    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
+               'self': self, 'user_id': id, 'linked': linked}
+    if self:
+        num_of_course = Course.objects.filter(students=user).count()
+        context['num_of_course'] = num_of_course
+
+    return render(request, 'duelink/deadline_stream.html', context)

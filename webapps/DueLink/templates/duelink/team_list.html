@@ -1,0 +1,49 @@
+{% extends "duelink/base.html" %}
+{% block title %}Team List{% endblock %}
+
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static "css/friend_list.css" %}">
+{% endblock links %}
+
+{% block friend_list %}
+    <li class="active">
+        <a href="#">
+            <img class="nav-image" src="{% static "images/Teams.png" %}">
+            <span class="text">Teams</span>
+        </a>
+    </li>
+{% endblock friend_list %}
+
+<!--TODO: teamlist style -->
+{% block content %}
+    <div class="row">
+    <div class="col-md-2"></div>
+    {% if search_result %}
+    <span class="search-result">Search result for: {{ search_term }}</span>
+    {% endif %}
+    </div>
+    {% for friend in friend_list %}
+        <div class="row" id="friend-{{ friend.id }}">
+            <!-- image -->
+            <div class="col-md-2"></div>
+            <div class="col-md-8 info-column">
+            <div class="col-md-4">
+                <a href="{% url 'profile' friend.id %}">
+                    <img class="img-thumbnail" alt="100x100" width="100px" src="{% url 'profile_image' friend.id %}"
+                         data-holder-rendered="true"></a>
+            </div>
+            <!-- name -->
+            <div class="col-md-8">
+                <span class="span-username"><a href="{% url 'profile' friend.id %}">{{ friend.nick_name }}</a></span>
+                <span>({{ friend.user }})</span>
+                </br>
+                <span>@{{ friend.school }}</span>
+
+            </div>
+        </div>
+        </div>
+        <div class="col-md-2"></div>
+    {% endfor %}
+
+{% endblock %}
