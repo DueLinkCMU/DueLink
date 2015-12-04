@@ -33,16 +33,17 @@ urlpatterns = [
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     url(r'^add_event$', 'DueLink.views.add_event', name='add_event'),
+
     url(r'^add_task$', 'DueLink.views.add_task', name='add_task'),
-
     url(r'^tasks/(?P<event_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
-
     url(r'^get_tasks/(?P<event_id>\d+)$', 'DueLink.views.get_tasks', name='get_tasks'),
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
 
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
-    url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
     url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
+
+    url(r'^display_user_course', 'DueLink.views.display_user_course', name='display_user_course'),
+    url(r'^subscribe_course', 'DueLink.views.subscribe_course', name='subscribe_course'),
 
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
@@ -67,8 +68,20 @@ urlpatterns = [
     url(r'^password_reset_complete$', 'django.contrib.auth.views.password_reset_complete',
         {'template_name': 'duelink/password_reset_complete.html'
          }, name='password_reset_complete'),
-    url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
-    url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink'),
+
+    url(r'^link/(?P<user_id>\d+)$', 'DueLink.views.link', name='link'),
+    url(r'^unlink/(?P<user_id>\d+)$', 'DueLink.views.unlink', name='unlink'),
     url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
-    url(r'^search_course$', 'DueLink.views.search_course', name='search_course')
+    url(r'^search_course$', 'DueLink.views.search_course', name='search_course'),
+    # Admin pages for user with special permissions
+    url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course', name='delete_course'),
+    url(r'^admin/add_course$', 'DueLink.views_admin.add_course', name='add_course'),
+    url(r'^admin/add_section$', 'DueLink.views_admin.add_section', name='add_section'),
+    url(r'^admin/manage_course$', 'DueLink.views_admin.manage_course', name='manage_course'),
+
+    url(r'^admin/add_school$', 'DueLink.views_admin.add_school', name='add_school'),
+    # url(r'^admin/delete_school$', 'DueLink.views_admin.delete_school', name='delete_school'),
+
+    url(r'^admin/admin_get$', 'DueLink.views_admin.admin_get'),
+
 ]

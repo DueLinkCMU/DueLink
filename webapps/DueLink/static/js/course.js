@@ -1,28 +1,3 @@
-/**
- * Created by pimengfu on 11/22/15.
- */
-/**
- * Created by changyilong on 11/22/15.
- */
-
-function link(user_id) {
-    var button_link = $(event.target);
-    $.post('/duelink/link/' + user_id).done(
-        function (data) {
-            button_link.attr('onclick', 'unlink(' + user_id + ')')
-                .html("Unlink");
-        });
-}
-
-function unlink(user_id) {
-    var button_link = $(event.target);
-    $.post('/duelink/unlink/' + user_id).done(
-        function (data) {
-            button_link.attr('onclick', 'link(' + user_id + ')')
-                .html("Link");
-        });
-}
-
 function populate() {
     var course_table = $('#course-list-modal');
     // Remove all children
@@ -44,8 +19,9 @@ function populate() {
 
 
 $(document).ready(function () {
-    // CSRF set-up copied from Django docs
+    //populate();
     $('#course-modal-trigger').on('click', populate);
+    // CSRF set-up copied from Django docs
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {

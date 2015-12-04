@@ -1,0 +1,64 @@
+{% extends 'duelink_admin/manage_course.html' %}
+{% load add_css %}
+{% load staticfiles %}
+{#For alert header#}
+{% block alert %}
+    {% if success_flag %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Successfully add course
+        </div>
+    {% endif %}
+    {% if fail_flag %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Fail to add course
+        </div>
+    {% endif %}
+{% endblock alert %}
+
+{% block addcourse %}
+    <h3>Add course </h3>
+    <form action="{% url 'add_course' %}" method="POST">
+        {% csrf_token %}
+        <table id="table-addcourse">
+            <tr> <td> <span class="span-addcourse">Course Number: </span> </td> </tr>
+            <tr>
+                <td> {{ add_course_form.course_number|add_css_id:"form-control" }} </td>
+                <td>{{ add_course_form.course_number.errors }}</td>
+            </tr>
+            <tr>
+                <td> <span class="span-addcourse">Course Name: </span> </td>
+            </tr>
+            <tr>
+                <td> {{ add_course_form.course_name|add_css_id:"form-control" }} </td>
+                <td>{{ add_course_form.course_name.errors }}</td>
+            </tr>
+            <tr>
+                <td> <span class="span-addcourse">Section: </span> </td>
+            </tr>
+            <tr>
+                <td> {{ add_course_form.section|add_css_id:"form-control" }} </td>
+                <td>{{ add_course_form.section.errors }}</td>
+            </tr>
+            <tr>
+                <td> <span class="span-addcourse">Instructor: </span> </td>
+            </tr>
+            <tr>
+                <td> {{ add_course_form.instructor|add_css_id:"form-control" }} </td>
+                <td>{{ add_course_form.instructor.errors }}</td>
+            </tr>
+            <tr>
+                <td> <span class="span-addcourse">Select School:</span> </td>
+            </tr>
+            <tr>
+                <td> {{ add_course_form.school|add_css_id:"form-control" }} </td>
+                <td>{{ add_course_form.school.errors }}</td>
+            </tr>
+
+        </table>
+        <input type="submit" class="btn btn-lg btn-primary btn-manage-page" id="submit-add-course">
+    </form>
+{% endblock addcourse %}

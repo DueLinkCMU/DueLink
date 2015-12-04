@@ -10,12 +10,12 @@
 
 {% block profile %}
 
-<li class="active"><a href="#">
-    {% if self %}
-    <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
-    My Dues
-    {% else %}
-    {{ profile.nick_name }}'s Dues
+    <li class="active"><a href="#">
+        {% if self %}
+            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
+            My Dues
+        {% else %}
+            {{ profile.nick_name }}'s Dues
         {% endif %}
     </a></li>
 {% endblock profile %}
@@ -43,24 +43,40 @@
             <div class="row">
 
                 <!--link or unlink-->
-                <div class="container-fluid">
-                    {% if not self %}
-                        {% if linked %}
+                {% if not self %}
+                    {% if linked %}
 
-                            <!--<form action="{% url 'unlink' user_id %}" method="POST">-->
-                            <a id="button-link" class="btn btn-block btn-default" onclick="unlink({{ user_id }})"
-                               type="submit">unlink</a>
-                            <!--{% csrf_token %}-->
-                            <!--</form>-->
-                        {% else %}
-                            <!--<form action="{% url 'link' user_id %}" method="POST">-->
-                            <a id="button-link" class="btn btn-block btn-primary" onclick="link({{ user_id }})"
-                               type="submit">link</a>
-                            <!--{% csrf_token %}-->
-                            <!--</form>-->
-                        {% endif %}
+                        <!--<form action="{% url 'unlink' user_id %}" method="POST">-->
+                        <a id="button-link" class="btn btn-block btn-default" onclick="unlink({{ user_id }})"
+                           type="submit">unlink</a>
+                        <!--{% csrf_token %}-->
+                        <!--</form>-->
+                    {% else %}
+                        <!--<form action="{% url 'link' user_id %}" method="POST">-->
+                        <a id="button-link" class="btn btn-block btn-primary" onclick="link({{ user_id }})"
+                           type="submit">link</a>
+                        <!--{% csrf_token %}-->
+                        <!--</form>-->
                     {% endif %}
-                </div>
+
+                {% else %}
+                    <div class="div-status">
+                        <a class="profile-status-link" id="course-modal-trigger" data-toggle="modal"
+                           data-target="#courseModal">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            <span class="profile-status-title">Courses</span>
+                            <span class="profile-status-number">{{ num_of_course }}</span>
+                        </a>
+                    </div>
+                    <div class="div-status">
+                        <a class="profile-status-link">
+                            <span class="glyphicon glyphicon-flag"></span>
+                            <span class="profile-status-title">Projects</span>
+                            <span class="profile-status-number">{% if num_of_projects %}{{ num_of_projects }} {% else %}
+                                {{ None }}{% endif %}</span>
+                        </a>
+                    </div>
+                {% endif %}
                 <!--End link or unlink -->
             </div>
         </div>
@@ -69,7 +85,7 @@
         <div class="col-md-1"></div>
 
         <!--Start of deadlines-->
-        <div class="col-md-8" id="deadline-panel">
+        <div class="col-md-9" id="deadline-panel">
             <div class="row">
                 <br>
             </div>
@@ -77,13 +93,29 @@
                 {% include 'duelink/deadline.html' %}
             {% endfor %}
         </div>
-        <!--end of deadlines-->
-        <div class="col-md-1">
-
-        </div>
+    </div>
 
     </div>
 
+    {#place for modal#}
+    <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="courseModalLabel">Course Subcription</h4>
+                </div>
+                <div class="modal-body">
+                    <ul id="course-list-modal">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}
 

@@ -1,0 +1,34 @@
+{% extends 'duelink_admin/manage_course.html' %}
+{% load add_css %}
+{% load staticfiles %}
+{#For alert header#}
+{% block alert %}
+    {% if success_flag %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Successfully add school
+        </div>
+    {% endif %}
+    {% if fail_flag %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Fail to add school
+        </div>
+    {% endif %}
+{% endblock alert %}
+
+{% block addschool %}
+    <h3>Add school</h3>
+    <form action="{% url 'add_school' %}" method="POST">
+        <table>
+            <tr>
+                <td>{{ add_school_form.name|add_css_id:"form-control" }}</td>
+                <td>{{ add_school_form.name.errors }}</td>
+            </tr>
+        </table>
+        <input type="submit" class="btn btn-lg btn-primary btn-manage-page" id="submit-add-school" value="Add">
+        {% csrf_token %}
+    </form>
+{% endblock addschool %}
