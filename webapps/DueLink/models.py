@@ -46,9 +46,19 @@ class Deadline(models.Model):
                + self.name + " due on " + self.due.__str__()
 
 
+class Team(models.Model):
+    name = models.CharField(max_length=200)
+    user = models.ForeignKey(User, related_name="creator", on_delete=models.CASCADE)
+    users = models.ManyToManyField(User, related_name="members")
+
+    def __unicode__(self):
+        return self.id.__str__() + "," +self.name + ',' + self.users.all().__str__()
+
+
 class DueEvent(models.Model):
     deadline = models.ForeignKey(Deadline, related_name='events', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, related_name='events', on_delete=models.CASCADE, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     finished = models.BooleanField(default=False)
 
@@ -76,3 +86,4 @@ class Task(models.Model):
     def __unicode__(self):
         return self.event.deadline.name + ", " + str(self.finished) + ", " + self.description + ", " \
                + self.created_time.__str__()
+
