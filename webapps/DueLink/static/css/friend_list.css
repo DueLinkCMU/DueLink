@@ -1,6 +1,5 @@
 .row {
-    margin-top: 50px;
-
+    margin-top: 40px;
 }
 .span-username {
     font-size: 24px;
@@ -10,6 +9,9 @@
     border-radius: 5px;
     /*padding: 0px;*/
     padding: 15px 0px 15px 0px;
-        background: #fff;
+    background: #fff;
     border: 1px solid #e1e8ed;
+}
+.search-result {
+    font-size: 24px;
 }

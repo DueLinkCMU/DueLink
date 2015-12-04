@@ -11,8 +11,8 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
-from forms import *
-from models import *
+from DueLink.forms import *
+from DueLink.models import *
 
 
 # Create your views here.
@@ -35,10 +35,11 @@ def get_profile(request, id):
     try:
         user = get_object_or_404(User, id=id)
         self = (user == request.user)
+
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
         events = user.events.all()
-        print profile.user.id
+        # print (profile.user.id)
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
@@ -48,6 +49,9 @@ def get_profile(request, id):
 
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
                'self': self, 'user_id': id, 'linked': linked}
+    if self:
+        num_of_course = Course.objects.filter(students=user).count()
+        context['num_of_course'] = num_of_course
 
     return render(request, 'duelink/deadline_stream.html', context)
 
@@ -113,8 +117,8 @@ def add_deadline(request, name, due, course_pk):
     return new_deadline
 
 
-@transaction.atomic
-@login_required
+# @transaction.atomic
+# @login_required
 # def add_task(request, event_id=None):
 #     event = get_object_or_404(DueEvent, id=event_id)
 #     if request.method == 'GET':
@@ -144,7 +148,7 @@ def add_task(request):
         raise Http404
     form = TaskForm(request.POST)
     event_id = request.POST['event_id']
-    print request.POST
+    # print(request.POST)
     event = get_object_or_404(DueEvent, id=event_id)
 
     if form.is_valid():
@@ -207,11 +211,11 @@ def update_task(request, task_id=None):
 @login_required
 def add_course(request):
     if request.method == 'GET':
-        form = CourseForm()
+        form = AddCourseForm()
         return render(request, 'duelink/add_course.html', {'form': form})
 
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = AddCourseForm(request.POST)
         if form.is_valid():  # Validate input data & duplicate course sections
             form.save()
             return HttpResponse("success")
@@ -352,3 +356,30 @@ def search_people(request):
 
     context = {'friend_list': result_join, 'search_result': True, 'search_term': name}
     return render(request, 'duelink/friend_list.html', context)
+
+
+@login_required
+def subscribe_course(request):
+    if request.method == 'GET':
+        form = SubscribeCourseForm()
+        context = {'subscribe_course_form': form}
+        return render(request, 'duelink/subscribe_course.html', context)
+
+    if request.method == 'POST':
+        form = SubscribeCourseForm(request.POST)
+        if form.is_valid() and form.clean_exist(request.user):
+            course = form.cleaned_data['course']
+            course.students.add(request.user)
+            context = {'new_subscribe_course': course}
+            return render(request, 'duelink_json/course.json', context, content_type='application/json')
+        else:
+            return HttpResponseForbidden("Invalid or subscribed course")
+
+
+@login_required
+def display_user_course(request):
+    user = request.user
+    courses = Course.objects.filter(students=user)
+
+    context = {'courses': courses}
+    return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')

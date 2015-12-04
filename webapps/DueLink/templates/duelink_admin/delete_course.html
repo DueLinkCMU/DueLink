@@ -1,0 +1,34 @@
+{% extends 'duelink_admin/manage_course.html' %}
+{% load add_css %}
+{% load staticfiles %}
+{#For alert header#}
+{% block alert %}
+    {% if success_flag %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Successfully delete course
+        </div>
+    {% endif %}
+    {% if fail_flag %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Fail to delete course
+        </div>
+    {% endif %}
+{% endblock alert %}
+
+{% block deletecourse %}
+    <h3>Delete Course</h3>
+    <form action="{% url 'delete_course' %}" method="POST">
+        <table>
+            <tr>
+                <td>{{ delete_course_form.courses.errors }}</td>
+                <td>{{ delete_course_form.courses|add_css_id:"form-control" }}</td>
+            </tr>
+        </table>
+        <input type="submit" class="btn btn-lg btn-primary btn-manage-page" id="submit-delete-course" value="Delete">
+        {% csrf_token %}
+    </form>
+{% endblock deletecourse %}
