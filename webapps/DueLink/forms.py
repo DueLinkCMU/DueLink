@@ -136,6 +136,8 @@ class UserForm(forms.ModelForm):
 
 
 class EditProfileForm(ProfileForm):
+    profile_image = forms.ImageField(widget=forms.FileInput)
+
     class Meta(ProfileForm.Meta):
         model = Profile
         fields = ProfileForm.Meta.fields + ('profile_image',)

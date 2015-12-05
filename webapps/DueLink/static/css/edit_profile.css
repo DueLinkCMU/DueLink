@@ -67,8 +67,6 @@ button.form-control {
     border-radius: 5px;
 }
 
-
-
 #submit-subscribe-course {
     padding: 0.5% 0 1% 0;
     height: 40px;
@@ -77,9 +75,11 @@ button.form-control {
     color: white;
     vertical-align: middle;
 }
+
 #id_course {
     font-size: 13px;
 }
+
 #id_profile_image {
     width: 100%;
     padding: 1% 0 1% 0;
@@ -88,4 +88,32 @@ button.form-control {
     font-weight: normal;
     border: 0;
     border-radius: 5px;
+}
+
+label[for='id_profile_image'] {
+    width: 200px;
+    background: #55acee none no-repeat;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: none;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.td-profile-image, .td-upload {
+    text-align: center;
+}
+.profile-image, .upload {
+    margin-bottom: 2%;
+}
+.profile-image {
+    width: 200px;
+    height: 200px;
 }

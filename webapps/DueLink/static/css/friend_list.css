@@ -47,3 +47,14 @@ div.search-result {
 .recommendations {
     margin-left: 15px;
 }
+
+span.users-you-may-know {
+    text-align: center;
+    font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+span.search-result {
+    text-align: center;
+    font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
+    font-size: 30px;
+}

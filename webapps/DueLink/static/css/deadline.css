@@ -130,3 +130,7 @@
 .modal-title {
     text-align: center;
 }
+.btn.btn-primary {
+    border: #55acee thin;
+    background: #55acee none no-repeat;
+}

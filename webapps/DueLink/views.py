@@ -377,6 +377,7 @@ def edit_profile(request):
     if request.method == 'GET':
         user_form = UserForm(instance=user_to_to_edit)
         profile_form = EditProfileForm(instance=profile_to_edit)  # Creates form from the
+
         context = {'profile_form': profile_form,
                    'user_form': user_form, 'edit_profile': True}  # profile_to_edit)
         return render(request, 'duelink/edit_profile.html', context)

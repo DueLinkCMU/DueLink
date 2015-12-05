@@ -9,7 +9,7 @@
     <div class="container" id="div-edit-profile">
         <div class="col-md-2"></div>
         <div class="col-md-8">
-        <h3>Edit Profile</h3>
+            <h3>Edit Profile</h3>
             {% for error in profile_form.non_field_errors %}
                 <div class="error">
                     {{ error }}
@@ -18,6 +18,18 @@
             <form class="div-edit-profile" enctype="multipart/form-data" action="{% url 'edit_profile' %}"
                   method="POST">
                 <table id="table-user-edit">
+                    <tr>
+                        <td class="td-profile-image"><img class="profile-image" src="{% url 'profile_image' user.id %}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-upload"><label class="upload" for="id_profile_image">Choose File</label></td>
+                    </tr>
+                    <tr>
+                        <td> {{ profile_form.profile_image }} </td>
+                        <td>{{ profile_form.profile_image.errors }}</td>
+                    </tr>
+                    <tr>
                     <tr>
                         <td><span class="span-edit-user">First name </span></td>
                     </tr>
@@ -52,14 +64,6 @@
                     <tr>
                         <td> {{ profile_form.school|add_css_id:"form-control" }} </td>
                         <td>{{ profile_form.school.errors }}</td>
-                    </tr>
-                    <tr>
-                    <tr>
-                        <td><span class="span-edit-profile">Profile image </span></td>
-                    </tr>
-                    <tr>
-                        <td> {{ profile_form.profile_image|add_css_id:"form-control" }} </td>
-                        <td>{{ profile_form.profile_image.errors }}</td>
                     </tr>
                     <tr>
                 </table>

@@ -22,7 +22,7 @@
         <span class="search-result">Search result for: {{ search_term }}</span>
         </div>
     {% endif %}
-    <div class="friends">
+    <div {% if search_result %} style="margin-top: 1%" {% endif %}class="friends">
         {% for friend in friend_list %}
             <div class="one-friend">
                 <div class="row" id="friend-{{ friend.id }}">
@@ -55,7 +55,7 @@
 
 {% block right-sidebar %}
     {% if recommend_list %}
-        <div class="users-you-may-know">Users you may know:</div>
+        <div class="users-you-may-know"><span class="users-you-may-know">Users you may know:</span></div>
     {% endif %}
 
     <div class="recommendations">
