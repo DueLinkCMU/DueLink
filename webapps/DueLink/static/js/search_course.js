@@ -8,8 +8,12 @@
 void function(){
     $('#id_course').attr('data-placeholder','Choose a course')
         .attr('class','chosen-select')
-        .attr('style','width: 350px;')
+        .attr('style','width: 420px;')
         .attr('tabindex',"1");
+     if($('#team_id').length > 0){
+        //is team
+        $('#id_course').prop('disabled','disabled');
+     }
 }();
 
 

@@ -1,7 +1,8 @@
+{% load add_css %}
 <form id="add-new-task">
     <input type="hidden" name="event_id" value="{{ event.id }}">
-    <p>Description: {{ task_form.description }}
-        <button type="button" id="add-task" class="">Add</button>
+    <p>Description: {{ task_form.description|add_class:"form-control" }}
+        <button type="button" id="add-task" class="form-control">Add</button>
         <!--<button>Add</button>--></p>
     {% csrf_token %}
 </form>

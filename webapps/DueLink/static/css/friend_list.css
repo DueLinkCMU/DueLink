@@ -1,5 +1,14 @@
-.row {
-    margin-top: 40px;
+.friends {
+    margin-top: 80px;
+}
+.one-friend {
+    margin-bottom: 25px;
+}
+.one-recommendation {
+    margin-bottom: 10px;
+}
+.col-md-9.row.search-result{
+    margin-top: 80px;
 }
 .span-username {
     font-size: 24px;
@@ -8,10 +17,44 @@
     /*background: #e6e6e6;*/
     border-radius: 5px;
     /*padding: 0px;*/
-    padding: 15px 0px 15px 0px;
+    padding: 15px 0 15px 0;
     background: #fff;
     border: 1px solid #e1e8ed;
 }
 .search-result {
     font-size: 24px;
+}
+#right-margin {
+    margin-top: 80px;
+}
+.col-md-3 {
+    padding: 0;
+}
+.col-md-9 {
+    padding-left: 0;
+}
+.span-rec-name {
+    font-weight: bold;
+    font-size: large;
+    display: block;
+}
+.col-md-2.row {
+    margin-top: 0;
+}
+div.search-result {
+    margin-top: 80px;
+}
+.recommendations {
+    margin-left: 15px;
+}
+
+span.users-you-may-know {
+    text-align: center;
+    font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+}
+span.search-result {
+    text-align: center;
+    font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
+    font-size: 30px;
 }
