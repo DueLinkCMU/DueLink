@@ -22,6 +22,10 @@ class Profile(models.Model):
     def __unicode__(self):
         return self.nick_name
 
+    @property
+    def get_courses(self):
+        return Course.objects.filter(students=self.user)
+
 
 class Course(models.Model):
     course_number = models.CharField(max_length=10)
@@ -73,7 +77,7 @@ class DueEvent(models.Model):
             for task in self.tasks.all():
                 if task.finished:
                     finished += 1
-            return round(float(finished) / total, 2) * 100
+            return int(round(float(finished) / total * 100))
         else:
             return 0
 

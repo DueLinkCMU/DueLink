@@ -5,12 +5,12 @@ body {
 .navbar.navbar-default.navbar-fixed-top {
     background: #ffffff;
     height: 56px;
-    width:auto;
+    width: auto;
     /*max-width: 80px;*/
 }
 
 #nav-search-logout {
-    height:60px;
+    height: 60px;
 }
 
 .container {
@@ -38,13 +38,14 @@ div.pull-right {
     display: inline-block;
     height: 50px;
     padding-top: 13px;
-    white-space:nowrap;
-    width:400px;
+    white-space: nowrap;
+    width: 400px;
 }
 
 .dropdown-menu {
     min-width: 60px;
 }
+
 .dropdown-items {
     font-size: 16px;
     color: #66757f;
@@ -59,6 +60,7 @@ img.navbar-brand {
 .sign.icon {
     margin-top: -50px;
 }
+
 .pull-right.search {
 
     max-width: 180px;
@@ -77,11 +79,13 @@ img.navbar-brand {
     transition: all .2s ease-in-out;
     margin-right: -20%;
 }
+
 button.search.icon {
-    border:none;
+    border: none;
     border-radius: 15px;
     background: inherit;
 }
+
 img.search.icon {
     width: 18px;
     height: 18px;
@@ -89,4 +93,10 @@ img.search.icon {
 
 .add-event {
     color: #66757f;
+}
+
+.fc-day-grid-event.fc-h-event.fc-event.fc-start.fc-end.fc-draggable {
+    background: #55acee none no-repeat;
+    border: #55acee solid;
+
 }

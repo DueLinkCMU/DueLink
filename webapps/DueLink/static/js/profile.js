@@ -24,17 +24,14 @@ function unlink(user_id) {
 }
 
 function populate() {
-    var course_table = $('#course-list-modal');
+    var course_table = $('#course-subscription-list');
     // Remove all children
     course_table.empty();
-    var data = $.get('/duelink/display_user_course')
+    var data = $.post('/duelink/display_user_course', {'skim': 1})
         .done(function (data) {
-            console.log(data.courses.length);
-            console.log(data.courses[0]);
             for (var i = 0; i < data.courses.length; i++) {
-                var new_li = $('<li>');
-                new_li.text(data.courses[i].course_name + " " + data.courses[i].course_section);
-                course_table.append(new_li);
+                var tag = data.courses[i].html;
+                course_table.append(tag);
             }
         })
         .fail(function (data) {
@@ -45,7 +42,10 @@ function populate() {
 
 $(document).ready(function () {
     // CSRF set-up copied from Django docs
+
     $('#course-modal-trigger').on('click', populate);
+
+
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {

@@ -34,20 +34,7 @@ select.form-control {
     padding: 8px;
     font-size: 16px;
     margin-bottom: 5%;
-    width: 44%;
-}
-
-div.select.time {
-    color: #66757f;
-    font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    margin-bottom: 3%;
-}
-
-td.select.course {
-    font-size: 16px;
-    font-weight: bold;
-    padding-left: 1%;
+    width: 44.5%;
 }
 
 #timePicker {
@@ -143,7 +130,6 @@ img.navbar-brand {
 }
 
 .search-input {
-
     width: 100%;
     padding: 8px 27px 6px 12px;
     font-size: 12px;
@@ -171,6 +157,10 @@ img.search.icon {
     color: #66757f;
 }
 
+#id_course, #id_course_chosen {
+    width: 420px;
+}
+
 button.submit.button.add-event {
     margin-left: 45.2%;
     width: 420px;
@@ -182,5 +172,14 @@ button.submit.button.add-event {
     padding: 12px 16px;
     border: 0;
     border-radius: 5px;
+}
+td.select.course, td.event.name, div.select.time {
+    color: #66757f;
+    font-size: 20px;
+    font-family: 'Calibri Light', Helvetica, Arial, sans-serif;
+    padding-left: 1%;
+}
 
+.select-course {
+    margin-bottom: 7%;
 }

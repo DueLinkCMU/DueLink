@@ -96,11 +96,41 @@
 .div-status {
     padding-bottom: 10px;
 }
+
 .profile-status-link {
     color: inherit;
     text-decoration: none;
 }
+
 .profile-status-link:hover {
     text-decoration: none;
     cursor: pointer;
+}
+
+.row.row-course-subscription {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.span-course-subscription-number {
+}
+
+.span-course-subscription-name {
+    font-weight: 700;
+}
+
+.span-course-subscription-delete {
+    float: right;
+    background: #b72122;
+    border-radius: 3px;
+    padding: 2px 5px 2px 5px;
+    color: #fff;
+}
+
+.modal-title {
+    text-align: center;
+}
+.btn.btn-primary {
+    border: #55acee thin;
+    background: #55acee none no-repeat;
 }

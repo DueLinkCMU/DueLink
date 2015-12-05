@@ -5,6 +5,7 @@
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'css/tasks.css' %}">
     <script src="{% static "js/add_task.js" %}"></script>
+
 {% endblock links %}
 {% block content %}
     <div class="tasks">
@@ -29,10 +30,6 @@
             <h3>New Task</h3>
             <hr>
             {% include 'duelink/add_task.html' %}
-        </div>
-        <br>
-        <div>
-            <a href = '{% url 'profile' user.id %}'>back</a>
         </div>
     </div>
 {% endblock content %}

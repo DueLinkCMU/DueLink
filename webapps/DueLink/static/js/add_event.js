@@ -1,5 +1,5 @@
 function parseDate(str) {
-    return moment(str).utc().format();
+    return moment(str, "MM-DD-YYYY HH:mm").utc().format();
 }
 
 function get_date() {
@@ -51,7 +51,7 @@ function send_form() {
 
 $(document).ready(function () {
     $('#timePicker').timepicker();
-    $('#timePicker').timepicker("setTime", Date.now());
+    $('#timePicker').timepicker("setTime", new Date(Date.now()));
     $('#datePicker').datepicker();
     $('#datePicker').datepicker('update', new Date(Date.now()));
     $('#submit_request').click(function() {send_form()});

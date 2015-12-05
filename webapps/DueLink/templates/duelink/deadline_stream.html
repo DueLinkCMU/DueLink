@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
     <script src="{% static "js/profile.js" %}"></script>
     <script src="{% static "js/add_member.js" %}"></script>
+
+{#    <script src="{% static "jquery/jquery.confirm.min.js" %}"></script>#}
+{#    <script src="{% static "js/course.js" %}"></script>#}
+
 {% endblock links %}
 {% block title %}{{ profile.nick_name }}'s Dues{% endblock %}
 
@@ -79,7 +83,7 @@
                         </a>
                     </div>
                     <div class="div-status">
-                        <a class="profile-status-link">
+                        <a class="profile-status-link" id="delete-trigger">
                             <span class="glyphicon glyphicon-flag"></span>
                             <span class="profile-status-title">Projects</span>
                             <span class="profile-status-number">{% if num_of_projects %}{{ num_of_projects }} {% else %}
@@ -152,15 +156,25 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="courseModalLabel">Course Subcription</h4>
+                    <h4 class="modal-title" id="courseModalLabel">Course Subscription</h4>
                 </div>
                 <div class="modal-body">
                     <ul id="course-list-modal">
                     </ul>
+                    <div class="container-fluid" id="course-subscription-list">
+                        <div class="row row-course-subscription" course_id="hah" >
+                            <span class="span-course-subscription-number">15-637 D</span>
+                            <span class="span-course-subscription-name">Web app development</span>
+                            <a href="deadline_stream.html"><span class="span-course-subscription-delete"> Delete </span></a>
+                        </div>
+                        <div  class="row row-course-subscription">
+                            <span class="span-course-subscription-number">15-213 D </span>
+                            <span class="span-course-subscription-name">Intro to Computer Systems</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <a href="{% url 'subscribe_course' %}" type="button" class="btn btn-primary"><b>Manage Your Course</b></a>
                 </div>
             </div>
         </div>

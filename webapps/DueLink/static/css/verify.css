@@ -1,0 +1,4 @@
+.logged-out {
+    background: gainsboro url("../../static/images/whatareyoulookingat.jpg") no-repeat center 30px;
+    background-size: 90%;
+}

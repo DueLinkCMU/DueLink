@@ -1,54 +1,79 @@
-{% extends "duelink/base.html" %}
+{% extends "duelink/user_settings.html" %}
 {% load add_css %}
 {% load staticfiles %}
 {% block title %} Subscribe Course {% endblock title %}
 {% block links %}
+    <link rel="stylesheet" href="{% static "css/deadline.css" %}">
+    <link rel="stylesheet" href="{% static "css/edit_profile.css" %}">
     <script src=" {% static 'js/course.js' %}"></script>
+    <script src=" {% static 'jquery/jquery.confirm.min.js' %}"></script>
+
 {% endblock links %}
-{% block content %}
-    <h3>Subscribe course </h3>
-    <form action="{% url 'subscribe_course' %}" method="POST">
-        {% csrf_token %}
-        <table>
-            <tr> <td> <span class="span-subscribecourse">Course: </span> </td> </tr>
-            <tr>
-                <td> {{ subscribe_course_form.course|add_css_id:"form-control" }} </td>
-                <td>{{ subscribe_course_form.course.errors }}</td>
-            </tr>
-            <tr>
+{% block subscribe_course %}
+    <div class="container container-subscribe-course" id="div-subscribe-course">
 
-        </table>
-        <input type="submit">
-    </form>
+        <div class="col-md-2"></div>
 
-        <ul id="course-list">
-        </ul>
+        <div class="col-md-8">
+
+            <div class="container container-subscribe-course">
+                <h3>Subscribe Courses </h3>
+
+                <form action="{% url 'subscribe_course' %}" method="POST">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td><span class="span-subscribecourse">Course: </span></td>
+                        </tr>
+                        <tr>
+                            <td> {{ subscribe_course_form.course|add_css_id:"form-control" }} </td>
+                            <td>{{ subscribe_course_form.course.errors }}</td>
+                        </tr>
+                        <tr>
+                    </table>
+                    <input type="submit" class="form-control" id="submit-subscribe-course" value="Submit">
+                </form>
+            </div>
+
+            <h3 class="h3-subscribe-course">Subscribed Courses </h3>
+
+            <div class="container container-subscribe-course" id="course-subscription-list">
+            </div>
+        </div>
+        {#        <div class="col-md-2">#}
+        {#            </div>#}
 
 
-    <!-- Button trigger modal -->
-<button type="button" id="course-modal-trigger" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#courseModal">
-  Launch course modal
-</button>
+        <!-- Button trigger modal -->
+        {#            <button type="button" id="course-modal-trigger" class="btn btn-primary btn-lg" data-toggle="modal"#}
+        {#                    data-target="#courseModal">#}
+        {#                Launch course modal#}
+        {#            </button>#}
 
-<!-- Modal -->
-<div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="courseModalLabel">Course Subscription</h4>
-      </div>
-      <div class="modal-body">
-          <ul id="course-list-modal">
-          </ul>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+        <!-- Modal -->
+        <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="courseModalLabel">Course Subscription</h4>
+                    </div>
+                    <div class="modal-body">
+                        <ul id="course-list-modal">
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+    </div>
 
 
-{% endblock content %}
+{% endblock subscribe_course %}
+response = self.client.get('/add_scho')
+response = self.client.get('/add_scho')
