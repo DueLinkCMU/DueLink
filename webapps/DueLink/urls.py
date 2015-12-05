@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^tasks/(?P<event_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
     url(r'^get_tasks/(?P<event_id>\d+)$', 'DueLink.views.get_tasks', name='get_tasks'),
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
-
+    url(r'^delete_task/(?P<task_id>\d+)$', 'DueLink.views.delete_task', name='delete_task'),
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
     url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
 

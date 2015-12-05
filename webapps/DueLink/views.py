@@ -223,6 +223,15 @@ def update_task(request, task_id=None):
 
 
 @login_required
+@transaction.atomic
+def delete_task(request, task_id=None):
+    if request.method == 'POST':
+        task = get_object_or_404(Task, id=task_id)
+        task.delete()
+        return HttpResponse("OK")
+    return HttpResponseForbidden("Error")
+
+@login_required
 def add_course(request):
     if request.method == 'GET':
         form = AddCourseForm()
