@@ -148,7 +148,11 @@
 
         {% endblock %}
     </div>
-    <div class="col-md-1" id="right-margin"></div>
+    <div class="col-md-2" id="right-margin">
+        {% block right-sidebar %}
+
+        {% endblock %}
+    </div>
 </div>
 
 {% block log_out %}

@@ -14,7 +14,6 @@ from django.contrib.auth import login, authenticate, logout
 from DueLink.forms import *
 from DueLink.models import *
 
-
 # Create your views here.
 
 
@@ -71,7 +70,22 @@ def get_friend_list(request):
     user = request.user
     friend_list = user.profile_friends.all()
     context['friend_list'] = friend_list
+    context['recommend_list'] = recommend_friends(user)
     return render(request, 'duelink/friend_list.html', context)
+
+
+def recommend_friends(user):
+    profile = get_object_or_404(Profile, user=user)
+    courses = profile.get_courses
+    friends = profile.friends
+    recommendations = {}
+    for course in courses:
+        for student in course.students.all():
+            if student not in friends.all() and student != user:
+                recommendations[student] = course.course_number
+                if len(recommendations) == 10:
+                    break
+    return recommendations
 
 
 @login_required

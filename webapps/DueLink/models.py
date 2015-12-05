@@ -22,6 +22,10 @@ class Profile(models.Model):
     def __unicode__(self):
         return self.nick_name
 
+    @property
+    def get_courses(self):
+        return Course.objects.filter(students=self.user)
+
 
 class Course(models.Model):
     course_number = models.CharField(max_length=10)

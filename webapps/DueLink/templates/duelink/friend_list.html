@@ -17,33 +17,66 @@
 
 <!--TODO: friendlist style -->
 {% block content %}
+
     <div class="row">
-    <div class="col-md-2"></div>
-    {% if search_result %}
-    <span class="search-result">Search result for: {{ search_term }}</span>
-    {% endif %}
-    </div>
-    {% for friend in friend_list %}
-        <div class="row" id="friend-{{ friend.id }}">
-            <!-- image -->
-            <div class="col-md-2"></div>
-            <div class="col-md-8 info-column">
-            <div class="col-md-4">
-                <a href="{% url 'profile' friend.id %}">
-                    <img class="img-thumbnail" alt="100x100" width="100px" src="{% url 'profile_image' friend.id %}"
-                         data-holder-rendered="true"></a>
-            </div>
-            <!-- name -->
-            <div class="col-md-8">
-                <span class="span-username"><a href="{% url 'profile' friend.id %}">{{ friend.nick_name }}</a></span>
-                <span>({{ friend.user }})</span>
-                </br>
-                <span>@{{ friend.school }}</span>
-
-            </div>
-        </div>
-        </div>
         <div class="col-md-2"></div>
-    {% endfor %}
+        {% if search_result %}
+            <span class="search-result">Search result for: {{ search_term }}</span>
+        {% endif %}
+    </div>
+    <div class="friends">
+        {% for friend in friend_list %}
+            <div class="one-friend">
+                <div class="row" id="friend-{{ friend.id }}">
+                    <!-- image -->
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8 info-column">
+                        <div class="col-md-4">
+                            <a href="{% url 'profile' friend.id %}">
+                                <img class="img-thumbnail" alt="100x100" width="100px"
+                                     src="{% url 'profile_image' friend.id %}"
+                                     data-holder-rendered="true"></a>
+                        </div>
+                        <!-- name -->
+                        <div class="col-md-8">
+                    <span class="span-username">
+                        <a href="{% url 'profile' friend.id %}">{{ friend.nick_name }}</a></span>
+                            <span>({{ friend.user }})</span>
+                            </br>
+                            <span>@{{ friend.school }}</span>
 
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+
+{% block right-sidebar %}
+    {% if recommend_list %}
+        <div class="users-you-may-know">Users you may know:</div>
+    {% endif %}
+    <div class="recommendations">
+        <!--TODO: recommend style -->
+        {% for key, value in recommend_list.items %}
+            <div class="one-recommendation">
+                <div class="row" id="recommend-{{ key.id }}">
+                    <!-- image -->
+                    <div class="col-md-3">
+                        <a href="{% url 'profile' key.id %}">
+                            <img class="img-thumbnail" alt="50x50" width="50px" src="{% url 'profile_image' key.id %}"
+                                 data-holder-rendered="true">
+                        </a>
+                    </div>
+                    <div class="col-md-9">
+                        <!-- name -->
+                        <span class="span-rec-name">{{ key.username }}</span>
+                        <span class="in_course">in {{ value }}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 {% endblock %}
