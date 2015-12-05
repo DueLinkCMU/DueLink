@@ -1,6 +1,6 @@
-~ Deployment server on EC2: http://ec2-52-91-103-243.compute-1.amazonaws.com  
-admin user account: username:admin2 passwd:123
-~ See our unit test results on Jenkins Build server: http://54.165.106.68:8080
+- Deployment server on EC2: http://ec2-52-91-103-243.compute-1.amazonaws.com  
+- admin user account: username:`admin2` passwd:`123`
+- See our unit test results on Jenkins Build server: http://54.165.106.68:8080
  
 ####To use:####
 - Add deadlines to schedule on calendar page  
