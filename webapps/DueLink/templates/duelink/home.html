@@ -28,8 +28,8 @@
 {% block content %}
 
     <div class="calendar">
-        <a class="add-event" href="{% url 'add_event' %}">Add Due</a>
-        <p>My Calendar</P>
+            <p>My Calendar</p>
+        <a class="add-event btn" id="schedule-add-event" href="{% url 'add_event' %}">Add Due</a>
         <div id='script-warning'>
             error occurs when loading events.
         </div>

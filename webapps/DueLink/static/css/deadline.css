@@ -13,9 +13,9 @@
     background: #f2dede;
     /*background: #e6e6e6;*/
     border-radius: 10px;
--webkit-box-shadow: 3px 4px 18px -6px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 4px 18px -6px rgba(0,0,0,0.75);
-box-shadow: 3px 4px 18px -6px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 4px 18px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 18px -6px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 18px -6px rgba(0, 0, 0, 0.75);
 }
 
 #deadline-content {
@@ -70,9 +70,9 @@ box-shadow: 3px 4px 18px -6px rgba(0,0,0,0.75);
     padding-left: 0px;
     padding-right: 38px;
     padding-bottom: 50px;
--webkit-box-shadow: 3px 4px 28px -9px rgba(0,0,0,0.75);
--moz-box-shadow: 3px 4px 28px -9px rgba(0,0,0,0.75);
-box-shadow: 3px 4px 28px -9px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 3px 4px 28px -9px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 28px -9px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 28px -9px rgba(0, 0, 0, 0.75);
 }
 
 .circle span {
@@ -97,6 +97,10 @@ box-shadow: 3px 4px 28px -9px rgba(0,0,0,0.75);
 
 .profile-status-title {
     font-size: 14px;
+}
+
+#profile-add-team {
+
 }
 
 .div-status {
@@ -136,7 +140,27 @@ box-shadow: 3px 4px 28px -9px rgba(0,0,0,0.75);
 .modal-title {
     text-align: center;
 }
+
 .btn.btn-primary {
     border: #55acee thin;
     background: #55acee none no-repeat;
+}
+
+#profile-add-team {
+    background: #55acee none no-repeat;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: none;
+    color: #fff;
+}
+.btn.team-stream {
+    background: #55acee none no-repeat;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: none;
+    color: #fff;
 }

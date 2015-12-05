@@ -144,6 +144,8 @@ def publish_deadline(request):
         if 'deadline_datetime' in request.POST:
             form_time = DueTimeForm()
             due = form_time.clean_deadline_datetime(request.POST['deadline_datetime'])
+            if due is None:
+                return HttpResponseForbidden("Invalid datetime")
         else:
             return HttpResponseForbidden("Invalid datetime")
 

@@ -83,6 +83,7 @@
                     {% endif %}
 
                 {% else %}
+                    <a class="add-event btn " id="profile-add-team" href="{% url 'add_team' %}">Add Team</a>
                     <div class="div-status">
                         <a class="profile-status-link" id="course-modal-trigger" data-toggle="modal"
                            data-target="#courseModal">
@@ -91,14 +92,6 @@
                             <span class="profile-status-number">{{ num_of_course }}</span>
                         </a>
                     </div>
-{#                    <div class="div-status">#}
-{#                        <a class="profile-status-link" id="delete-trigger">#}
-{#                            <span class="glyphicon glyphicon-flag"></span>#}
-{#                            <span class="profile-status-title">Projects</span>#}
-{#                            <span class="profile-status-number">{% if num_of_projects %}{{ num_of_projects }} {% else %}#}
-{#                                {{ None }}{% endif %}</span>#}
-{#                        </a>#}
-{#                    </div>#}
 
                     <div class="div-status">
                         {% if isTeam or isTeams %}
@@ -161,8 +154,8 @@
                    <h1>Team: {{ team.name }}</h1>
                     <form>
                         {{ form.member}}
-                        <button id="add_member">Add friend</button>
-                        <button type = "button" class="button" onclick="window.location.href='{% url 'add_event_team' team.id%}'">Add Due</button>
+                        <button class="btn team-stream" id="add_member">Add friend</button>
+                        <button class="btn team-stream" type = "button" class="button" onclick="window.location.href='{% url 'add_event_team' team.id%}'">Add Due</button>
                     </form>
 
                 </div>
