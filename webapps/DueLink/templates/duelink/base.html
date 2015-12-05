@@ -88,7 +88,7 @@
                     {% endblock friend_stream %}
                     {% block team %}
                         <li>
-                            <a href="#">
+                            <a href="{% url 'get_team_stream' %}">
                                 <img class="nav-image" src="{% static "images/team.png" %}">
                                 <span class="text">Teams</span>
                             </a>

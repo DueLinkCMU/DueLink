@@ -14,23 +14,32 @@
 {% block title %}{{ profile.nick_name }}'s Dues{% endblock %}
 
 
-{% if isTeam %}
 
-{% else %}
+
 
 {% block profile %}
-
-    <li class="active"><a href="#">
-        {% if self %}
-            <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
-            My Dues
-        {% else %}
-            {{ profile.nick_name }}'s Dues
-        {% endif %}
-    </a></li>
+    {% if not isTeams and not isTeam %}
+        <li class="active">
+            <a href="#">
+                <img class="nav-image" src="{% static "images/team.png" %}">
+                <span class="text">Teams</span>
+            </a>
+        </li>
+    {% else %}
+        {{ block.super }}
+    {% endif %}
 {% endblock profile %}
 
-{% endif %}
+{% block team %}
+     {% if isTeams or isTeam %}
+         <li class="active"><a href="{% url 'get_team_stream' %}">
+             <img class="nav-image" src="{% static "images/team.png" %}">
+             <span class="text">Teams</span>
+         </a></li>
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock team %}
 
 {% block content %}
     {% if isTeam %}
