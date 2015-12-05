@@ -2,6 +2,7 @@
 {% load add_css %}
 {% load staticfiles %}
 {#For alert header#}
+{% block title %} Add Section {% endblock title %}
 {% block alert %}
     {% if success_flag %}
         <div class="alert alert-success alert-dismissible" role="alert">
@@ -23,13 +24,22 @@
     <h3>Add section</h3>
     <form action="{% url 'add_section' %}" method="POST">
         <table>
+                        <tr>
+                <td> <span class="span-addcourse">Origin course: </span> </td>
+            </tr>
             <tr>
                 <td>{{ add_section_form.origin_course|add_css_id:"form-control" }}</td>
                 <td>{{ add_section_form.origin_course.errors }}</td>
             </tr>
+                        <tr>
+                <td> <span class="span-addcourse">New section: </span> </td>
+            </tr>
             <tr>
                 <td>{{ add_section_form.new_section|add_css_id:"form-control" }}</td>
                 <td>{{ add_section_form.new_section.errors }}</td>
+            </tr>
+                        <tr>
+                <td> <span class="span-addcourse">Instructor: </span> </td>
             </tr>
             <tr>
                 <td>{{ add_section_form.new_instructor|add_css_id:"form-control" }}</td>

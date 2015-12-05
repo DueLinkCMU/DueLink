@@ -49,7 +49,7 @@ urlpatterns = [
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
 
-    url(r'edit-profile$', 'DueLink.views.edit_profile', name='edit_profile'),
+    url(r'edit_profile$', 'DueLink.views.edit_profile', name='edit_profile'),
     # url(r'manage-course$', 'DueLink.views.manage_course', name='manage_course'),
 
     url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
@@ -76,7 +76,10 @@ urlpatterns = [
     url(r'^unlink/(?P<user_id>\d+)$', 'DueLink.views.unlink', name='unlink'),
     url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
     url(r'^search_course$', 'DueLink.views.search_course', name='search_course'),
+
     # Admin pages for user with special permissions
+
+    url(r'^admin/publish_deadline$', 'DueLink.views_admin.publish_deadline', name='publish_deadline'),
     url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course', name='delete_course'),
     url(r'^admin/add_course$', 'DueLink.views_admin.add_course', name='add_course'),
     url(r'^admin/add_section$', 'DueLink.views_admin.add_section', name='add_section'),

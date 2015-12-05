@@ -44,6 +44,22 @@ class DueLinkEventTest(TestCase):
         self.assertEqual(DueEvent.objects.filter(deadline__name='test').count(), 1)
 
 
+class DueLinkEditProfileTest(TransactionTestCase):
+    fixtures = ['test_data2.json']
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
+    def test_upload_file(self):
+        with open('DueLink/static/images/bell.png') as pic:
+            response = self.client.post('/duelink/edit_profile', {'profile_image': pic})
+            print(response)
+
+
+
+
+
+
 class DueLinkGetTaskTest(TestCase):
     fixtures = ['test_data2.json']
 

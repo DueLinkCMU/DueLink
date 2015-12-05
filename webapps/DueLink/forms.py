@@ -1,8 +1,10 @@
 import dateutil.parser
+from django.utils import timezone
 from django import forms
 from forms import *
 from DueLink.models import *
 import views
+from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.extras.widgets import SelectDateWidget
 
@@ -227,3 +229,44 @@ class UnsubscribeCourseForm(forms.Form):
                 return False
         except Exception:
             return False
+
+
+class DueTimeForm(forms.Form):
+    deadline_datetime = forms.DateTimeField()
+
+    def clean(self):
+        cleaned_data = super(DueTimeForm, self).clean()
+        return cleaned_data
+
+    def clean_deadline_datetime(self, datetime_str):
+        try:
+            due_datetime = dateutil.parser.parse(datetime_str)
+            if due_datetime < timezone.now():
+                raise forms.ValidationError("Invalid datetime: no early than current time")
+            return due_datetime
+        except ValueError:
+            print("ValueError of dateutil.parser")
+            raise forms.ValidationError(('DateUtil parse error'))
+        except Exception as e:
+            print("Exception" + str(e))
+            raise forms.ValidationError(("Datetime unexpected errors"))
+
+
+class PublishDeadlineForm(forms.Form):
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    name = forms.CharField(max_length=20)
+
+    def clean(self):
+        cleaned_data = super(PublishDeadlineForm, self).clean()
+        return cleaned_data
+
+    def clean_name(self):
+        new_course = self.cleaned_data['course']
+        deadline_set = Deadline.objects.filter(course=new_course)
+        name = self.cleaned_data['name']
+        for deadline in deadline_set:
+            if self.cleaned_data['name'] == deadline.name:
+                print("dup")
+                raise forms.ValidationError("Duplicated Deadline Name")
+
+        return name

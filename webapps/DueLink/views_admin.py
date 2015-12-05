@@ -8,7 +8,7 @@ from DueLink.forms import *
 from DueLink.models import *
 
 
-# yizhong shunjian rang ni biancheng guanliyuan de yemian
+# TODO yizhong shunjian rang ni biancheng guanliyuan de yemian
 @login_required
 def admin_get(request):
     try:
@@ -127,3 +127,41 @@ def add_school(request):
         else:
             context = {'add_school_form': form, 'add_school': True, 'fail_flag': True}
             return render(request, 'duelink_admin/add_school.html', context)
+
+
+@login_required
+@permission_required('DueLink.add_course')
+@permission_required('DueLink.delete_course')
+def publish_deadline(request):
+    if request.method == 'GET':
+        form = PublishDeadlineForm()
+        context = {'publish_deadline_form': form, 'publish_deadline': True}
+        return render(request, 'duelink_admin/publish_deadline.html', context)
+
+    if request.method == 'POST':
+        form = PublishDeadlineForm(request.POST)
+        print(request.POST)
+        if 'deadline_datetime' in request.POST:
+            form_time = DueTimeForm()
+            due = form_time.clean_deadline_datetime(request.POST['deadline_datetime'])
+        else:
+            return HttpResponseForbidden("Invalid datetime")
+
+        if form.is_valid():
+            new_deadline = Deadline(name=form.cleaned_data['name'], due=due,
+                                    course=form.cleaned_data['course'])
+            new_deadline.save()
+
+            target_course = form.cleaned_data['course']
+
+            for student in target_course.students.all():
+                new_event = DueEvent.objects.create(deadline=new_deadline, user=student)
+                new_event.save()
+                new_deadline.students.add(student)
+
+            context = {'publish_deadline_form': form, 'publish_deadline': True, 'success_flag': True}
+            return render(request, 'duelink_admin/publish_deadline.html', context)
+        else:
+            print(form.errors)
+            print(form_time.errors)
+            return HttpResponseForbidden("Fail")
