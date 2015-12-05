@@ -76,7 +76,7 @@ class DueEvent(models.Model):
             for task in self.tasks.all():
                 if task.finished:
                     finished += 1
-            return round(float(finished) / total, 2) * 100
+            return int(round(float(finished) / total * 100))
         else:
             return 0
 
