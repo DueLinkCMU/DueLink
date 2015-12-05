@@ -503,16 +503,19 @@ def get_team_stream(request):
         profile_page = True
         teams = user.teams.all()
         profile = get_object_or_404(Profile, user=user)
-        events = DueEvent.objects.filter(team__in=teams)
-
+        events = DueEvent.objects.filter(team__in=teams).filter(deadline__due__gt=datetime.now()).order_by(
+            'deadline__due')
+        events_dued = DueEvent.objects.filter(team__in=teams).filter(deadline__due__lte=datetime.now()).order_by(
+            '-deadline__due')
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
 
     profile_me = get_object_or_404(Profile, user=request.user)
     linked = False
-    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self, 'user_id': id, 'linked': linked, 'isTeams':True, 'teams': teams, 'team_num': len(teams)}
+    context = {'user': user, 'profile': profile, 'events': events, 'events_dued': events_dued, 'errors': errors,
+               'profile_page': profile_page, 'self': self, 'user_id': id, 'linked': linked, 'isTeams': True,
+               'teams': teams, 'team_num': len(teams)}
 
     if self:
         num_of_course = Course.objects.filter(students=user).count()
@@ -531,7 +534,8 @@ def get_team_stream_by_id(request, team_id):
         self = (user in team.members.all())
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
-        events = team.events.all()
+        events = team.events.filter(deadline__due__gt=datetime.now()).order_by('deadline__due')
+        events_dued = team.events.filter(deadline__due__lte=datetime.now()).order_by('-deadline__due')
         form = AddMemberForm(user=user)
 
     except ObjectDoesNotExist:
@@ -541,9 +545,10 @@ def get_team_stream_by_id(request, team_id):
     profile_me = get_object_or_404(Profile, user=request.user)
     linked = False
 
-    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self, 'user_id': id, 'linked': linked, 'isTeam':True, 'team':team, 'teams':teams,'form':form,
-               'member_num':len(team.members.all()), 'team_num': len(teams)}
+    context = {'user': user, 'profile': profile, 'events': events, 'events_dued': events_dued, 'errors': errors,
+               'profile_page': profile_page, 'self': self, 'user_id': id, 'linked': linked, 'isTeam': True,
+               'team': team, 'teams': teams, 'form': form, 'member_num': len(team.members.all()),
+               'team_num': len(teams)}
 
     if self:
         num_of_course = Course.objects.filter(students=user).count()
