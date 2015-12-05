@@ -9,7 +9,7 @@
     <script src="{% static 'js/add_event.js' %}"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
     <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
-    <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
+    <link rel="stylesheet" href="{% static "chosen/chosen.min.css" %}">
 
 
     {% load static %}
@@ -32,18 +32,21 @@
                 </p>
             {% endfor %}
 
-            <table>
+            <table class="select-course">
+                <tr>
+                    <td class="event name"><b>Input event name:</b></td>
+                </tr>
                 <tr>
                     <td>{{ form.name|add_css_id:"form-control" }}</td>
                     <td class="error">{{ form.name.errors }}</td>
                 </tr>
                 <tr class="select course">
                     <td class="select course">
-                        Select course:
+                        <b>Select course:</b>
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ form.course|add_css_id:"form-control" }}</td>
+                    <td>{{ form.course }}</td>
                     <td class="error">{{ form.course.errors }}</td>
                 </tr>
 
@@ -69,15 +72,15 @@
     </div>
 
     <script src="{% static "js/search_course.js" %}"></script>
-    <script src="{% static "chosen/chosen.jquery.min.js"%}" type="text/javascript"></script>
+    <script src="{% static "chosen/chosen.jquery.min.js" %}" type="text/javascript"></script>
     <script src="{% static 'js/search_course.js' %}"></script>
     <script type="text/javascript">
         var config = {
-            '.chosen-select'           : {},
-            '.chosen-select-deselect'  : {allow_single_deselect:true},
-            '.chosen-select-no-single' : {disable_search_threshold:10},
-            '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-            '.chosen-select-width'     : {width:"95%"}
+            '.chosen-select': {},
+            '.chosen-select-deselect': {allow_single_deselect: true},
+            '.chosen-select-no-single': {disable_search_threshold: 10},
+            '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
+            '.chosen-select-width': {width: "95%"}
         };
         for (var selector in config) {
             $(selector).chosen(config[selector]);
