@@ -3,9 +3,12 @@
     <form id='task_form_{{ task.id }}' action="{% url 'update_task' task.id %}" method="POST">
         <h3>Task {{ forloop.counter }}</h3>
         <hr>
-        <p>{{ task.description }}</p>
+        <p class="task-description">{{ task.description }}
+            <input type="hidden" name="task_id" value={{ task.id }}>
+            <button type="button" class="form-control0" onclick="deleteTask()">Delete</button>
+        </p>
         <hr>
-        <div class="one-task">
+
             <p id="task_status_{{ task.id }}">
                 {% if task.finished %}
                     <span class="finished">Status : finished </span>
@@ -17,7 +20,7 @@
                 <input type="hidden" name="task_id" value={{ task.id }}>
                 <button type="button" class="form-control1" onclick="updateTask()">Change Status</button>
             </p>
-        </div>
+
 
         {% csrf_token %}
     </form>

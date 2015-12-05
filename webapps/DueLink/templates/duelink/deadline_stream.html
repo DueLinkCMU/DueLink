@@ -91,18 +91,22 @@
                             <span class="profile-status-number">{{ num_of_course }}</span>
                         </a>
                     </div>
-                    <div class="div-status">
-                        <a class="profile-status-link" id="delete-trigger">
-                            <span class="glyphicon glyphicon-flag"></span>
-                            <span class="profile-status-title">Projects</span>
-                            <span class="profile-status-number">{% if num_of_projects %}{{ num_of_projects }} {% else %}
-                                {{ None }}{% endif %}</span>
-                        </a>
-                    </div>
-                    </div>
+{#                    <div class="div-status">#}
+{#                        <a class="profile-status-link" id="delete-trigger">#}
+{#                            <span class="glyphicon glyphicon-flag"></span>#}
+{#                            <span class="profile-status-title">Projects</span>#}
+{#                            <span class="profile-status-number">{% if num_of_projects %}{{ num_of_projects }} {% else %}#}
+{#                                {{ None }}{% endif %}</span>#}
+{#                        </a>#}
+{#                    </div>#}
+
                     <div class="div-status">
                         {% if isTeam or isTeams %}
-                            <h>Team List:</h>
+                            <h class="profile-status-link">
+                                <span class="glyphicon glyphicon-flag"></span>
+                            <span class="profile-status-title">Team List:</span>
+                             <span class="profile-status-number">{{ team_num }}</span>
+                            </h>
                             <ul>
                                 {% for team in teams %}
                                     <li>
@@ -113,8 +117,22 @@
                         {% endif %}
 
                         {% if isTeam %}
-                            <h>Team: {{ team.name }}</h>
-                            <h>Course: {{ team.course.course_number }}</h>
+                            <h class="profile-status-link">
+                            <span class="glyphicon glyphicon-education"></span>
+                                Team: {{ team.name }}
+                            </h>
+                            <br>
+                            <h class="profile-status-link">
+                            <span class="glyphicon glyphicon-education"></span>
+                                Course: {{ team.course.course_number }}
+                            </h>
+                            <br>
+                             <h class="profile-status-link">
+                            <span class="glyphicon glyphicon-education"></span>
+                                Members:
+                             <span class="profile-status-number">{{ member_num }}</span>
+                            </h>
+
                             <ul id="member_list">
                                 {% for member in team.members.all %}
                                     <li>
@@ -144,6 +162,7 @@
                     <form>
                         {{ form.member}}
                         <button id="add_member">Add friend</button>
+                        <button type = "button" class="button" onclick="window.location.href='{% url 'add_event_team' team.id%}'">Add Due</button>
                     </form>
 
                 </div>
