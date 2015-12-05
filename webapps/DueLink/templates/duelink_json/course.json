@@ -1,0 +1,7 @@
+{% load json_filter %}
+{
+  "course_name": "{{course.course_name}}",
+  "course_number": "{{course.course_number}}",
+  "course_section": "{{course.section}}",
+  "html": "{%spaceless%}{% filter addslashes_doublequote%}{% include 'duelink_json/course_template.html' with course=course %}{% endfilter%}{%endspaceless%}"
+}

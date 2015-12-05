@@ -10,11 +10,13 @@
 
     <!-- Custom styles for this template -->
     {% load static %}
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="{% static "bootstrap-3.3.5-dist/js/jquery-2.1.4.min.js" %}" type="text/javascript"></script>
 
     <script src="{% static "js/duelink.js" %}" type="text/javascript"></script>
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
@@ -24,6 +26,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{% static "css/home.css" %}">
+
     {% block links %}
 
     {% endblock links %}
@@ -35,93 +38,119 @@
 {% block header %}
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
-    {#        <div >#}
-    <img class="sign icon" src="{% static "images/duelink_blue.png" %}"/>
-    {#        </div>#}
+        {#        <div >#}
+        <img class="sign icon" src="{% static "images/duelink_blue.png" %}"/>
+        {#        </div>#}
 
-    <div class="container"  id="navbar-duelink">
+        <div class="container" id="navbar-duelink">
 
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                {% block home %}
-                    <li>
-                        <a href="{% url 'home' %}">
-                            <img class="nav-image" src="{% static "images/schedule.png" %}">
-                            <span class="text">Schedule</span>
-                        </a>
-                    </li>
-                {% endblock home %}
-                {% block profile %}
-                    <li><a href="{% url 'profile' user.id %}">
-                        <img class="nav-image" src="{% url 'profile_image' user.id %}"/>
-                        <span class="text">{{ user.profile_user.nick_name }}</span>
-                    </a></li>
-                {% endblock profile %}
-                {% block friend_list %}
-                    <li>
-                        <a href="{% url 'friend_list' %}">
-                            <img class="nav-image" src="{% static "images/friends.png" %}">
-                            <span class="text">Friends</span>
-                        </a>
-                    </li>
-                {% endblock friend_list %}
-                {% block friend_stream %}
-                    <li>
-                        <a href="{% url 'friend_stream' %}">
-                            <img class="nav-image" src="{% static "images/bell.png" %}">
-                            <span class="text">Friends' Dues</span>
-                        </a>
-                    </li>
-                {% endblock friend_stream %}
-                {% block nav_dropdown %}
-                    <!-- <li class="dropdown">
-                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Dropdown <span class="caret"></span></a>
-                         <ul class="dropdown-menu">
-                             <li><a href="">Action</a></li>
-                             <li><a href="">Another action</a></li>
-                             <li><a href="">Something else here</a></li>
-                             <li role="separator" class="divider"></li>
-                             <li class="dropdown-header">Nav header</li>
-                             <li><a href="#">Separated link</a></li>
-                             <li><a href="#">One more separated link</a></li>
-                         </ul>
-                     </li> -->
-                {% endblock nav_dropdown %}
-            </ul>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    {% block home %}
+                        <li>
+                            <a href="{% url 'home' %}">
+                                <img class="nav-image" src="{% static "images/schedule.png" %}">
+                                <span class="text">Schedule</span>
+                            </a>
+                        </li>
+                    {% endblock home %}
+                    {% block profile %}
+                        <li><a href="{% url 'profile' user.id %}">
+                            <img class="nav-image" src="{% url 'profile_image' user.id %}"/>
+                            <span class="text">{{ user.profile_user.nick_name }}</span>
+                        </a></li>
+                    {% endblock profile %}
+                    {% block friend_list %}
+                        <li>
+                            <a href="{% url 'friend_list' %}">
+                                <img class="nav-image" src="{% static "images/friends.png" %}">
+                                <span class="text">Friends</span>
+                            </a>
+                        </li>
+                    {% endblock friend_list %}
+                    {% block friend_stream %}
+                        <li>
+                            <a href="{% url 'friend_stream' %}">
+                                <img class="nav-image" src="{% static "images/bell.png" %}">
+                                <span class="text">Friends' Dues</span>
+                            </a>
+                        </li>
+                    {% endblock friend_stream %}
+                    {% block team %}
+                        <li>
+                            <a href="{% url 'get_team_stream' %}">
+                                <img class="nav-image" src="{% static "images/team.png" %}">
+                                <span class="text">Teams</span>
+                            </a>
+                        </li>
+                    {% endblock team %}
 
-            <ul class="nav navbar-nav navbar-right" >
-                <li id="nav-search-logout">
-                    <form class="navbar search" action="{% url 'search_people' %}" method="POST" style="display: inline-block; margin-top: 10px">
-                        {% csrf_token %}
+
+                    {% block nav_dropdown %}
+                        <!-- <li class="dropdown">
+                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                aria-expanded="false">Dropdown <span class="caret"></span></a>
+                             <ul class="dropdown-menu">
+                                 <li><a href="">Action</a></li>
+                                 <li><a href="">Another action</a></li>
+                                 <li><a href="">Something else here</a></li>
+                                 <li role="separator" class="divider"></li>
+                                 <li class="dropdown-header">Nav header</li>
+                                 <li><a href="#">Separated link</a></li>
+                                 <li><a href="#">One more separated link</a></li>
+                             </ul>
+                         </li> -->
+                    {% endblock nav_dropdown %}
+                </ul>
+
+{#            Start of search bar#}
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="nav-search-logout">
+                        <form class="navbar search" action="{% url 'search_people' %}" method="POST"
+                              style="display: inline-block; margin-top: 10px">
+                            {% csrf_token %}
                     <span>
-                    <input class="search-input" type="text" name="search_term" id="search-people-field" placeholder="Search for Friend"
-                           autocomplete="off"></span>
+                    <input class="search-input" type="text" name="search_term" id="search-people-field"
+                           placeholder="Search for Friends"
+                           autocomplete="off">
+                    </span>
                         <span class="search-action">
                             <button type="submit" class="search icon" tabindex="-1" id="search-people-btn">
                                 <img class="search icon" src="{% static "images/search.png" %}">
                             </button>
                         </span>
-                    </form>
-                </li>
-                <li>
-                   <a class="logout" href='{% url 'logout' %}'>Log out</a>
-                </li>
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
+                        </form>
+                    </li>
+{#            End of search bar#}
+
+{#                    Start of dropdown#}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle btn-lg" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-items" href="{% url 'edit_profile' %}">Settings</a></li>
+                            <li><a class="dropdown-items" href="{% url 'manage_course' %}">Site Admin</a></li>
+                            <li><a class="dropdown-items" href='{% url 'logout' %}'>Log out</a></li>
+                        </ul>
+                    </li>
+{#                    End of dropdown#}
+                </ul>
+            </div>
+        </div>
     </nav>
 {% endblock %}
+
 <div class="row">
     <div class="col-md-1" id="left-margin"></div>
     <div class="col-md-9" id="middle">
@@ -129,7 +158,11 @@
 
         {% endblock %}
     </div>
-    <div class="col-md-1" id="right-margin"></div>
+    <div class="col-md-2" id="right-margin">
+        {% block right-sidebar %}
+
+        {% endblock %}
+    </div>
 </div>
 
 {% block log_out %}

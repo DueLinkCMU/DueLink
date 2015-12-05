@@ -1,0 +1,9 @@
+[
+    { value: 'banana', text: 'Bananas from Amazon Rainforest' },
+    { value: 'banana-boat', text: 'Banana Boat' },
+    { value: 'apple', text: 'Red apples from New Zealand' },
+    { value: 'apple-cider', text: 'Red apple cider beer' },
+    { value: 'orange', text: 'Oranges from Moscow' },
+    { value: 'orange-vodka', text: 'Classic orange vodka cocktail' },
+    { value: 'lemon', text: 'Juicy lemons from Amalfitan Coast' }
+]

@@ -1,15 +1,20 @@
-body {background:#ccc}
+body {background:#ffffff}
 
 .tasks{
     margin-top:100px;
+    font-size: 16px;
 }
 
 .unfinished{
     color: red;
+    font-size: 16px;
+    vertical-align: middle;
 }
 
 .finished{
     color: forestgreen;
+    font-size: 16px;
+    vertical-align: middle;
 }
 
 .box h3{
@@ -35,7 +40,7 @@ body {background:#ccc}
 
 .box {
 	width:70%;
-	background:#FFF;
+	background:#fff8cb;
 	margin: auto;
     padding: 10px;
 }
@@ -59,12 +64,43 @@ body {background:#ccc}
 
 .box-progress {
     width:30%;
-	background:#FFF;
+	background:#fff8cb;
 	margin: auto;
     padding: 10px;
 }
 
+input.form-control {
+    display: inline;
+    width: 70%;
+}
 
+button.form-control {
+    width: 10%;
+    background: #55acee none no-repeat;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: normal;
+    color: #ffffff;
+    border: 0;
+    border-radius: 5px;
+}
+
+button.form-control0, button.form-control1 {
+    width: 20%;
+    padding: 1% 0 1% 0;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: normal;
+    color: #ffffff;
+    border: 0;
+    border-radius: 5px;
+}
+button.form-control0 {
+    background: #b72122 none no-repeat;
+}
+    button.form-control1 {
+    background: #55acee none no-repeat;
+}
 
 div{
    text-align: center;
@@ -104,4 +140,10 @@ div{
   transform: rotate(3deg);
   right: 10px;
   left: auto;
+}
+
+.task-description {
+    font-size: 18px;
+    vertical-align: middle;
+    padding: 0 0 1% 0;
 }

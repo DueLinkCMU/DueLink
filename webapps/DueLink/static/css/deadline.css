@@ -2,65 +2,165 @@
     color: #1b6d85;
     font-size: 20px;
 }
+
 .deadline-content {
     border-radius: 10px;
 }
+
 #deadline-content {
     margin: auto;
     margin-bottom: 10px;
     background: #f2dede;
     /*background: #e6e6e6;*/
-	border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 4px 18px -6px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 18px -6px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 18px -6px rgba(0, 0, 0, 0.75);
 }
+
 #deadline-content {
-	margin-left: -40px;
+    margin-left: -40px;
 }
+
 #deadline-icon-row {
     margin: 20px -20px 20px -20px;
 }
+
 .span-coursename-text {
     font-size: 14px;
     background-color: #843534;
 }
+
 .div-deadline-progress {
     margin: 30px 0px 10px 0px;
 }
+
 .div-deadline-coursename {
-    margin: 10px 0px 20px 0px ;
+    margin: 10px 0px 20px 0px;
 }
+
 #button-link {
-	max-width: 150px;
+    max-width: 150px;
 }
+
 #button-unlink {
-	max-width: 150px;
+    max-width: 150px;
 }
+
 .span-status {
-	float:right;
+    float: right;
 }
+
 #deadline-stream-whole {
-	margin-top: 70px;
+    margin-top: 70px;
 }
+
 .circle {
-	background: #b9def0;
-	border-radius:50%;
-	color: black;
-	display:table;
-	/*height: 120px;*/
-	font-weight: bold;
-	font-size: 1.2em;
-	width: 120px;
-	margin:0 auto;
-	text-align: right;
-	padding-top: 50px;
-	padding-left: 0px;
-	padding-right:38px;
-	padding-bottom: 50px;
+    background: #b9def0;
+    border-radius: 50%;
+    color: black;
+    display: table;
+    /*height: 120px;*/
+    font-weight: bold;
+    font-size: 1.2em;
+    width: 120px;
+    margin: 0 auto;
+    text-align: right;
+    padding-top: 50px;
+    padding-left: 0px;
+    padding-right: 38px;
+    padding-bottom: 50px;
+    -webkit-box-shadow: 3px 4px 28px -9px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 3px 4px 28px -9px rgba(0, 0, 0, 0.75);
+    box-shadow: 3px 4px 28px -9px rgba(0, 0, 0, 0.75);
 }
+
 .circle span {
-	display:table-cell;
-	vertical-align:middle;
-	height:80px;
-	width:180px;
-	text-align:center;
-	padding: 0 15px;
+    display: table-cell;
+    vertical-align: middle;
+    height: 80px;
+    width: 180px;
+    text-align: center;
+    padding: 0 15px;
+}
+
+.profile-status-number {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #666;
+    background-color: #eee;
+    border-radius: 20px;
+}
+
+.profile-status-title {
+    font-size: 14px;
+}
+
+#profile-add-team {
+
+}
+
+.div-status {
+    padding-bottom: 10px;
+}
+
+.profile-status-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.profile-status-link:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.row.row-course-subscription {
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
+.span-course-subscription-number {
+}
+
+.span-course-subscription-name {
+    font-weight: 700;
+}
+
+.span-course-subscription-delete {
+    float: right;
+    background: #b72122;
+    border-radius: 3px;
+    padding: 2px 5px 2px 5px;
+    color: #fff;
+}
+
+.modal-title {
+    text-align: center;
+}
+
+.btn.btn-primary {
+    border: #55acee thin;
+    background: #55acee none no-repeat;
+}
+
+#profile-add-team {
+    background: #55acee none no-repeat;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: none;
+    color: #fff;
+}
+.btn.team-stream {
+    background: #55acee none no-repeat;
+    border-radius: 5px;
+    border: 0px;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: none;
+    color: #fff;
 }

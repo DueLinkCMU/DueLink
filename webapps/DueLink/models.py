@@ -22,6 +22,10 @@ class Profile(models.Model):
     def __unicode__(self):
         return self.nick_name
 
+    @property
+    def get_courses(self):
+        return Course.objects.filter(students=self.user)
+
 
 class Course(models.Model):
     course_number = models.CharField(max_length=10)
@@ -32,7 +36,7 @@ class Course(models.Model):
     students = models.ManyToManyField(User, related_name='course_students')
 
     def __unicode__(self):
-        return self.school.name + ": " + self.course_number + " " + self.course_name
+        return self.school.name + ": " + self.course_number + " " + self.course_name + "/" + self.section
 
 
 class Deadline(models.Model):
@@ -46,9 +50,20 @@ class Deadline(models.Model):
                + self.name + " due on " + self.due.__str__()
 
 
+class Team(models.Model):
+    name = models.CharField(max_length=200)
+    creator = models.ForeignKey(User, related_name="creator_teams", on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name="teams", on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name="teams")
+
+    def __unicode__(self):
+        return self.id.__str__() + "," + self.name + ',' + self.members.all().__str__()
+
+
 class DueEvent(models.Model):
     deadline = models.ForeignKey(Deadline, related_name='events', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='events', on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, related_name='events', on_delete=models.CASCADE, null=True)
     created_time = models.DateTimeField(auto_now_add=True)
     finished = models.BooleanField(default=False)
 
@@ -62,7 +77,7 @@ class DueEvent(models.Model):
             for task in self.tasks.all():
                 if task.finished:
                     finished += 1
-            return round(float(finished) / total, 2) * 100
+            return int(round(float(finished) / total * 100))
         else:
             return 0
 

@@ -1,0 +1,28 @@
+{% extends "duelink/base.html" %}
+{% load add_css %}
+{% load staticfiles %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/edit_profile.css" %}">
+{% endblock links %}
+{% block title %}  {% endblock title %}
+{% block content %}
+    <div class="container" id="user-settings">
+
+        {% block alert %}
+        {% endblock alert %}
+
+        {#    the views_admin sends booleans to tell which tab is active according to current page#}
+        <ul class="nav nav-pills" id="nav-user-settings">
+            <li role="presentation" {% if edit_profile %} class="active" {% else %} class="inactive" {% endif %} >
+                <a href="{% url 'edit_profile' %}">Edit Profile</a></li>
+            <li role="presentation" {% if subscribe_course %} class="active" {% else %} class="inactive" {% endif %}>
+                <a href="{% url 'subscribe_course' %}">Manage Course</a></li>
+        </ul>
+
+        {% block edit_profile %}
+        {% endblock edit_profile %}
+
+        {% block subscribe_course %}
+        {% endblock subscribe_course %}
+    </div>
+{% endblock content %}

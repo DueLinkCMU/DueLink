@@ -1,0 +1,109 @@
+{% extends 'duelink_admin/manage_course.html' %}
+{% load add_css %}
+{% load staticfiles %}
+{% load static %}
+{% block title %} Publish Deadline {% endblock title %}
+{#For alert header#}
+{% block links %}
+    <script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
+    <script src="{% static 'jquery/jquery.timepicker.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
+{#    <script src="{% static 'js/add_event.js' %}"></script>#}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
+    <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
+    <script src="{% static 'js/admin.js' %}"></script>
+    <link rel="stylesheet" href="{% static "css/home.css" %}">
+    <link rel="stylesheet" href="{% static "css/admin_page.css" %}">
+{% endblock links %}
+
+{% block alert %}
+    {% if success_flag %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Successfully delete course
+        </div>
+    {% endif %}
+    {% if fail_flag %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            Fail to delete course
+        </div>
+    {% endif %}
+{% endblock alert %}
+
+{% block publishdeadline %}
+    <h3>Publish Deadline</h3>
+    <p>Students who subscribed this course, will get this on their schedule</p>
+    {#    <div class="container" id="container-publish-deadline">#}
+
+    <form class="form publish-deadline" action="{% url 'publish_deadline' %}" method="POST">
+
+        {#            <h2 class="form publish-deadline header">Publish new deadline</h2>#}
+
+        {% for error in publish_deadline_form.non_field_errors %}
+            <p class="error">
+                {{ error }}
+            </p>
+        {% endfor %}
+
+        <table>
+            <tr class="select course">
+                <td class="select course">
+                    Deadline name:
+                </td>
+            </tr>
+            <tr>
+                <td>{{ publish_deadline_form.name|add_css_id:"form-control" }}</td>
+                <td class="error">{{ publish_deadline_form.name.errors }}</td>
+            </tr>
+            <tr class="select course">
+                <td class="select course">
+                    Select course:
+                </td>
+            </tr>
+            <tr>
+
+                <td>{{ publish_deadline_form.course|add_css_id:"form-control" }}</td>
+                <td class="error">{{ publish_deadline_form.course.errors }}</td>
+            </tr>
+
+        </table>
+        {% for field in publish_deadline_form.hidden_fields %}
+            {{ field }}
+        {% endfor %}
+
+        {% csrf_token %}
+    </form>
+
+
+    <div class="demo">
+        <div class="select time"><b>Select date and time:</b></div>
+
+        <input id="timePicker" type="text" data-time-format="H:i"/>
+        <input id="datePicker">
+
+    </div>
+
+    <button class="submit button add-event" id="submit_request">Publish</button>
+
+    {#    </div>#}
+    <script src="{% static "js/search_course.js" %}"></script>
+    <script src="{% static "chosen/chosen.jquery.min.js" %}" type="text/javascript"></script>
+    <script src="{% static 'js/search_course.js' %}"></script>
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {allow_single_deselect: true},
+            '.chosen-select-no-single': {disable_search_threshold: 10},
+            '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
+            '.chosen-select-width': {width: "95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
+{% endblock publishdeadline %}

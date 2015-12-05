@@ -1,0 +1,119 @@
+#user-settings {
+    margin-top: 80px;
+    max-width: 100%;
+}
+
+.container.container-subscribe-course {
+    max-width: 100%;
+    padding-left: 0;
+}
+
+.inactive {
+    background-color: #d5d5d5;
+    border-radius: 5px;
+    border: #d5d5d5 thin;
+}
+
+.h3-subscribe-course {
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.span-edit-user {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.span-edit-profile {
+    font-size: 16px;
+    font-weight: bold;
+    padding-left: 1%;
+}
+
+.row.row-course-subscription {
+    margin-left: 0;
+    margin-bottom: 10px;
+}
+
+#table-user-edit {
+    width: 100%;
+}
+
+.form-control {
+    margin-bottom: 4%;
+    font-size: 16px;
+    padding: 2%;
+}
+
+#table-profile-edit {
+    width: 100%;
+}
+
+#nav-user-settings {
+    margin-left: 120px;
+    margin-bottom: 20px;
+}
+
+button.form-control {
+    width: 100%;
+    padding: 1% 0 1% 0;
+    background: #55acee none no-repeat;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: normal;
+    color: #ffffff;
+    border: 0;
+    border-radius: 5px;
+}
+
+#submit-subscribe-course {
+    padding: 0.5% 0 1% 0;
+    height: 40px;
+    font-size: 16px;
+    background: #55acee none no-repeat;
+    color: white;
+    vertical-align: middle;
+}
+
+#id_course {
+    font-size: 13px;
+}
+
+#id_profile_image {
+    width: 100%;
+    padding: 1% 0 1% 0;
+    box-shadow: none;
+    font-size: 16px;
+    font-weight: normal;
+    border: 0;
+    border-radius: 5px;
+}
+
+label[for='id_profile_image'] {
+    width: 200px;
+    background: #55acee none no-repeat;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: none;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+input[type='file'] {
+    display: none;
+}
+
+.td-profile-image, .td-upload {
+    text-align: center;
+}
+.profile-image, .upload {
+    margin-bottom: 2%;
+}
+.profile-image {
+    width: 200px;
+    height: 200px;
+}

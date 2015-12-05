@@ -33,20 +33,24 @@ urlpatterns = [
     url(r'^profile_image/(?P<id>\d+)$', 'DueLink.views.get_user_image', name="profile_image"),
 
     url(r'^add_event$', 'DueLink.views.add_event', name='add_event'),
+
     url(r'^add_task$', 'DueLink.views.add_task', name='add_task'),
-
     url(r'^tasks/(?P<event_id>\d+)$', 'DueLink.views.display_tasks', name='tasks'),
-
     url(r'^get_tasks/(?P<event_id>\d+)$', 'DueLink.views.get_tasks', name='get_tasks'),
     url(r'^update_task/(?P<task_id>\d+)$', 'DueLink.views.update_task', name='update_task'),
-
+    url(r'^delete_task/(?P<task_id>\d+)$', 'DueLink.views.delete_task', name='delete_task'),
     url(r'^add_school$', 'DueLink.views.add_school', name='add_school'),
-    url(r'^add_course$', 'DueLink.views.add_course', name='add_course'),
     url(r'^get_schedule', 'DueLink.views_schedule.get_schedule', name='get_schedule'),
+
+    url(r'^display_user_course', 'DueLink.views.display_user_course', name='display_user_course'),
+    url(r'^subscribe_course', 'DueLink.views.subscribe_course', name='subscribe_course'),
+    url(r'^unsubscribe_course', 'DueLink.views.unsubscribe_course', name='unsubscribe_course'),
 
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
+
     url(r'edit-profile$', 'DueLink.views.edit_profile', name='edit_profile'),
+    # url(r'manage-course$', 'DueLink.views.manage_course', name='manage_course'),
 
     url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
         {'template_name': 'duelink/password_reset.html',
@@ -67,7 +71,27 @@ urlpatterns = [
     url(r'^password_reset_complete$', 'django.contrib.auth.views.password_reset_complete',
         {'template_name': 'duelink/password_reset_complete.html'
          }, name='password_reset_complete'),
-    url(r'^link/(?P<user_id>\d+)$','DueLink.views.link',name='link'),
-    url(r'^unlink/(?P<user_id>\d+)$','DueLink.views.unlink',name='unlink'),
-    url(r'^search_people$', 'DueLink.views.search_people', name='search_people')
+
+    url(r'^link/(?P<user_id>\d+)$', 'DueLink.views.link', name='link'),
+    url(r'^unlink/(?P<user_id>\d+)$', 'DueLink.views.unlink', name='unlink'),
+    url(r'^search_people$', 'DueLink.views.search_people', name='search_people'),
+    url(r'^search_course$', 'DueLink.views.search_course', name='search_course'),
+    # Admin pages for user with special permissions
+        url(r'^admin/publish_deadline$', 'DueLink.views_admin.publish_deadline', name='publish_deadline'),
+    url(r'^admin/delete_course$', 'DueLink.views_admin.delete_course', name='delete_course'),
+    url(r'^admin/add_course$', 'DueLink.views_admin.add_course', name='add_course'),
+    url(r'^admin/add_section$', 'DueLink.views_admin.add_section', name='add_section'),
+    url(r'^admin/manage_course$', 'DueLink.views_admin.manage_course', name='manage_course'),
+
+    url(r'^admin/add_school$', 'DueLink.views_admin.add_school', name='add_school'),
+    # url(r'^admin/delete_school$', 'DueLink.views_admin.delete_school', name='delete_school'),
+
+    url(r'^admin/admin_get$', 'DueLink.views_admin.admin_get'),
+     url(r'^add_team$', 'DueLink.views.add_team', name="add_team"),
+    url(r'^add_member/(?P<team_id>\d+)$', 'DueLink.views.add_member', name='add_member'),
+    url(r'^remove_member/(?P<team_id>\d+)$', 'DueLink.views.remove_member', name='remove_member'),
+    url(r'^get_team_list$', 'DueLink.views.get_team_list', name='get_team_list'),
+    url(r'^get_team_stream$', 'DueLink.views.get_team_stream', name='get_team_stream'),
+    url(r'^get_team_stream/(?P<team_id>\d+)$','DueLink.views.get_team_stream_by_id', name='get_team_stream_by_id'),
+    url(r'^add_event_team/(?P<team_id>\d+)$','DueLink.views.add_event_team', name = 'add_event_team')
 ]

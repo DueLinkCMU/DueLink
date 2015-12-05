@@ -3,25 +3,48 @@
 {% block links %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
+    <link rel="stylesheet" href="{% static "chosen/chosen.min.css" %}">
     <script src="{% static "js/profile.js" %}"></script>
+    <script src="{% static "js/add_member.js" %}"></script>
+
+    {#    <script src="{% static "jquery/jquery.confirm.min.js" %}"></script>#}
+    {#    <script src="{% static "js/course.js" %}"></script>#}
+
 {% endblock links %}
 {% block title %}{{ profile.nick_name }}'s Dues{% endblock %}
 
 
-{% block profile %}
 
-<li class="active"><a href="#">
-    {% if self %}
-    <img class="nav-image" src="{% url 'profile_image' profile.user.id %}"/>
-    My Dues
+
+
+{% block profile %}
+    {% if not isTeams and not isTeam %}
+        <li class="active">
+            <a href="#">
+                <img class="nav-image" src="{% static "images/team.png" %}">
+                <span class="text">Teams</span>
+            </a>
+        </li>
     {% else %}
-    {{ profile.nick_name }}'s Dues
-        {% endif %}
-    </a></li>
+        {{ block.super }}
+    {% endif %}
 {% endblock profile %}
 
+{% block team %}
+    {% if isTeams or isTeam %}
+        <li class="active"><a href="{% url 'get_team_stream' %}">
+            <img class="nav-image" src="{% static "images/team.png" %}">
+            <span class="text">Teams</span>
+        </a></li>
+    {% else %}
+        {{ block.super }}
+    {% endif %}
+{% endblock team %}
 
 {% block content %}
+    {% if isTeam %}
+        <input type="hidden" id="team_id" value="{{ team.id }}">
+    {% endif %}
     <div id="deadline-stream-whole">
         <!--Start of user icon and link-->
         <div class="col-md-2">
@@ -43,25 +66,79 @@
             <div class="row">
 
                 <!--link or unlink-->
-                <div class="container-fluid">
-                    {% if not self %}
-                        {% if linked %}
+                {% if not self %}
+                    {% if linked %}
 
-                            <!--<form action="{% url 'unlink' user_id %}" method="POST">-->
-                            <a id="button-link" class="btn btn-block btn-default" onclick="unlink({{ user_id }})"
-                               type="submit">unlink</a>
-                            <!--{% csrf_token %}-->
-                            <!--</form>-->
-                        {% else %}
-                            <!--<form action="{% url 'link' user_id %}" method="POST">-->
-                            <a id="button-link" class="btn btn-block btn-primary" onclick="link({{ user_id }})"
-                               type="submit">link</a>
-                            <!--{% csrf_token %}-->
-                            <!--</form>-->
-                        {% endif %}
+                        <!--<form action="{% url 'unlink' user_id %}" method="POST">-->
+                        <a id="button-link" class="btn btn-block btn-default" onclick="unlink({{ user_id }})"
+                           type="submit">unlink</a>
+                        <!--{% csrf_token %}-->
+                        <!--</form>-->
+                    {% else %}
+                        <!--<form action="{% url 'link' user_id %}" method="POST">-->
+                        <a id="button-link" class="btn btn-block btn-primary" onclick="link({{ user_id }})"
+                           type="submit">link</a>
+                        <!--{% csrf_token %}-->
+                        <!--</form>-->
                     {% endif %}
-                </div>
+
+                {% else %}
+                    <a class="add-event btn " id="profile-add-team" href="{% url 'add_team' %}">Add Team</a>
+                    <div class="div-status">
+                        <a class="profile-status-link" id="course-modal-trigger" data-toggle="modal"
+                           data-target="#courseModal">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                            <span class="profile-status-title">Courses</span>
+                            <span class="profile-status-number">{{ num_of_course }}</span>
+                        </a>
+                    </div>
+
+
+                    <div class="div-status">
+                        {% if isTeam or isTeams %}
+                            <h class="profile-status-link">
+                                <span class="glyphicon glyphicon-flag"></span>
+                                <span class="profile-status-title">Team List:</span>
+                                <span class="profile-status-number">{{ team_num }}</span>
+                            </h>
+                            <ul>
+                                {% for team in teams %}
+                                    <li>
+                                        <a href="{% url 'get_team_stream_by_id' team.id %}">{{ team.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        {% if isTeam %}
+                            <h class="profile-status-link">
+                                <span class="glyphicon glyphicon-education"></span>
+                                Team: {{ team.name }}
+                            </h>
+                            <br>
+                            <h class="profile-status-link">
+                                <span class="glyphicon glyphicon-education"></span>
+                                Course: {{ team.course.course_number }}
+                            </h>
+                            <br>
+                            <h class="profile-status-link">
+                                <span class="glyphicon glyphicon-education"></span>
+                                Members:
+                                <span class="profile-status-number">{{ member_num }}</span>
+                            </h>
+
+                            <ul id="member_list">
+                                {% for member in team.members.all %}
+                                    <li>
+                                        <a href="{% url 'profile' member.id %}">{{ member.username }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <!--End link or unlink -->
+
             </div>
         </div>
         <!--End of user icon name link-->
@@ -69,22 +146,82 @@
         <div class="col-md-1"></div>
 
         <!--Start of deadlines-->
-        <div class="col-md-8" id="deadline-panel">
+        <div class="col-md-9" id="deadline-panel">
             <div class="row">
                 <br>
             </div>
+            {% if isTeam %}
+                <div class="well">
+                    <h1>Team: {{ team.name }}</h1>
+
+                    <form>
+                        {{ form.member}}
+                        <button class="btn team-stream" id="add_member">Add friend</button>
+                        <button class="btn team-stream" type = "button" class="button" onclick="window.location.href='{% url 'add_event_team' team.id%}'">Add Due</button>
+
+                    </form>
+
+                </div>
+
+            {% endif %}
             {% for event in events %}
                 {% include 'duelink/deadline.html' %}
             {% endfor %}
-        </div>
-        <!--end of deadlines-->
-        <div class="col-md-1">
-
+            {% for event in events_dued %}
+                {% include 'duelink/deadline.html' %}
+            {% endfor %}
         </div>
 
     </div>
 
+
+
+    {#place for modal#}
+    <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="courseModalLabel">Course Subscription</h4>
+                </div>
+                <div class="modal-body">
+                    <ul id="course-list-modal">
+                    </ul>
+                    <div class="container-fluid" id="course-subscription-list">
+                        <div class="row row-course-subscription" course_id="hah">
+                            <span class="span-course-subscription-number">15-637 D</span>
+                            <span class="span-course-subscription-name">Web app development</span>
+                            <a href="deadline_stream.html"><span class="span-course-subscription-delete"> Delete </span></a>
+                        </div>
+                        <div class="row row-course-subscription">
+                            <span class="span-course-subscription-number">15-213 D </span>
+                            <span class="span-course-subscription-name">Intro to Computer Systems</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'subscribe_course' %}" type="button" class="btn btn-primary"><b>Manage Your
+                        Course</b></a>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="{% static "js/search_friend.js" %}"></script>
+    <script src="{% static "chosen/chosen.jquery.min.js" %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {allow_single_deselect: true},
+            '.chosen-select-no-single': {disable_search_threshold: 10},
+            '.chosen-select-no-results': {no_results_text: 'Oops, nothing found!'},
+            '.chosen-select-width': {width: "95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
 {% endblock content %}
 
 
