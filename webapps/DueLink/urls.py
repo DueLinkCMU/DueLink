@@ -83,10 +83,11 @@ urlpatterns = [
     # url(r'^admin/delete_school$', 'DueLink.views_admin.delete_school', name='delete_school'),
 
     url(r'^admin/admin_get$', 'DueLink.views_admin.admin_get'),
-    url(r'^create_team/(?P<user_id>\d+)$', 'DueLink.views.create_team', name='create_team'),
+     url(r'^add_team$', 'DueLink.views.add_team', name="add_team"),
     url(r'^add_member/(?P<team_id>\d+)$', 'DueLink.views.add_member', name='add_member'),
     url(r'^remove_member/(?P<team_id>\d+)$', 'DueLink.views.remove_member', name='remove_member'),
-    url(r'^get_team_list/(?P<user_id>\d+)$', 'DueLink.views.get_team_list', name='get_team_list'),
-    url(r'^get_team_stream/(?P<user_id>\d+)$', 'DueLink.views.get_team_stream', name='get_team_stream')
-
+    url(r'^get_team_list$', 'DueLink.views.get_team_list', name='get_team_list'),
+    url(r'^get_team_stream$', 'DueLink.views.get_team_stream', name='get_team_stream'),
+    url(r'^get_team_stream/(?P<team_id>\d+)$','DueLink.views.get_team_stream_by_id', name='get_team_stream_by_id'),
+    url(r'^add_event_team/(?P<team_id>\d+)$','DueLink.views.add_event_team', name = 'add_event_team')
 ]

@@ -3,10 +3,16 @@
 {% block links %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/deadline.css' %}">
+    <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
     <script src="{% static "js/profile.js" %}"></script>
+    <script src="{% static "js/add_member.js" %}"></script>
 {% endblock links %}
 {% block title %}{{ profile.nick_name }}'s Dues{% endblock %}
 
+
+{% if isTeam %}
+
+{% else %}
 
 {% block profile %}
 
@@ -20,8 +26,12 @@
     </a></li>
 {% endblock profile %}
 
+{% endif %}
 
 {% block content %}
+    {% if isTeam %}
+        <input type="hidden" id = "team_id" value="{{ team.id }}">
+    {% endif %}
     <div id="deadline-stream-whole">
         <!--Start of user icon and link-->
         <div class="col-md-2">
@@ -76,9 +86,35 @@
                                 {{ None }}{% endif %}</span>
                         </a>
                     </div>
+                    </div>
+                    <div class="div-status">
+                        {% if isTeam or isTeams %}
+                            <h>Team List:</h>
+                            <ul>
+                                {% for team in teams %}
+                                    <li>
+                                        <a href = "{% url 'get_team_stream_by_id' team.id %}">{{ team.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        {% if isTeam %}
+                            <h>Team: {{ team.name }}</h>
+                            <h>Course: {{ team.course.course_number }}</h>
+                            <ul id="member_list">
+                                {% for member in team.members.all %}
+                                    <li>
+                                        <a href = "{% url 'profile' member.id %}">{{ member.username}}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
                 {% endif %}
                 <!--End link or unlink -->
-            </div>
+
+        </div>
         </div>
         <!--End of user icon name link-->
 
@@ -89,13 +125,25 @@
             <div class="row">
                 <br>
             </div>
+            {% if isTeam %}
+                <div class = "well">
+                   <h1>Team: {{ team.name }}</h1>
+                    <form>
+                        {{ form.member}}
+                        <button id="add_member">Add friend</button>
+                    </form>
+
+                </div>
+
+            {% endif %}
             {% for event in events %}
                 {% include 'duelink/deadline.html' %}
             {% endfor %}
         </div>
-    </div>
 
     </div>
+
+
 
     {#place for modal#}
     <div class="modal fade" id="courseModal" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel">
@@ -117,6 +165,21 @@
             </div>
         </div>
     </div>
+
+     <script src="{% static "js/search_friend.js" %}"></script>
+    <script src="{% static "chosen/chosen.jquery.min.js"%}" type="text/javascript"></script>
+    <script type="text/javascript">
+        var config = {
+            '.chosen-select'           : {},
+            '.chosen-select-deselect'  : {allow_single_deselect:true},
+            '.chosen-select-no-single' : {disable_search_threshold:10},
+            '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+            '.chosen-select-width'     : {width:"95%"}
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
+    </script>
 {% endblock content %}
 
 

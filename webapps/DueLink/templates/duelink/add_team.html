@@ -3,15 +3,8 @@
 {% block links %}
 
     <script src="{% static 'jquery/jquery-1.11.3.js' %}"></script>
-    <script src="{% static 'jquery/jquery.timepicker.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
-    <script src="{% static 'fullcalendar-2.4.0/lib/moment.min.js' %}"></script>
-    <script src="{% static 'js/add_event.js' %}"></script>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %} "/>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap-datepicker.min.css' %} "/>
-    <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
-
-
+    <script src="{% static 'js/add_team.js' %}"></script>
+     <link rel="stylesheet" href="{%  static "chosen/chosen.min.css" %}">
     {% load static %}
     <link rel="stylesheet" href="{% static "css/add_event.css" %}">
     {% load add_css %}
@@ -20,13 +13,10 @@
 {% block content %}
     <div class="container" id="add-event">
 
-    {% if isTeam %}
-        <input type="hidden" id = "team_id" value="{{ team_id }}">
-    {% endif %}
 
         <form class="form add-event" action="{% url 'add_event' %}" method="POST">
 
-            <h2 class="form add-event header">Add new event</h2>
+            <h2 class="form add-event header">Add new team</h2>
 
 
             {% for error in form.non_field_errors %}
@@ -38,19 +28,18 @@
             <table>
                 <tr>
                     <td>{{ form.name|add_css_id:"form-control" }}</td>
-{#                    <td class="error">{{ form.name.errors }}</td>#}
+                    <td class="error">{{ form.name.errors }}</td>
                 </tr>
+
                 <tr class="select course">
                     <td class="select course">
                         Select course:
                     </td>
                 </tr>
                 <tr>
-
                     <td>{{ form.course|add_css_id:"form-control" }}</td>
                     <td class="error">{{ form.course.errors }}</td>
                 </tr>
-
             </table>
             {% for field in form.hidden_fields %}
                 {{ field }}
@@ -60,20 +49,13 @@
         </form>
 
 
-        <div class="demo">
-            <div class="select time"><b>Select date and time:</b></div>
 
-            <input id="timePicker" type="text" data-time-format="H:i"/>
-            <input id="datePicker">
-
-        </div>
-
-        <button class="submit button add-event" id="submit_request">Submit Request</button>
+        <button class="submit button add-event" id="submit_request">Create</button>
 
     </div>
-
-    <script src="{% static "js/search_course.js" %}"></script>
+     <script src="{% static "js/search_course.js" %}"></script>
     <script src="{% static "chosen/chosen.jquery.min.js"%}" type="text/javascript"></script>
+    <script src="{% static 'js/search_course.js' %}"></script>
     <script type="text/javascript">
         var config = {
             '.chosen-select'           : {},
@@ -86,5 +68,6 @@
             $(selector).chosen(config[selector]);
         }
     </script>
+
 
 {% endblock content %}

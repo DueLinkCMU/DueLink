@@ -39,7 +39,10 @@ def get_profile(request, id):
         profile_page = True
         profile = get_object_or_404(Profile, user=user)
         events = user.events.all()
-        # print (profile.user.id)
+        teams = user.teams.all()
+        events_team = DueEvent.objects.filter(team__in = teams)
+        events = events | events_team
+        # (profile.user.id)
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
@@ -225,11 +228,11 @@ def add_course(request):
 
 def add_school(request):
     if request.method == 'GET':
-        form = SchoolForm()
+        form = AddSchoolForm()
         return render(request, 'duelink/add_school.html', {'form': form})
 
     if request.method == 'POST':
-        form = SchoolForm(request.POST)
+        form = AddSchoolForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -395,30 +398,32 @@ def display_user_course(request):
 
 @transaction.atomic
 @login_required
-def create_team(request, user_id):
-    user_ = get_object_or_404(User, id=user_id)
-    profile = get_object_or_404(Profile, user=request.user)
-    profile_ = get_object_or_404(Profile, user=user_)
+def add_team(request):
+
+    if request.method == "GET":
+        context = {'form':AddTeamForm}
+        return render(request, 'duelink/add_team.html',context)
     if request.method == "POST":
-        profile.friends.add(user_)
-        profile.save()
-        profile_.friends.add(request.user)
-        profile.save()
-        return HttpResponse("success link")
+        form = AddTeamForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            course_pk = form.cleaned_data['course']
+            team = Team.objects.create(creator = request.user, name = name, course = course_pk)
+            team.members.add(request.user)
+            team.save()
+            return HttpResponse("success link")
 
     return HttpResponseForbidden
 
 @transaction.atomic
 @login_required
 def add_member(request, team_id):
-    user_ = get_object_or_404(User, id=user_id)
-    profile = get_object_or_404(Profile, user=request.user)
-    profile_ = get_object_or_404(Profile, user=user_)
+    team = get_object_or_404(Team, id=team_id)
     if request.method == "POST":
-        profile.friends.add(user_)
-        profile.save()
-        profile_.friends.add(request.user)
-        profile.save()
+        user_id = request.POST['member']
+        user = get_object_or_404(User, id = user_id)
+        team.members.add(user)
+        team.save()
         return HttpResponse("success link")
 
     return HttpResponseForbidden
@@ -426,7 +431,7 @@ def add_member(request, team_id):
 @transaction.atomic
 @login_required
 def remove_member(request, team_id):
-    user_ = get_object_or_404(User, id=user_id)
+    user_ = get_object_or_404(User, id=team_id)
     profile = get_object_or_404(Profile, user=request.user)
     profile_ = get_object_or_404(Profile, user=user_)
     if request.method == "POST":
@@ -442,34 +447,86 @@ def remove_member(request, team_id):
 def get_team_list(request):
     context = {}
     user = request.user
-    friend_list = user.profile_friends.all()
-    context['friend_list'] = friend_list
-    return render(request, 'duelink/friend_list.html', context)
+    team_list = user.profile_friends.all()
+    context['team_list'] = team_list
+    return render(request, 'duelink/team_list.html', context)
 
 
 @login_required
-def get_team_stream(request, id):
+def get_team_stream(request):
     errors = []
-    # Go to the profile page of a user matching the id
     try:
-        user = get_object_or_404(User, id=id)
-        self = (user == request.user)
-
+        user = request.user
+        self = True
         profile_page = True
+        teams = user.teams.all()
         profile = get_object_or_404(Profile, user=user)
-        events = user.events.all()
-        # print (profile.user.id)
+        events = DueEvent.objects.filter(team__in = teams)
+
     except ObjectDoesNotExist:
         errors.append('This user does not exist.')
         return render(request, 'duelink/deadline_stream.html', errors)
 
     profile_me = get_object_or_404(Profile, user=request.user)
-    linked = profile_me.friends.filter(id=id).exists()
-
+    linked = False
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self, 'user_id': id, 'linked': linked}
+               'self': self, 'user_id': id, 'linked': linked, 'isTeams':True, 'teams': teams}
     if self:
         num_of_course = Course.objects.filter(students=user).count()
         context['num_of_course'] = num_of_course
 
     return render(request, 'duelink/deadline_stream.html', context)
+
+
+@login_required
+def get_team_stream_by_id(request,team_id):
+    errors = []
+    try:
+        user = request.user
+        team = get_object_or_404(Team, id=team_id)
+        teams = user.teams.all()
+        self = (user in team.members.all())
+        profile_page = True
+        profile = get_object_or_404(Profile, user=user)
+        events = team.events.all()
+        form = AddMemberForm(user=user)
+
+    except ObjectDoesNotExist:
+        errors.append('This user does not exist.')
+        return render(request, 'duelink/deadline_stream.html', errors)
+
+    profile_me = get_object_or_404(Profile, user=request.user)
+    linked = False
+
+    context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
+               'self': self, 'user_id': id, 'linked': linked, 'isTeam':True, 'team':team, 'teams':teams,'form':form}
+    if self:
+        num_of_course = Course.objects.filter(students=user).count()
+        context['num_of_course'] = num_of_course
+
+    return render(request, 'duelink/deadline_stream.html', context)
+
+
+@login_required
+def add_event_team(request, team_id):
+    team = get_object_or_404(Team, id=team_id)
+    if request.method == 'GET':
+        form = AddEventForm({'course': team.course.id})
+        return render(request, 'duelink/add_event.html', {'form': form, 'isTeam':True, 'team_id': team_id})
+
+    if request.method == 'POST':
+        form = AddEventForm(request.POST)
+        if form.is_valid():
+            deadline = form.clean_deadline(request)  # Check and return dl .Ee suppose user create event for themselves
+            if not deadline:
+                return HttpResponseForbidden("Fail to add event: Duplicated event")
+
+            student = request.user
+            deadline.students.add(student)
+
+            # Then add the student to that deadline
+            new_event = DueEvent.objects.create(deadline=deadline, user=student, team = team)
+            new_event.save()
+            return HttpResponse("Successfully add event")
+        else:
+            return HttpResponseForbidden("Fail to add event")

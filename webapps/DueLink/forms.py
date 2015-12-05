@@ -214,3 +214,20 @@ class SubscribeCourseForm(forms.Form):
         except Exception:
             print("Unexpected error: course is not Course object or user is not User object")
             return False
+
+
+class AddTeamForm(forms.Form):
+    name = forms.CharField(max_length=20, label='Team Name')
+    course = forms.ModelChoiceField(queryset=Course.objects.all())
+    # TODO: validate add only course you select
+    def clean(self):
+        cleaned_data = super(AddTeamForm, self).clean()
+        return cleaned_data
+
+class AddMemberForm(forms.Form) :
+    member = None
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
+        users = user.profile_user.friends.all()
+        super(AddMemberForm,self).__init__(*args, **kwargs)
+        self.fields['member'] = forms.ModelChoiceField(queryset=users)

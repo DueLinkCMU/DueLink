@@ -10,6 +10,10 @@ void function(){
         .attr('class','chosen-select')
         .attr('style','width: 350px;')
         .attr('tabindex',"1");
+     if($('#team_id').length > 0){
+        //is team
+        $('#id_course').prop('disabled','disabled');
+     }
 }();
 
 
