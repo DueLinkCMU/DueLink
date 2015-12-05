@@ -7,7 +7,7 @@ function create_team() {
     $.post("add_team", {name: name , course: course})
         .done(function() {
             alert("Success: new team added");
-           // document.location.href = "team_stream";
+           document.location.href = "/duelink/get_team_stream";
 
         })
         .fail(function(){
