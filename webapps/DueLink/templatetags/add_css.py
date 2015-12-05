@@ -13,3 +13,9 @@ def add_css(field, cls):
 def add_css(field, cls):
     return field.as_widget(
         attrs={"class": cls, "id": "id_" + field.name, "placeholder": field.label})
+
+
+@register.filter(name='add_class')
+def add_class(field, cls):
+    return field.as_widget(
+        attrs={"class": cls, "id": "id_" + field.name})

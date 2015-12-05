@@ -7,8 +7,9 @@
 .one-recommendation {
     margin-bottom: 10px;
 }
-
-
+.col-md-9.row.search-result{
+    margin-top: 80px;
+}
 .span-username {
     font-size: 24px;
 }
@@ -40,7 +41,9 @@
 .col-md-2.row {
     margin-top: 0;
 }
-
+div.search-result {
+    margin-top: 80px;
+}
 .recommendations {
     margin-left: 15px;
 }

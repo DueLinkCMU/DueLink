@@ -17,13 +17,11 @@
 
 <!--TODO: friendlist style -->
 {% block content %}
-
-    <div class="row">
-        <div class="col-md-2"></div>
-        {% if search_result %}
-            <span class="search-result">Search result for: {{ search_term }}</span>
-        {% endif %}
-    </div>
+    {% if search_result %}
+        <div class="search-result">
+        <span class="search-result">Search result for: {{ search_term }}</span>
+        </div>
+    {% endif %}
     <div class="friends">
         {% for friend in friend_list %}
             <div class="one-friend">
@@ -59,6 +57,7 @@
     {% if recommend_list %}
         <div class="users-you-may-know">Users you may know:</div>
     {% endif %}
+
     <div class="recommendations">
         <!--TODO: recommend style -->
         {% for key, value in recommend_list.items %}
@@ -79,4 +78,5 @@
                 </div>
             </div>
         {% endfor %}
-{% endblock %}
+    </div>
+{% endblock right-sidebar %}
