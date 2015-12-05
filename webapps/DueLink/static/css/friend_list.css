@@ -1,6 +1,14 @@
-.row {
-    margin-top: 40px;
+.friends {
+    margin-top: 80px;
 }
+.one-friend {
+    margin-bottom: 25px;
+}
+.one-recommendation {
+    margin-bottom: 10px;
+}
+
+
 .span-username {
     font-size: 24px;
 }
@@ -8,10 +16,31 @@
     /*background: #e6e6e6;*/
     border-radius: 5px;
     /*padding: 0px;*/
-    padding: 15px 0px 15px 0px;
+    padding: 15px 0 15px 0;
     background: #fff;
     border: 1px solid #e1e8ed;
 }
 .search-result {
     font-size: 24px;
+}
+#right-margin {
+    margin-top: 80px;
+}
+.col-md-3 {
+    padding: 0;
+}
+.col-md-9 {
+    padding-left: 0;
+}
+.span-rec-name {
+    font-weight: bold;
+    font-size: large;
+    display: block;
+}
+.col-md-2.row {
+    margin-top: 0;
+}
+
+.recommendations {
+    margin-left: 15px;
 }
