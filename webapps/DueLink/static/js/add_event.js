@@ -38,7 +38,7 @@ function send_form() {
         .done(function() {
             alert("Success: new evnet added");
             if(isTeam){
-                document.location.href = "/duelink/get_team_stream"
+                document.location.href = "/duelink/get_team_stream/"+team_id
             }else{
                 document.location.href = "/duelink/home";
             }

@@ -494,7 +494,7 @@ def get_team_stream(request):
     profile_me = get_object_or_404(Profile, user=request.user)
     linked = False
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self, 'user_id': id, 'linked': linked, 'isTeams':True, 'teams': teams}
+               'self': self, 'user_id': id, 'linked': linked, 'isTeams':True, 'teams': teams, 'team_num': len(teams)}
     if self:
         num_of_course = Course.objects.filter(students=user).count()
         context['num_of_course'] = num_of_course
@@ -523,7 +523,8 @@ def get_team_stream_by_id(request,team_id):
     linked = False
 
     context = {'user': user, 'profile': profile, 'events': events, 'errors': errors, 'profile_page': profile_page,
-               'self': self, 'user_id': id, 'linked': linked, 'isTeam':True, 'team':team, 'teams':teams,'form':form}
+               'self': self, 'user_id': id, 'linked': linked, 'isTeam':True, 'team':team, 'teams':teams,'form':form,
+               'member_num':len(team.members.all()), 'team_num': len(teams)}
     if self:
         num_of_course = Course.objects.filter(students=user).count()
         context['num_of_course'] = num_of_course
