@@ -58,13 +58,13 @@
                         <td><span class="span-edit-profile">Profile image </span></td>
                     </tr>
                     <tr>
-                        <td> {{ profile_form.profile_image }} </td>
+                        <td> {{ profile_form.profile_image|add_css_id:"form-control" }} </td>
                         <td>{{ profile_form.profile_image.errors }}</td>
                     </tr>
                     <tr>
                 </table>
 
-                <button type="submit" class="btn btn-block btn-default">Save</button>
+                <button type="submit" class="form-control">Save</button>
                 {% csrf_token %}
             </form>
         </div>
