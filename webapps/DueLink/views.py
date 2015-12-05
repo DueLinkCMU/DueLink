@@ -328,13 +328,14 @@ def search_people(request):
     context = {'friend_list': result_join, 'search_result': True, 'search_term': name}
     return render(request, 'duelink/friend_list.html', context)
 
+
 @login_required
 def search_course(request):
-    #return a courses.json
+    # return a courses.json
     context = {}
     context['courses'] = Course.objects.all()
     if request.method == "GET":
-        return render(request, 'duelink/courses.json', context,  content_type = "application/json")
+        return render(request, 'duelink/courses.json', context, content_type="application/json")
 
 
 @login_required
@@ -343,7 +344,7 @@ def display_user_course(request):
     skim = False
     if 'skim' in request.POST:
         if request.POST['skim'] == '1':
-           skim = True
+            skim = True
 
     courses = Course.objects.filter(students=user)
 
@@ -392,20 +393,10 @@ def subscribe_course(request):
         if form.is_valid() and form.clean_exist(request.user):
             course = form.cleaned_data['course']
             course.students.add(request.user)
-            context = {'courses': [course,]}
+            context = {'courses': [course, ]}
             return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')
         else:
             return HttpResponseForbidden("Invalid or subscribed course")
-
-
-# @login_required
-# <<<<<<< HEAD
-# def display_user_course(request):
-#     user = request.user
-#     courses = Course.objects.filter(students=user)
-#
-#     context = {'courses': courses}
-#     return render(request, 'duelink_json/display_user_course.json', context, content_type='application/json')
 
 
 @transaction.atomic
@@ -423,6 +414,7 @@ def create_team(request, user_id):
 
     return HttpResponseForbidden
 
+
 @transaction.atomic
 @login_required
 def add_member(request, team_id):
@@ -438,6 +430,7 @@ def add_member(request, team_id):
 
     return HttpResponseForbidden
 
+
 @transaction.atomic
 @login_required
 def remove_member(request, team_id):
@@ -452,6 +445,7 @@ def remove_member(request, team_id):
         return HttpResponse("success link")
 
     return HttpResponseForbidden
+
 
 @login_required
 def get_team_list(request):
@@ -488,7 +482,8 @@ def get_team_stream(request, id):
         context['num_of_course'] = num_of_course
 
     return render(request, 'duelink/deadline_stream.html', context)
-# =======
+
+
 def unsubscribe_course(request):
     if request.method == 'POST':
         form = UnsubscribeCourseForm(request.POST)
@@ -501,4 +496,3 @@ def unsubscribe_course(request):
             return HttpResponseForbidden("Fail to un-subscribe course")
     else:
         return HttpResponseForbidden("Invalid request method, should be POST")
-# >>>>>>> xgy
