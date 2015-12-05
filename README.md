@@ -1,34 +1,21 @@
-~ Test server: http://54.165.106.68:8080
-密码见测试.py里那个
+~ Deployment server on EC2: http://ec2-52-91-103-243.compute-1.amazonaws.com  
+admin user account: username:admin2 passwd:123
+~ See our unit test results on Jenkins Build server: http://54.165.106.68:8080
+ 
+####To use:####
+- Add deadlines to schedule on calendar page  
+- Check deadlines on profile page, view and create tasks, check progress  
+- Subscribe courses' deadlines and edit profile by clicking the icon on web pages' right top
+- For admin users, enter admin site from the entry on the top right of the web pages. they may publish new deadlines to students who subscribed the course, they may also add/delete courses.
 
 
-###Sprint 3 Backlog###
+###Sprint 3 Summary###
 
-
-- User can type course name or number to search the course(**Working**)  
-- Users set events as private/public
-- User can set event as private, so that people linked to them cannot see it on friend stream
-- Email notification(**1 hour's work**): https://github.com/django-ses/django-ses
-
-####Project team(**Not Started!**) ####
-- Build new models for project team
-- Create new due page for project team
-- Add to project team
-- New actions for adding team
-- Deadline for team project
-
-####Recommendations####
-- Recommend people to link based on same course
-
-####Unit test####
-- Improve coverage(**good-progress 68% lines**)  
-    (**2~3 labor hrs to cover views.py**)
-
-####Admin User####
-- Add admin user who has privilege to add course/school to system(**90%**)
-
-####Deployment and automation####
-- Deploy on aws and build docker images for duelink to automate deployment.(**Test automation done**)
+####Progress####
+- Finished most ore features(those we mentioned in project sepcification)
+- Gave up some none-core features 
+- Difficulties: Time is never enough, model relationships, templates inheritance 
+- But we did implement some interesting stuff: a POSFIX smtp server, a Jenkins CI sever for test automation, deploy service on a Docker container
 
 
 
