@@ -29,14 +29,26 @@ function updateTask() {
     $.post('/duelink/update_task/' + task_id).done(
         function (data) {
             //$('#task_'+task_id).
-            if (data.type == 'task') { // Comment success, return the new comment
+            if (data.type == 'task') {
                 $('#task_status_' + task_id).html($(data.html).find("#task_status_" + task_id).html());
                 $('#progress').attr('aria-valuenow', data.progress)
                     .attr('style', "width:" + data.progress + "%")
                     .html(data.progress + "% complete");
             } else {
-                  //TODO:to-jie pan
+                //TODO:to-jie pan
             }
+        });
+}
+
+function deleteTask() {
+    var task_id = $(event.target).prev().val();
+    $.post('/duelink/delete_task/' + task_id).done(
+        function (data) {
+            var div = $('#task_' + task_id);
+            div.remove();
+            $('#progress').attr('aria-valuenow', data.progress)
+                .attr('style', "width:" + data.progress + "%")
+                .html(data.progress + "% complete");
         });
 }
 
