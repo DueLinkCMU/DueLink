@@ -1,6 +1,6 @@
 from django.test import TestCase, Client, TransactionTestCase, SimpleTestCase
-from DueLink.forms import AddEventForm
 from DueLink.models import School, DueEvent, Course, Task
+import DueLink
 
 
 # http://stackoverflow.com/questions/853796/problems-with-contenttypes-when-loading-a-fixture-in-django
@@ -82,7 +82,7 @@ class DueLinkTestForm(TestCase):
     def test_form(self):
         course = Course.objects.get(pk=1)
         # Test adding existing section, form.is_valid() should be False
-        form = AddEventForm({'origin_course': course, 'new_section': course.section})
+        form = DueLink.forms.AddEventForm({'origin_course': course, 'new_section': course.section})
         form.is_valid()
         self.assertFalse(form.is_valid())
 
@@ -160,7 +160,7 @@ class AddSectionTest(TransactionTestCase):
         self.assertTrue(response.content.find('Fail'.encode()) > 0)
 
 
-class AccessTest(TransactionTestCase):
+class AdminAccessTest(TransactionTestCase):
     fixtures = ['test_data2.json']
 
     def setUp(self):
@@ -178,3 +178,40 @@ class AccessTest(TransactionTestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.get('/duelink/admin/manage_course', follow=True)
         self.assertEqual(response.status_code, 200)
+
+class DueLinkAcessTest(TransactionTestCase):
+    fixtures = ['test_data2.json']
+
+    def setUp(self):
+        self.client = Client()
+        self.client.login(username='admin2', password='123')
+
+    def test_admin(self):
+        response = self.client.get('/duelink/home')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/duelink/friend_list')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/duelink/friend_stream')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/duelink/profile/1')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/duelink/profile/10086')
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.get('/duelink/profile_image/1')
+        self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/duelink/add_event')
+        self.assertEqual(response.status_code, 200)
+
+        # TODO:Can any user visit any other users' task?
+        # response = self.client.get('/duelink/tasks/1')
+        # self.assertEqual(response.status_code, 200)
+
+        response = self.client.get('/duelink/get_tasks/1')
+        self.assertEqual(response.status_code, 200)
+

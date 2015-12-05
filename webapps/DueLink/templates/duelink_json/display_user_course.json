@@ -1,8 +1,15 @@
 {"courses":
 [
+  {% if skim %}
+  {% for course in courses %}
+  {% include 'duelink_json/profile_course.json' %}
+  {% if not forloop.last %},{% endif%}
+  {% endfor %}
+  {% else %}
   {% for course in courses %}
   {% include 'duelink_json/course.json' %}
   {% if not forloop.last %},{% endif%}
   {% endfor %}
+  {% endif %}
 ]
 }

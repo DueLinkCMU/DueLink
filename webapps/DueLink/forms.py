@@ -82,13 +82,6 @@ class DeadlineForm(forms.ModelForm):
         widgets = {'due': SelectDateWidget}
 
 
-# class TaskForm(forms.ModelForm):
-#     class Meta:
-#         model = Task
-#         fields = ('finished',)
-#         widgets = {'finished': forms.Select}
-#
-
 class UpdateTaskForm(forms.ModelForm):
     finished = forms.TypedChoiceField(coerce=lambda x: bool(int(x)),
                                       choices=((0, 'Unfinished'), (1, 'Finished')),
@@ -204,7 +197,7 @@ class SubscribeCourseForm(forms.Form):
         # print(course)
         # print(user)
         try:
-            #
+            # check user in the course model's students
             if user in course.students.all():
                 return False
             return True
@@ -213,4 +206,24 @@ class SubscribeCourseForm(forms.Form):
             return False
         except Exception:
             print("Unexpected error: course is not Course object or user is not User object")
+            return False
+
+
+class UnsubscribeCourseForm(forms.Form):
+    course_id = forms.IntegerField()
+
+    def clean(self):
+        cleaned_data = super(UnsubscribeCourseForm, self).clean()
+        if not Course.objects.filter(id=self.cleaned_data['course_id']).count() > 0:
+            raise forms.ValidationError("None-exist course")
+        return cleaned_data
+
+    def valid_user(self, user):
+        try:
+            course = Course.objects.get(id=self.cleaned_data['course_id'])
+            if user in course.students.all():
+                return course
+            else:
+                return False
+        except Exception:
             return False

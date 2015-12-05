@@ -44,10 +44,13 @@ urlpatterns = [
 
     url(r'^display_user_course', 'DueLink.views.display_user_course', name='display_user_course'),
     url(r'^subscribe_course', 'DueLink.views.subscribe_course', name='subscribe_course'),
+    url(r'^unsubscribe_course', 'DueLink.views.unsubscribe_course', name='unsubscribe_course'),
 
     # # Route to logout a user and send them back to the login page
     url(r'^logout$', 'django.contrib.auth.views.logout_then_login', name='logout'),
+
     url(r'edit-profile$', 'DueLink.views.edit_profile', name='edit_profile'),
+    # url(r'manage-course$', 'DueLink.views.manage_course', name='manage_course'),
 
     url(r'^password_reset$', 'django.contrib.auth.views.password_reset',
         {'template_name': 'duelink/password_reset.html',

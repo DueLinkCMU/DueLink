@@ -1,35 +1,75 @@
-{% extends "dueLink/base.html" %}
+{% extends "dueLink/user_settings.html" %}
+{% load static %}
 {% block title %}Edit Profile{% endblock %}
+{% load add_css %}
+{% block links %}
+    <link rel="stylesheet" href="{% static "css/edit_profile.css" %}">
+{% endblock links %}
+{% block edit_profile %}
+    <div class="container" id="div-edit-profile">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+        <h3>Edit Profile</h3>
+            {% for error in profile_form.non_field_errors %}
+                <div class="error">
+                    {{ error }}
+                </div>
+            {% endfor %}
+            <form class="div-edit-profile" enctype="multipart/form-data" action="{% url 'edit_profile' %}"
+                  method="POST">
+                <table id="table-user-edit">
+                    <tr>
+                        <td><span class="span-edit-user">First name </span></td>
+                    </tr>
+                    <tr>
+                        <td> {{ user_form.first_name|add_css_id:"form-control" }} </td>
+                        <td>{{ user_form.first_name.errors }}</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td><span class="span-edit-user">Last name </span></td>
+                    </tr>
+                    <tr>
+                        <td> {{ user_form.last_name|add_css_id:"form-control" }} </td>
+                        <td>{{ user_form.last_name.errors }}</td>
+                    </tr>
+                    <tr>
+                </table>
 
-{% block content %}
-    {% for error in profile_form.non_field_errors %}
-        <div class="error">
-            {{ error }}
+                <table id="table-profile-edit">
+
+                    <tr>
+                        <td><span class="span-edit-profile">Nick name</span></td>
+                    </tr>
+                    <tr>
+                        <td> {{ profile_form.nick_name|add_css_id:"form-control" }} </td>
+                        <td>{{ profile_form.nick_name.errors }}</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td><span class="span-edit-profile">School </span></td>
+                    </tr>
+                    <tr>
+                        <td> {{ profile_form.school|add_css_id:"form-control" }} </td>
+                        <td>{{ profile_form.school.errors }}</td>
+                    </tr>
+                    <tr>
+                    <tr>
+                        <td><span class="span-edit-profile">Profile image </span></td>
+                    </tr>
+                    <tr>
+                        <td> {{ profile_form.profile_image }} </td>
+                        <td>{{ profile_form.profile_image.errors }}</td>
+                    </tr>
+                    <tr>
+                </table>
+
+                <button type="submit" class="btn btn-block btn-default">Save</button>
+                {% csrf_token %}
+            </form>
         </div>
-    {% endfor %}
-    <form class="div-edit-profile" enctype="multipart/form-data" action="{% url 'edit_profile' %}" method="POST">
-        {% for field in user_form %}
-            <div>
-                {{ field.label }}:
-                {{ field }}
-                <div class="error">
-                    {{ field.errors }}
-                </div>
-            </div>
-        {% endfor %}
+        <div class="col-md-2"></div>
 
-        {% for field in profile_form %}
-            <div>
-                {{ field.label }}:
-                {{ field }}
-                <div class="error">
-                    {{ field.errors }}
-                </div>
-            </div>
-        {% endfor %}
-
-        <button type="submit" class="btn btn-block btn-default">Save</button>
-        {% csrf_token %}
-    </form>
+    </div>
 
 {% endblock %}
