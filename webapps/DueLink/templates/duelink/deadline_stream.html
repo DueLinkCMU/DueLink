@@ -21,8 +21,8 @@
     {% if not isTeams and not isTeam %}
         <li class="active">
             <a href="#">
-                <img class="nav-image" src="{% static "images/team.png" %}">
-                <span class="text">Teams</span>
+                <img class="nav-image" src="{% url 'profile_image' user.id %}">
+                <span class="text">My Dues</span>
             </a>
         </li>
     {% else %}
