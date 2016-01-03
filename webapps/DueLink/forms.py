@@ -32,12 +32,15 @@ class AddCourseForm(forms.ModelForm):
         courses_same_course_num = Course.objects.filter(course_number=cleaned_data['course_number'])
         courses_same_course_name = Course.objects.filter(course_number=cleaned_data['course_name'])
         courses_exist = courses_same_course_num | courses_same_course_name
-        if courses_exist.count() > 0:
-            for each in courses_exist:
-                if each.section == cleaned_data['section']:
-                    raise forms.ValidationError("Section invalid")
+        courses_exist.__or__()
+        # if courses_exist.count() > 0:
+        #     for each in courses_exist:
+        #         if each.section == cleaned_data['section']:
+        #             raise forms.ValidationError("Section invalid")
+        if courses_exist.filter(section=cleaned_data['section']).exists():
+            raise forms.ValidationError("Section invalid")
             # if no return, any request with existing course num will fail
-            return cleaned_data['section']
+            # return cleaned_data['section']
         else:
             return cleaned_data['section']
 

@@ -143,35 +143,14 @@ def add_deadline(request, name, due, course_pk):
     return new_deadline
 
 
-# @transaction.atomic
-# @login_required
-# def add_task(request, event_id=None):
-#     event = get_object_or_404(DueEvent, id=event_id)
-#     if request.method == 'GET':
-#         form = TaskForm()
-#         return render(request, 'duelink/add_task.html', {'task_form': form, 'event_id': event_id})
-# if request.method == 'POST':
-#     form = TaskForm(request.POST)
-#     if not event_id:
-#         return Http404
-#     if form.is_valid():
-#         task = form.save(commit=False)
-#         task.event = event
-#         task.save()
-#         # return HttpResponseRedirect('tasks', event_id)
-#         # return redirect('profile', request.user.id)
-#
-#         return redirect('get_tasks', event_id)
-#     else:
-#         print form
-#         return HttpResponseForbidden("Error:" + form.__str__())
-# return Http404
 @transaction.atomic
 @login_required
 def add_task(request):
     context = {}
-    if not request.POST['event_id']:
+    # if not request.POST['event_id']:
+    if 'event_id' not in request.POST:
         raise Http404
+
     form = TaskForm(request.POST)
     event_id = request.POST['event_id']
     # print(request.POST)
@@ -222,14 +201,6 @@ def update_task(request, task_id=None):
         task.save()
         response = render(request, 'duelink/task.json', {"task": task}, content_type="application/json")
         return response
-        # form = UpdateTaskForm(request.POST, instance=task)
-        #
-        # if form.is_valid():
-        #     form.save()
-        #     return redirect('get_tasks',task.event.id)
-        # else:
-        #     print form
-        #     return HttpResponse("Error" + form.__str__())
 
     return HttpResponseForbidden("Error")
 
@@ -245,6 +216,7 @@ def delete_task(request, task_id=None):
 
 
 @login_required
+@transaction.atomic
 def add_course(request):
     if request.method == 'GET':
         form = AddCourseForm()
@@ -368,8 +340,7 @@ def search_people(request):
 @login_required
 def search_course(request):
     # return a courses.json
-    context = {}
-    context['courses'] = Course.objects.all()
+    context = {'courses': Course.objects.all()}
     if request.method == "GET":
         return render(request, 'duelink/courses.json', context, content_type="application/json")
 
@@ -419,6 +390,7 @@ def edit_profile(request):
 
 
 @login_required
+@transaction.atomic
 def subscribe_course(request):
     if request.method == 'GET':
         form = SubscribeCourseForm()
@@ -558,6 +530,7 @@ def get_team_stream_by_id(request, team_id):
 
 
 @login_required
+@transaction.atomic
 def add_event_team(request, team_id):
     team = get_object_or_404(Team, id=team_id)
     if request.method == 'GET':
